@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+
+# Editor / OS
+.idea/
+.vscode/
+.claude/
+*.swp
+*.swo
+*~
+
+# Build / dependency dirs (defensive — none expected in this static site)
+node_modules/
+dist/
+.cache/
+
+# Large source media — exceeds GitHub's 100 MB hard limit.
+# The .mov is the hero video; host externally or convert to a web-optimized
+# H.264 MP4 (under ~25 MB) before committing.
+assets/section-video.mov
+*.mov
+
+# Logs / temp
+*.log
+.tmp/
