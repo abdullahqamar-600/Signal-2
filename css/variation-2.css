@@ -146,7 +146,7 @@
   left: 0;
   bottom: 0;
   z-index: 2;
-  width: clamp(440px, 54vw, 720px);
+  width: clamp(720px, 90vw, 1320px);
   background: transparent;
   color: var(--white);
   padding:
@@ -183,12 +183,13 @@
 
 .v2-hero__title {
   margin: 0;
-  font-size: clamp(52px, 4.7vw, 68px);
+  font-size: clamp(88px, 7vw, 100px);
   line-height: 0.98;
   font-weight: 700;
   letter-spacing: -0.015em;
   text-transform: uppercase;
   color: var(--white);
+  text-wrap: balance;
 }
 
 .v2-hero__lede {
@@ -776,6 +777,10 @@
     bottom: 0;
     padding: 32px 24px 32px;
     gap: 20px;
+  }
+
+  .v2-hero__title {
+    font-size: clamp(48px, 10vw, 72px);
   }
 
   .v2-hero__meta {
