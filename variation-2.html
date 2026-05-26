@@ -6,27 +6,26 @@
     <title>V2 · Quiet / Magazine — Leadership Summit 2026</title>
     <link rel="stylesheet" href="css/shared.css" />
     <link rel="stylesheet" href="css/switcher.css" />
-    <link rel="stylesheet" href="css/variation-2.css" />
+    <link rel="stylesheet" href="css/variation-2.css?v=pin-js-2026-05-26" />
   </head>
   <body class="v2">
-    <!-- ────── Thin utility nav ────── -->
+    <!-- ────── Compact nav — three balanced zones: brand · sections · CTA ────── -->
     <nav class="v2-nav" aria-label="Primary">
-      <ul class="v2-nav__group v2-nav__group--left">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#agenda">Agenda</a></li>
-        <li><a href="#travel">Travel &amp; Hotel</a></li>
-        <li><a href="#faqs">FAQs</a></li>
-      </ul>
       <a href="#home" class="v2-nav__brand" aria-label="Leadership Summit 2026">
         <img
-          src="assets/Logo%20Coloured.png"
+          src="assets/Logo%20Blue.png"
           alt="Leadership Summit"
           class="v2-nav__logo"
         />
       </a>
-      <ul class="v2-nav__group v2-nav__group--right">
-        <li><a href="#register" class="v2-nav__register">Register Now</a></li>
+
+      <ul class="v2-nav__group" role="list">
+        <li><a href="#agenda">Agenda</a></li>
+        <li><a href="#travel">Travel</a></li>
+        <li><a href="#faqs">FAQs</a></li>
       </ul>
+
+      <a href="#register" class="v2-nav__cta">Register</a>
     </nav>
 
     <!-- ────── Full-bleed hero ────── -->
@@ -88,16 +87,6 @@
         </a>
       </p>
     </section>
-
-    <!-- ────── Section break image ────── -->
-    <figure class="v2-figure">
-      <img
-        src="assets/photos/SignalOwnerSummit2024-7062.jpg"
-        alt="A wide view of the Signal Owner Summit room — attendees seated at round tables in front of a stage and twin screens displaying the Owners shield."
-        loading="lazy"
-      />
-      <figcaption class="v2-figure__cap">Inside the room · Signal Home Office, 2024</figcaption>
-    </figure>
 
     <!-- ────── Days strip ────── -->
     <section class="v2-days" aria-label="What to expect">
@@ -183,6 +172,387 @@
       </ol>
     </section>
 
+    <!-- ────── Section break image ────── -->
+    <figure class="v2-figure">
+      <img
+        src="assets/photos/Convention2026-0700.jpg"
+        alt="Signal Owner Summit — wide view of the room."
+        loading="lazy"
+      />
+      <figcaption class="v2-figure__cap">Inside the room · Signal Home Office, 2024</figcaption>
+    </figure>
+
+    <!-- ────── Travel — Getting to Omaha ────── -->
+    <section class="v2-travel" id="travel" aria-label="Travel and lodging">
+      <div class="v2-travel__inner">
+        <header class="v2-travel__head">
+          <span class="v2-travel__eyebrow">Destination</span>
+          <h2 class="v2-travel__address" id="v2-travel-address">
+            3880 S. 149th St., Ste. 106<br />
+            Omaha, NE 68144.
+          </h2>
+          <a
+            class="v2-travel__copy"
+            href="https://www.google.com/maps/search/?api=1&query=3880+S.+149th+St.,+Ste.+106,+Omaha,+NE+68144"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Signal Home Office in Google Maps"
+          >
+            <span class="v2-travel__copy-label">Open in maps</span>
+            <span class="v2-travel__copy-icon" aria-hidden="true">↗</span>
+          </a>
+        </header>
+
+        <div class="v2-travel__grid">
+          <div class="v2-travel__col v2-travel__col--left">
+            <ul class="v2-travel__items">
+              <li class="v2-travel__item">
+                <span class="v2-travel__item-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M3 13 L21 9 M21 9 L13 17 M21 9 L17 4 M11 13 L13 17 M11 13 L7 11 M3 13 L7 11"
+                      stroke="currentColor"
+                      stroke-width="1.75"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </span>
+                <h3 class="v2-travel__item-title">
+                  Eppley Airfield <span class="v2-travel__item-code">OMA</span>
+                </h3>
+                <p class="v2-travel__item-body">
+                  20–25 minutes from the home office. Serviced by all major US airlines.
+                </p>
+              </li>
+
+              <li class="v2-travel__item">
+                <span class="v2-travel__item-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M3 16 L3 11 L5 7 L19 7 L21 11 L21 16 M3 16 L21 16 M3 16 L3 18 M21 16 L21 18 M5 7 L4 5 L7 5 M19 7 L20 5 L17 5"
+                      stroke="currentColor"
+                      stroke-width="1.75"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <circle cx="7" cy="16" r="1.5" stroke="currentColor" stroke-width="1.75" fill="none" />
+                    <circle cx="17" cy="16" r="1.5" stroke="currentColor" stroke-width="1.75" fill="none" />
+                  </svg>
+                </span>
+                <h3 class="v2-travel__item-title">Ground Transport</h3>
+                <p class="v2-travel__item-body">
+                  Rideshare and rental cars at the curb. Short- and long-term parking on site.
+                </p>
+              </li>
+
+              <li class="v2-travel__item">
+                <span class="v2-travel__item-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <rect
+                      x="3.5" y="5" width="17" height="15" rx="1"
+                      stroke="currentColor" stroke-width="1.75" fill="none"
+                    />
+                    <path d="M3.5 10 L20.5 10" stroke="currentColor" stroke-width="1.75" />
+                    <path d="M8 3 L8 7 M16 3 L16 7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+                  </svg>
+                </span>
+                <h3 class="v2-travel__item-title">Early Arrival</h3>
+                <p class="v2-travel__item-body">
+                  Plan to land Monday, October 5 for the Kids Against Hunger kickoff.
+                </p>
+              </li>
+            </ul>
+          </div>
+
+          <figure class="v2-travel__media">
+            <img
+              src="assets/photos/SignalOwnerSummit2024-0834.jpg"
+              alt="Signal Home Office exterior — a stand-in placeholder."
+              loading="lazy"
+            />
+            <figcaption class="v2-travel__media-cap">Signal Home Office</figcaption>
+          </figure>
+
+          <div class="v2-travel__col v2-travel__col--right">
+            <ul class="v2-travel__items">
+              <li class="v2-travel__item">
+                <span class="v2-travel__item-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M3 18 L3 10 L21 10 L21 18 M3 14 L21 14 M6 10 L6 7 L11 7 L11 10"
+                      stroke="currentColor" stroke-width="1.75"
+                      stroke-linecap="round" stroke-linejoin="round" fill="none"
+                    />
+                    <path d="M3 20 L3 18 M21 20 L21 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+                  </svg>
+                </span>
+                <h3 class="v2-travel__item-title">
+                  Embassy Suites La Vista
+                  <span class="v2-travel__item-tag">Recommended</span>
+                </h3>
+                <p class="v2-travel__item-body">
+                  10 minutes from the home office. By Hilton, with complimentary breakfast and parking.
+                </p>
+              </li>
+
+              <li class="v2-travel__item">
+                <span class="v2-travel__item-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="12" r="3.5" stroke="currentColor" stroke-width="1.75" fill="none" />
+                    <path
+                      d="M11.5 12 L21 12 M18 12 L18 15 M15 12 L15 14"
+                      stroke="currentColor" stroke-width="1.75"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+                <h3 class="v2-travel__item-title">Hotel Choice</h3>
+                <p class="v2-travel__item-body">
+                  Attendees are welcome to stay at any hotel of their choosing.
+                </p>
+              </li>
+
+              <li class="v2-travel__item">
+                <span class="v2-travel__item-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12 21 C7 15 4 12 4 9 A8 8 0 0 1 20 9 C20 12 17 15 12 21 Z"
+                      stroke="currentColor" stroke-width="1.75"
+                      stroke-linejoin="round" fill="none"
+                    />
+                    <circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.75" fill="none" />
+                  </svg>
+                </span>
+                <h3 class="v2-travel__item-title">Walkable Area</h3>
+                <p class="v2-travel__item-body">
+                  Restaurants and dining within walking distance of the hotel.
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ────── Speakers — scroll-pinned S-curve flow ──────
+         Eight speaker cards flow continuously along an invisible
+         S-shaped path while the section is pinned. Cards enter
+         top-right, ride along the top row, curve down through the
+         middle, ride along the bottom row, and exit bottom-left.
+         At rest the four visible cards form the LL/HH layout. -->
+    <section class="v2-speakers" id="speakers" aria-label="Summit speakers">
+      <div class="v2-speakers__scene">
+        <div class="v2-speakers__viewport">
+          <header class="v2-speakers__head">
+            <div class="v2-speakers__head-text">
+              <span class="v2-speakers__eyebrow">+ Speakers</span>
+              <h2 class="v2-speakers__title">Voices from the summit.</h2>
+            </div>
+          </header>
+
+          <ol class="v2-speakers__track" aria-label="All eight summit speakers">
+            <article class="v2-speaker-card" data-i="0">
+              <figure class="v2-speaker-card__image">
+                <img src="assets/photos/SignalOwnerSummit2024-1668.jpg" alt="Reed Stocker, President &amp; CEO." loading="lazy" />
+              </figure>
+              <div class="v2-speaker-card__caption">
+                <h3 class="v2-speaker-card__name">Reed Stocker</h3>
+                <p class="v2-speaker-card__role">President &amp; CEO</p>
+              </div>
+            </article>
+
+            <article class="v2-speaker-card" data-i="1">
+              <figure class="v2-speaker-card__image">
+                <img src="assets/photos/SignalOwnerSummit2024-1281.jpg" alt="Alex Park, VP of Operations." loading="lazy" />
+              </figure>
+              <div class="v2-speaker-card__caption">
+                <h3 class="v2-speaker-card__name">Alex Park</h3>
+                <p class="v2-speaker-card__role">VP, Operations</p>
+              </div>
+            </article>
+
+            <article class="v2-speaker-card" data-i="2">
+              <figure class="v2-speaker-card__image">
+                <img src="assets/photos/SignalOwnerSummit2024-1144.jpg" alt="Casey Walsh, Head of Training." loading="lazy" />
+              </figure>
+              <div class="v2-speaker-card__caption">
+                <h3 class="v2-speaker-card__name">Casey Walsh</h3>
+                <p class="v2-speaker-card__role">Head of Training</p>
+              </div>
+            </article>
+
+            <article class="v2-speaker-card" data-i="3">
+              <figure class="v2-speaker-card__image">
+                <img src="assets/photos/SignalOwnerSummit2024-1681.jpg" alt="Morgan Chen, Director of Marketing." loading="lazy" />
+              </figure>
+              <div class="v2-speaker-card__caption">
+                <h3 class="v2-speaker-card__name">Morgan Chen</h3>
+                <p class="v2-speaker-card__role">Director, Marketing</p>
+              </div>
+            </article>
+
+            <article class="v2-speaker-card" data-i="4">
+              <figure class="v2-speaker-card__image">
+                <img src="assets/photos/SignalOwnerSummit2024-1312.jpg" alt="Jordan Lee, Director of Sales." loading="lazy" />
+              </figure>
+              <div class="v2-speaker-card__caption">
+                <h3 class="v2-speaker-card__name">Jordan Lee</h3>
+                <p class="v2-speaker-card__role">Director, Sales</p>
+              </div>
+            </article>
+
+            <article class="v2-speaker-card" data-i="5">
+              <figure class="v2-speaker-card__image">
+                <img src="assets/photos/SignalOwnerSummit2024-0834.jpg" alt="Taylor Brown, Director of Franchise Development." loading="lazy" />
+              </figure>
+              <div class="v2-speaker-card__caption">
+                <h3 class="v2-speaker-card__name">Taylor Brown</h3>
+                <p class="v2-speaker-card__role">Director, Franchise Dev</p>
+              </div>
+            </article>
+
+            <article class="v2-speaker-card" data-i="6">
+              <figure class="v2-speaker-card__image">
+                <img src="assets/photos/SignalOwnerSummit2024-0917.jpg" alt="Riley Foster, Owner Council Chair." loading="lazy" />
+              </figure>
+              <div class="v2-speaker-card__caption">
+                <h3 class="v2-speaker-card__name">Riley Foster</h3>
+                <p class="v2-speaker-card__role">Owner Council Chair</p>
+              </div>
+            </article>
+
+            <article class="v2-speaker-card" data-i="7">
+              <figure class="v2-speaker-card__image">
+                <img src="assets/photos/SignalOwnerSummit2024-0931.jpg" alt="Sam Rodriguez, Director of Communications." loading="lazy" />
+              </figure>
+              <div class="v2-speaker-card__caption">
+                <h3 class="v2-speaker-card__name">Sam Rodriguez</h3>
+                <p class="v2-speaker-card__role">Director, Communications</p>
+              </div>
+            </article>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────── FAQs ────── -->
+    <section class="v2-faqs" id="faqs" aria-label="Frequently asked questions">
+      <div class="v2-faqs__inner">
+        <header class="v2-faqs__head">
+          <h2 class="v2-faqs__title">
+            Frequently<br />
+            asked questions.
+          </h2>
+        </header>
+
+        <div class="v2-faqs__list">
+          <details class="v2-faq">
+            <summary class="v2-faq__q">
+              <span class="v2-faq__num">01</span>
+              <span class="v2-faq__text">Who should attend?</span>
+              <span class="v2-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="v2-faq__a">
+              <p>
+                Leadership Summit is designed primarily for Signal franchise owners, executive
+                directors, directors, and other key employees within franchise organizations.
+              </p>
+            </div>
+          </details>
+
+          <details class="v2-faq">
+            <summary class="v2-faq__q">
+              <span class="v2-faq__num">02</span>
+              <span class="v2-faq__text">Can I bring members of my leadership team?</span>
+              <span class="v2-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="v2-faq__a">
+              <p>
+                Yes. Leadership Summit was intentionally expanded to allow franchise leadership
+                teams to attend together.
+              </p>
+            </div>
+          </details>
+
+          <details class="v2-faq">
+            <summary class="v2-faq__q">
+              <span class="v2-faq__num">03</span>
+              <span class="v2-faq__text">What types of sessions will be offered?</span>
+              <span class="v2-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="v2-faq__a">
+              <p>
+                Sessions include executive team updates, leadership development, sales and
+                operational breakout trainings, franchise owner-led best practices, and
+                interactive discussions built around the day-to-day realities of running a
+                Signal franchise.
+              </p>
+            </div>
+          </details>
+
+          <details class="v2-faq">
+            <summary class="v2-faq__q">
+              <span class="v2-faq__num">04</span>
+              <span class="v2-faq__text">What is included with registration?</span>
+              <span class="v2-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="v2-faq__a">
+              <p>
+                Registration includes access to Summit sessions, breakout trainings, networking
+                opportunities, and scheduled activities. Hotel accommodations are not included.
+              </p>
+            </div>
+          </details>
+
+          <details class="v2-faq">
+            <summary class="v2-faq__q">
+              <span class="v2-faq__num">05</span>
+              <span class="v2-faq__text">Do I need to attend all three days?</span>
+              <span class="v2-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="v2-faq__a">
+              <p>
+                We strongly recommend participating in the full Summit to take part in the
+                complete schedule of events.
+              </p>
+            </div>
+          </details>
+
+          <details class="v2-faq">
+            <summary class="v2-faq__q">
+              <span class="v2-faq__num">06</span>
+              <span class="v2-faq__text">Is the October 5 kickoff required?</span>
+              <span class="v2-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="v2-faq__a">
+              <p>
+                No, but arriving by early afternoon on October 5 allows you to participate in
+                the Kids Against Hunger volunteer event and the evening at Vala’s Pumpkin Patch.
+              </p>
+            </div>
+          </details>
+
+          <details class="v2-faq">
+            <summary class="v2-faq__q">
+              <span class="v2-faq__num">07</span>
+              <span class="v2-faq__text">Where will Leadership Summit be held?</span>
+              <span class="v2-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="v2-faq__a">
+              <p>
+                Leadership Summit will take place at Signal Home Office in Omaha, Nebraska —
+                3880 S. 149th St., Ste. 106, Omaha, NE 68144.
+              </p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <!-- ────── People gallery ────── -->
     <section class="v2-gallery" aria-label="People at the Summit">
       <div class="v2-gallery__head">
@@ -237,57 +607,55 @@
       </div>
     </section>
 
-    <!-- ────── Footer ────── -->
+    <!-- ────── Footer — editorial closing on white ──────
+         Streaks band at the top (echoes .v2-figure), then closing
+         statement + date strip + flat link grid + meta row. -->
+    <!-- ────── Footer — compact, clean, with the Leadership Summit
+         logo as the single loud element.  ────── -->
     <footer class="v2-foot" aria-label="Footer">
-      <div class="v2-foot__strip" aria-hidden="true"></div>
+      <div class="v2-foot__inner">
+        <a class="v2-foot__mark" href="#home" aria-label="Leadership Summit 2026">
+          <span class="v2-foot__mark-top">Leadership</span>
+          <span class="v2-foot__mark-bottom" aria-hidden="true">
+            <span class="v2-foot__mark-rule"></span>
+            <span class="v2-foot__mark-sub">Summit</span>
+            <span class="v2-foot__mark-rule"></span>
+          </span>
+        </a>
 
-      <div class="v2-foot__top">
-        <img
-          class="v2-foot__wordmark"
-          src="assets/Logo%20Coloured.png"
-          alt="Leadership Summit"
-        />
-
-        <div class="v2-foot__cols">
-          <div class="v2-foot__col">
-            <span class="v2-foot__col-title">Summit</span>
-            <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#agenda">Agenda</a></li>
-              <li><a href="#travel">Travel &amp; Hotel</a></li>
-              <li><a href="#faqs">FAQs</a></li>
-              <li><a href="#register">Register</a></li>
-            </ul>
+        <dl class="v2-foot__strip" aria-label="Summit details">
+          <div class="v2-foot__strip-item">
+            <dt>Dates</dt>
+            <dd>Oct 6&ndash;8, 2026</dd>
           </div>
-          <div class="v2-foot__col">
-            <span class="v2-foot__col-title">Signal</span>
-            <ul>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Franchise</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
+          <div class="v2-foot__strip-item">
+            <dt>Location</dt>
+            <dd>Signal Home Office, Omaha NE</dd>
           </div>
-        </div>
-      </div>
+          <div class="v2-foot__strip-item">
+            <dt>Contact</dt>
+            <dd>
+              <a class="v2-foot__email" href="mailto:summit@signal88.com">summit@signal88.com</a>
+            </dd>
+          </div>
+        </dl>
 
-      <div class="v2-foot__bottom">
-        <div class="v2-foot__addr">
-          <span class="v2-foot__addr-title">Signal Home Office</span>
-          <span>3880 S. 149th St., Ste. 106</span>
-          <span>Omaha, NE 68144</span>
-        </div>
-        <div class="v2-foot__addr">
-          <span class="v2-foot__addr-title">Contact</span>
-          <a href="mailto:summit@signal88.com">summit@signal88.com</a>
-          <span>October 6–8, 2026</span>
-        </div>
-        <div class="v2-foot__meta">
-          <span>© 2026 Signal · Internal · Not for public distribution</span>
+        <div class="v2-foot__base">
+          <nav class="v2-foot__links" aria-label="Footer navigation">
+            <a href="#home">Home</a>
+            <a href="#agenda">Agenda</a>
+            <a href="#travel">Travel</a>
+            <a href="#faqs">FAQs</a>
+            <a href="#register">Register</a>
+          </nav>
+          <span class="v2-foot__copy">
+            &copy; 2026 Signal &middot; Internal &middot; Not for public distribution
+          </span>
         </div>
       </div>
     </footer>
 
     <script src="js/switcher.js"></script>
+    <script src="js/variation-2.js?v=spath-shorter-2026-05-26"></script>
   </body>
 </html>
