@@ -4,12 +4,18 @@
     { id: 2, title: 'Quiet / Magazine', file: 'variation-2.html' },
     { id: 3, title: 'Editorial Stack', file: 'variation-3.html' },
     { id: 4, title: 'The Annual', file: 'variation-4.html' },
+    { id: 5, title: 'The Operator', file: 'variation-5.html' },
   ];
+
+  // Treat v5 sub-pages as part of v5
+  const v5SubPages = ['v5-agenda.html', 'v5-travel.html', 'v5-faqs.html', 'v5-register.html'];
 
   const current = (function () {
     const path = window.location.pathname.split('/').pop() || 'index.html';
     const match = path.match(/variation-(\d+)\.html/);
-    return match ? parseInt(match[1], 10) : null;
+    if (match) return parseInt(match[1], 10);
+    if (v5SubPages.includes(path)) return 5;
+    return null;
   })();
 
   const root = document.createElement('div');

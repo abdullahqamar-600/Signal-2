@@ -33,8 +33,12 @@ Tone words pulled from their copy: **reliable, compassionate, proactive, trustwo
 ## Design System (shared across all variations)
 
 ### Typography
-- **Font family:** Darker Grotesque (Google Fonts) — used across all weights.
-- **Treatment:** Creative. Sizing, spacing, and structure mimic the reference design provided per variation. Type does heavy lifting.
+**Overridden by [VISUAL.md](./VISUAL.md). See section 1 for the full type spec.**
+
+- **Font family:** Archivo + Archivo Black (Google Fonts). One family, two roles. Archivo Black (900) for display; Archivo (400/500/600/700) for body and UI.
+- **Why:** Closest free match to the Leadership Summit logo wordmark (heavy, slightly condensed geometric grotesque with flat terminals).
+- **Treatment:** Type does heavy lifting. Hierarchy by scale and weight only. Manual line breaks on hero headlines. Tabular numerals on stacked numbers (dates, times, schedules).
+- **Not used:** Darker Grotesque. Do not load it.
 
 ### Color palette
 | Token | Hex | Share | Role |
