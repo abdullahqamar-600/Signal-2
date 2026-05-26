@@ -6,9 +6,75 @@
     <title>V2 · Quiet / Magazine — Leadership Summit 2026</title>
     <link rel="stylesheet" href="css/shared.css" />
     <link rel="stylesheet" href="css/switcher.css" />
-    <link rel="stylesheet" href="css/variation-2.css?v=pin-js-2026-05-26" />
+    <link rel="stylesheet" href="css/variation-2.css?v=intro16-2026-05-27" />
+    <!-- Decide if the intro animation should run, BEFORE first paint, so
+         the page never flashes content unstyled. Skip if the user has
+         already seen it this session — but always re-run on reload (hard
+         refresh, Cmd+R) and on a fresh tab (sessionStorage is per-tab). -->
+    <script>
+      (function () {
+        var html = document.documentElement;
+        try {
+          var entries = performance.getEntriesByType('navigation');
+          var isReload = entries && entries[0] && entries[0].type === 'reload';
+          var seen = sessionStorage.getItem('v2-intro-seen');
+          if (seen && !isReload) {
+            html.classList.add('v2--no-intro');
+            return;
+          }
+          html.classList.add('v2--intro-pending');
+        } catch (e) {
+          html.classList.add('v2--intro-pending');
+        }
+        // Outer failsafe: even if the page's main JS never runs (CSP
+        // block, parse error, network failure), tear down the intro
+        // gate after 3.5s so the user is never trapped behind it.
+        setTimeout(function () {
+          if (html.classList.contains('v2--intro-pending')) {
+            html.classList.remove('v2--intro-pending');
+            html.classList.add('v2--intro-done');
+            var node = document.querySelector('[data-intro]');
+            if (node && node.parentNode) node.parentNode.removeChild(node);
+          }
+        }, 3500);
+      })();
+    </script>
   </head>
   <body class="v2">
+    <!-- ────── Intro: white overlay with a swoosh-shaped window that
+         exposes the playing hero video. The window appears with a
+         subtle blue outline, holds, then scales past the viewport
+         edges to reveal the full video; page content fades in last.
+         The inline <head> script decides whether to run this. ────── -->
+    <div class="v2-intro" data-intro role="presentation" aria-hidden="true">
+      <svg class="v2-intro__svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <!-- The swoosh path, pre-centered on (0,0) so any ancestor
+               <g translate(500 500)> places it at viewport center. -->
+          <path
+            id="v2-intro-swoosh"
+            d="M98.5 32.5L117 0H83.6759C76.7307 0 70.2827 3.6031 66.6427 9.51805L55.4286 27.741C53.6086 30.6984 50.3847 32.5 46.912 32.5H18L0 65H33.5253C40.6318 65 47.2046 61.229 50.7912 55.0939L61.1044 37.453C62.8977 34.3855 66.1841 32.5 69.7374 32.5H98.5Z"
+            transform="translate(-58.5 -32.5)"
+          />
+          <mask id="v2-intro-mask" maskUnits="userSpaceOnUse">
+            <!-- White = overlay visible; black swoosh = cut out (video
+                 shows through). Outer <g> positions at viewport center;
+                 inner <g> is the one CSS scales — anchored on its own
+                 local origin so transform-box support is not required. -->
+            <rect width="1000" height="1000" fill="white" />
+            <g transform="translate(500 500)">
+              <g class="v2-intro__cutout">
+                <use href="#v2-intro-swoosh" fill="black" />
+              </g>
+            </g>
+          </mask>
+        </defs>
+
+        <!-- White overlay, cut by the swoosh mask. -->
+        <rect class="v2-intro__overlay" width="1000" height="1000" fill="white" mask="url(#v2-intro-mask)" />
+      </svg>
+    </div>
+
     <!-- ────── Compact nav — three balanced zones: brand · sections · CTA ────── -->
     <nav class="v2-nav" aria-label="Primary">
       <a href="#home" class="v2-nav__brand" aria-label="Leadership Summit 2026">
@@ -175,7 +241,7 @@
     <!-- ────── Section break image ────── -->
     <figure class="v2-figure">
       <img
-        src="assets/photos/Convention2026-0700.jpg"
+        src="assets/photos/group-8.png"
         alt="Signal Owner Summit — wide view of the room."
         loading="lazy"
       />
@@ -205,6 +271,7 @@
 
         <div class="v2-travel__grid">
           <div class="v2-travel__col v2-travel__col--left">
+            <p class="v2-travel__col-eyebrow">Getting here</p>
             <ul class="v2-travel__items">
               <li class="v2-travel__item">
                 <span class="v2-travel__item-icon" aria-hidden="true">
@@ -277,6 +344,7 @@
           </figure>
 
           <div class="v2-travel__col v2-travel__col--right">
+            <p class="v2-travel__col-eyebrow">Where to stay</p>
             <ul class="v2-travel__items">
               <li class="v2-travel__item">
                 <span class="v2-travel__item-icon" aria-hidden="true">
@@ -656,6 +724,6 @@
     </footer>
 
     <script src="js/switcher.js"></script>
-    <script src="js/variation-2.js?v=spath-bigger-2026-05-26"></script>
+    <script src="js/variation-2.js?v=intro16-2026-05-27"></script>
   </body>
 </html>

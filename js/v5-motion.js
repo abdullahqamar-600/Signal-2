@@ -79,3 +79,32 @@
   if (mq.addEventListener) mq.addEventListener('change', handleMq);
   else mq.addListener(handleMq);
 })();
+
+/* Variation 5 — page-pattern parallax.
+   As the bottom decorative band enters view, the base pattern shifts
+   vertically at a slower rate than the page scroll. */
+(function () {
+  const band = document.querySelector('.v5__page-pattern');
+  if (!band) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (prefersReduced.matches) return;
+
+  let ticking = false;
+  const updateParallax = () => {
+    const rect = band.getBoundingClientRect();
+    const vh = window.innerHeight;
+    if (rect.bottom > 0 && rect.top < vh) {
+      const progress = (vh - rect.top) / (vh + rect.height);
+      const py = (progress - 0.5) * -48;
+      band.style.setProperty('--v5-pp-py', py.toFixed(1) + 'px');
+    }
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+  updateParallax();
+})();

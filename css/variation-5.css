@@ -410,8 +410,8 @@
     0 0 0 1px rgba(10, 26, 76, 0.04);
 }
 
-/* Icons removed from pills — text-only label style */
-.v5__tag svg { display: none; }
+/* Pills hidden from the design — text-only and now off entirely */
+.v5__tag { display: none !important; }
 
 /* -----------------------------------------------------------
    Buttons
@@ -485,7 +485,6 @@
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: saturate(180%) blur(12px);
   -webkit-backdrop-filter: saturate(180%) blur(12px);
-  border-bottom: 1px solid var(--v5-rule-soft);
 }
 
 .v5__nav-inner {
@@ -667,13 +666,11 @@
 /* Hero pills are larger than the shared default so they read at hero scale */
 .v5__hero-media .v5__tag {
   font-size: 16px;
-  gap: 10px;
-  padding: 14px 22px 14px 18px;
+  padding: 14px 22px;
   box-shadow:
     0 6px 16px rgba(10, 26, 76, 0.12),
     0 0 0 1px rgba(10, 26, 76, 0.04);
 }
-.v5__hero-media .v5__tag svg { width: 16px; height: 16px; }
 
 .v5__hero-media .v5__tag--a { top: 32px; left: -16px; }
 .v5__hero-media .v5__tag--b { top: 38%; right: -22px; }
@@ -821,6 +818,13 @@
   flex-direction: column;
   gap: clamp(8px, 0.8vw, 12px);
 }
+/* Allow the swoosh inside the CTA card to grow to full viewport width.
+   We clip at body level so the bleed never causes horizontal page scroll
+   but the swoosh isn't constrained by the composite/card width. */
+html.v5, body.v5 { overflow-x: clip; }
+@supports not (overflow: clip) {
+  html.v5, body.v5 { overflow-x: hidden; }
+}
 
 .v5__composite-row {
   display: grid;
@@ -833,6 +837,46 @@
 
 .v5__composite-row--bottom {
   grid-template-columns: minmax(0, 1.33fr) minmax(0, 1fr);  /* ~57/43 */
+}
+
+/* Decorative swoosh inside the navy CTA card — uses the full "Extendede
+   Swoosh.svg" (2743×270, 10.16:1 ratio). The image is sized by HEIGHT and
+   centered relative to the viewport (via 100vw band) so the full ribbon
+   reveals end-to-end across the page in one go, regardless of how narrow
+   the card is. Body-level overflow-x:clip prevents horizontal scroll. */
+.v5__composite-cta-swoosh {
+  position: relative;
+  /* Break out of the card horizontally — span the whole viewport */
+  width: 100vw;
+  left: 50%;
+  margin-left: -50vw;
+  /* Height set so width (= height × 10.16) reaches viewport width.
+     At a 1440px viewport, 100vw × 270/2743 ≈ 141.7px tall. */
+  height: clamp(60px, 9.85vw, 160px);
+  margin-block: clamp(8px, 1.2vw, 20px);
+  flex: 0 0 auto;
+  overflow: visible;
+}
+.v5__composite-cta-swoosh img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Full viewport width — the swoosh shows end to end. */
+  width: 100vw;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  filter: drop-shadow(0 10px 24px rgba(255, 140, 0, 0.30));
+}
+
+@media (max-width: 480px) {
+  .v5__composite-cta-swoosh {
+    height: clamp(38px, 9.85vw, 50px);             /* 9.85vw keeps the same source ratio at mobile */
+    margin-block: 6px;
+  }
 }
 
 /* Big top card — dark blue body on the left, photo on the right,
@@ -927,12 +971,14 @@
 .v5__composite-mission-photo .v5__tag--b { top: 50%; right: 20px; transform: translateY(-50%); }
 .v5__composite-mission-photo .v5__tag--c { bottom: 20px; left: 20px; }
 
-/* Bottom-right card — dark blue, with CTA + avatars */
+/* Bottom-right card — dark blue, with CTA and the swoosh clipped to the card */
 .v5__composite-cta {
+  position: relative;
   background: var(--v5-surface-dark);
   color: var(--v5-on-dark);
   padding: clamp(24px, 2.6vw, 40px);
   border-radius: var(--v5-r-hero);
+  overflow: hidden;                                    /* clip the swoosh bleed */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -974,18 +1020,6 @@
   background: #fff;
 }
 
-.v5__composite-avatars {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.v5__composite-avatars img {
-  width: 48px;
-  height: 48px;
-  border-radius: 999px;
-  object-fit: cover;
-}
 
 @media (max-width: 960px) {
   .v5__composite-row--bottom {
@@ -1546,6 +1580,63 @@
   border-top: 1px solid var(--v5-rule);
   padding: clamp(64px, 8vw, 112px) 0 clamp(28px, 3vw, 40px);
   margin-top: var(--v5-section-y);
+}
+
+/* -----------------------------------------------------------
+   Page pattern — a 30vh band fixed to the viewport bottom.
+   The website is treated as a layer on top of this. As the user
+   scrolls down past the natural end of content, the footer slides
+   up over the pattern, progressively revealing it.
+     ::before — base layer (light cyan #C5E9FA), drifts on scroll
+                (parallax).
+     .v5__page-pattern-spot — heavier-blue layer that uses the
+                pattern as a mask + an irregular cluster of radial
+                gradients centered on the cursor.
+   ----------------------------------------------------------- */
+.v5__page-pattern {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;                                       /* sits beneath every content layer */
+  height: 30vh;
+  min-height: 220px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* Reserve scroll room past the footer so it can slide up over the
+   fixed pattern — without this, the footer simply rests at the
+   viewport bottom and the pattern never reveals. */
+body.v5 { padding-bottom: 30vh; }
+
+/* Lift every real content layer above the pattern AND give them solid
+   backgrounds so the pattern is fully covered during normal scroll.
+   The pattern only ever reveals in the padding-bottom strip below the
+   footer, never through transparent sections in mid-page. */
+.v5__nav,
+.v5 main,
+.v5__footer-big { position: relative; z-index: 1; }
+.v5 main { background: var(--v5-bg); }              /* opaque white covers the fixed pattern */
+
+/* Faint shadow under the footer — just a hint of separation from the
+   pattern layer beneath, nothing more. */
+.v5__footer-big {
+  box-shadow: 0 12px 28px -16px rgba(10, 26, 76, 0.10);
+}
+.v5__page-pattern::before {
+  content: '';
+  position: absolute;
+  inset: -10% -2% -10% -2%;
+  background: url('../Pattern.svg') center / cover no-repeat;
+  pointer-events: none;
+  transform: translate3d(0, var(--v5-pp-py, 0px), 0);
+  will-change: transform;
+  transition: transform 120ms linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v5__page-pattern::before { transform: none; transition: none; }
 }
 
 /* Outer 2-col split: big statement on the left, info column on the right */
@@ -2309,6 +2400,15 @@ body.v5--menu-open .v5__dock { opacity: 0 !important; pointer-events: none !impo
   .v5__nav-inner { gap: 16px; padding-inline: 20px; height: 72px; }
   .v5 .v5__brand-mark { height: 28px; }
 
+  /* Tighten radius scale — 32px/24px on small phone images reads as pill,
+     not photo. Scale down ~40% so corners feel intentional, not soft. */
+  .v5 {
+    --v5-r-img: 18px;
+    --v5-r-hero: 16px;
+    --v5-r-card: 14px;
+    --v5-r-thumb: 12px;
+  }
+
   /* Hero typography — readable, doesn't blow out at 390px */
   .v5__display-xl,
   .v5__hero-title { font-size: clamp(34px, 9vw, 44px); line-height: 1.05; }
@@ -2337,8 +2437,7 @@ body.v5--menu-open .v5__dock { opacity: 0 !important; pointer-events: none !impo
 
   /* Pull the hero pills inside the image edges so they don't clip
      against the viewport on tighter widths */
-  .v5__hero-media .v5__tag { font-size: 13px; padding: 10px 14px; gap: 8px; }
-  .v5__hero-media .v5__tag svg { width: 14px; height: 14px; }
+  .v5__hero-media .v5__tag { font-size: 13px; padding: 10px 14px; }
   .v5__hero-media .v5__tag--a { top: 16px; left: 12px; }
   .v5__hero-media .v5__tag--b { top: 44%; right: 12px; }
   .v5__hero-media .v5__tag--d { bottom: 16px; right: 12px; left: auto; }

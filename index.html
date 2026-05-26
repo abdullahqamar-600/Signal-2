@@ -55,9 +55,11 @@
       }
       .grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 32px;
         text-align: left;
+        max-width: 720px;
+        margin: 0 auto;
       }
       .card {
         display: flex;
@@ -128,12 +130,9 @@
       .card.disabled .label,
       .card.disabled .desc { color: var(--muted); }
 
-      @media (max-width: 880px) {
-        .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-      }
       @media (max-width: 560px) {
         body { padding: 48px 24px; }
-        .grid { grid-template-columns: 1fr; }
+        .grid { grid-template-columns: 1fr; gap: 24px; }
         .meta { margin-bottom: 40px; }
       }
     </style>
@@ -145,48 +144,15 @@
       <p class="meta">October 6–8, 2026 · Design variations</p>
 
       <div class="grid">
-        <a class="card" href="variation-1.html">
-          <span class="thumb">
-            <iframe src="variation-1.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
-          </span>
-          <div class="meta-row">
-            <span class="label">Constellation</span>
-            <span class="id">V1</span>
-          </div>
-          <p class="desc">Type-led editorial hero with a scattered image constellation around the thesis.</p>
-        </a>
-
         <a class="card" href="variation-2.html">
           <span class="thumb">
             <iframe src="variation-2.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
           </span>
           <div class="meta-row">
-            <span class="label">Magazine</span>
+            <span class="label">Loud</span>
             <span class="id">V2</span>
           </div>
           <p class="desc">Quiet utility nav, full-bleed hero, a single accent band as punctuation.</p>
-        </a>
-
-        <a class="card" href="variation-3.html">
-          <span class="thumb">
-            <iframe src="variation-3.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
-          </span>
-          <div class="meta-row">
-            <span class="label">Editorial Stack</span>
-            <span class="id">V3</span>
-          </div>
-          <p class="desc">Quiet mono chrome, photography centred — a stacked pile of images carries the hero.</p>
-        </a>
-
-        <a class="card" href="variation-4.html">
-          <span class="thumb">
-            <iframe src="variation-4.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
-          </span>
-          <div class="meta-row">
-            <span class="label">The Annual</span>
-            <span class="id">V4</span>
-          </div>
-          <p class="desc">Literary-magazine translation — tiny labels, marquee moments, vast whitespace, and a credit-block hero.</p>
         </a>
 
         <a class="card" href="variation-5.html">
@@ -194,7 +160,7 @@
             <iframe src="variation-5.html" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
           </span>
           <div class="meta-row">
-            <span class="label">The Operator</span>
+            <span class="label">Clean</span>
             <span class="id">V5</span>
           </div>
           <p class="desc">Production system. Bold display type, full sub-pages, working accordion + numbered story.</p>
