@@ -212,7 +212,24 @@
     </aside>
     <script>
       requestAnimationFrame(() => {
-        document.querySelector('.v5__dock')?.classList.add('is-ready');
+        const dock = document.querySelector('.v5__dock');
+        if (!dock) return;
+        dock.classList.add('is-ready');
+
+        const cta = dock.querySelector('.v5__dock-cta');
+        if (!cta) return;
+        const hero = document.querySelector('.v5__hero');
+        if (!hero || !('IntersectionObserver' in window)) {
+          // Sub-page (no main hero) or no IO support: surface the CTA right away.
+          cta.classList.add('is-visible');
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            cta.classList.toggle('is-visible', !entry.isIntersecting);
+          });
+        }, { threshold: 0 });
+        io.observe(hero);
       });
     </script>
     <script src="js/v5-motion.js"></script>
