@@ -7,7 +7,7 @@
     <meta name="description" content="Getting to Omaha for Leadership Summit 2026." />
     <link rel="stylesheet" href="css/shared.css" />
     <link rel="stylesheet" href="css/switcher.css" />
-    <link rel="stylesheet" href="css/variation-5.css" />
+    <link rel="stylesheet" href="css/variation-5.css?v=6-travel-bento" />
   </head>
   <body class="v5">
     <header class="v5__nav">
@@ -22,8 +22,33 @@
           </ul>
         </nav>
         <a class="v5__btn v5__btn--primary v5__nav-cta" href="v5-register.html">Register</a>
+        <button class="v5__nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="v5MobileMenu">
+          <span class="v5__nav-toggle-bar"></span>
+          <span class="v5__nav-toggle-bar"></span>
+        </button>
       </div>
     </header>
+    <div class="v5__mobile-menu" id="v5MobileMenu" hidden aria-hidden="true">
+      <div class="v5__mobile-menu-inner">
+        <nav class="v5__mobile-nav" aria-label="Primary">
+          <a class="v5__mobile-link" href="variation-5.html">Home</a>
+          <a class="v5__mobile-link" href="v5-agenda.html">Agenda</a>
+          <a class="v5__mobile-link" href="v5-travel.html" aria-current="page">Travel</a>
+          <a class="v5__mobile-link" href="v5-faqs.html">FAQs</a>
+        </nav>
+        <a class="v5__btn v5__btn--primary v5__mobile-cta" href="v5-register.html">
+          Register
+          <svg class="v5__btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" />
+          </svg>
+        </a>
+        <div class="v5__mobile-meta">
+          <span class="v5__mobile-meta-label">Oct 6–8, 2026</span>
+          <span class="v5__mobile-meta-sep">·</span>
+          <span class="v5__mobile-meta-label">Omaha, NE</span>
+        </div>
+      </div>
+    </div>
 
     <main>
       <section class="v5__page-hero">
@@ -55,7 +80,7 @@
                 <img src="assets/photos/SignalOwnerSummit2024-7063.jpg" alt="Embassy Suites La Vista" />
               </div>
               <h2 class="v5__sub-h">Embassy Suites by Hilton Omaha La Vista.</h2>
-              <p class="v5__lede" style="font-size: 16px;">
+              <p>
                 About 10 minutes from the Signal Home Office. Where most of the
                 network stays. The lobby is where the side conversations happen.
               </p>
@@ -69,7 +94,7 @@
 
             <article class="v5__travel-card v5__travel-card--airport">
               <h2 class="v5__sub-h">Eppley Airfield (OMA).</h2>
-              <p class="v5__lede" style="font-size: 16px;">
+              <p>
                 Roughly 20 to 25 minutes from the Signal Home Office. Most major
                 U.S. cities have a direct flight in.
               </p>
@@ -82,7 +107,7 @@
 
             <article class="v5__travel-card v5__travel-card--around">
               <h2 class="v5__sub-h">Carpool, rideshare, or rental.</h2>
-              <p class="v5__lede" style="font-size: 16px;">
+              <p>
                 The Home Office and Embassy Suites are close enough that owners
                 typically share rides between sessions. Carpool details and rideshare
                 guidance go out with the registration confirmation.
@@ -91,7 +116,7 @@
 
             <article class="v5__travel-card v5__travel-card--early">
               <h2 class="v5__sub-h">October in Omaha is genuinely pleasant.</h2>
-              <p style="color: rgba(244,245,251,0.75); font-size: 16px; line-height: 1.55;">
+              <p>
                 If you&rsquo;re extending the trip, the home office team is happy to
                 point you at what is worth doing: the Old Market, the Henry Doorly
                 Zoo, the river path, a steak.
@@ -228,7 +253,7 @@
         io.observe(hero);
       });
     </script>
-    <script src="js/v5-motion.js"></script>
+    <script src="js/v5-motion.js?v=2"></script>
     <script src="js/switcher.js"></script>
   </body>
 </html>

@@ -877,7 +877,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: clamp(180px, 18vw, 280px);
+  width: clamp(220px, 21vw, 340px);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -890,14 +890,14 @@
 /* Defaults so the section renders sensibly with JS disabled or
    before the first scroll handler fires. Mirrors the at-rest
    positions JS computes for progress = 0. */
-.v2-speaker-card[data-i="0"] { --x: 8;   --y: 36; }
-.v2-speaker-card[data-i="1"] { --x: 28;  --y: 36; }
-.v2-speaker-card[data-i="2"] { --x: 48;  --y: 16; }
-.v2-speaker-card[data-i="3"] { --x: 68;  --y: 16; }
-.v2-speaker-card[data-i="4"] { --x: 108; --y: 16; }
-.v2-speaker-card[data-i="5"] { --x: 130; --y: 16; }
-.v2-speaker-card[data-i="6"] { --x: 150; --y: 16; }
-.v2-speaker-card[data-i="7"] { --x: 170; --y: 16; }
+.v2-speaker-card[data-i="0"] { --x: 6;   --y: 34; }
+.v2-speaker-card[data-i="1"] { --x: 28;  --y: 34; }
+.v2-speaker-card[data-i="2"] { --x: 50;  --y: 18; }
+.v2-speaker-card[data-i="3"] { --x: 72;  --y: 18; }
+.v2-speaker-card[data-i="4"] { --x: 100; --y: 18; }
+.v2-speaker-card[data-i="5"] { --x: 122; --y: 18; }
+.v2-speaker-card[data-i="6"] { --x: 144; --y: 18; }
+.v2-speaker-card[data-i="7"] { --x: 166; --y: 18; }
 
 .v2-speaker-card__image {
   margin: 0;

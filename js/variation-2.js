@@ -41,26 +41,26 @@
   // off-screen positions (u<=0 and u>=5) push fully clear of the
   // viewport so cards disappear cleanly behind the overflow:hidden.
   const X_WAYPOINTS = {
-    '-3': 190,
-    '-2': 170,
-    '-1': 150,
-    '0':  108,  // off-screen right, fully hidden
-    '1':  68,   // slot 4 (top-right)
-    '2':  48,   // slot 3
+    '-3': 188,
+    '-2': 166,
+    '-1': 144,
+    '0':  100,  // off-screen right, fully hidden (cards are now 21vw)
+    '1':  72,   // slot 4 (top-right)
+    '2':  50,   // slot 3
     '3':  28,   // slot 2
-    '4':  8,    // slot 1 (bottom-left)
-    '5':  -20,  // off-screen left, fully hidden
-    '6':  -42,
-    '7':  -62,
-    '8':  -82
+    '4':  6,    // slot 1 (bottom-left)
+    '5':  -22,  // off-screen left, fully hidden
+    '6':  -44,
+    '7':  -66,
+    '8':  -88
   };
   // S-curve vertical extent. Top row at TOP_Y, bottom row at BOT_Y,
   // both measured in vh (window units) from the viewport's TOP-left
   // corner. Because the viewport is now an 80vh centered band, both
   // values are pulled up so the heading + two rows fit inside it.
   // BOT_Y - TOP_Y (= 25vh) is the S height — unchanged.
-  const TOP_Y = 16;    // vh — top edge of the top row
-  const BOT_Y = 36;    // vh — top edge of the bottom row
+  const TOP_Y = 18;    // vh — top edge of the top row
+  const BOT_Y = 34;    // vh — top edge of the bottom row
   // The descent happens entirely between slot 2 (u=2) and slot 3
   // (u=3) so that all four slots stay on their flat rows.
   const CURVE_START = 2.05;
@@ -81,8 +81,8 @@
     const x1 = X_WAYPOINTS[u0 + 1];
     if (x0 === undefined || x1 === undefined) {
       // Fall back to linear extrapolation off the ends (matches the
-      // 20vw step between waypoints).
-      return 108 - 20 * u;
+      // 22vw step between in-slot waypoints).
+      return 100 - 22 * u;
     }
     return x0 + (x1 - x0) * t;
   }

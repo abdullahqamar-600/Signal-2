@@ -30,7 +30,7 @@
   --v5-accent: #FF9332;            /* Signal Orange — primary CTA on light surfaces */
   --v5-accent-deep: #E67711;       /* darker orange for hover */
   --v5-accent-soft: #f2f3f8;
-  --v5-surface-dark: #0a1a4c;
+  --v5-surface-dark: #0032A0;       /* Signal Brand Blue — primary dark surface */
   --v5-surface-soft: #f2f3f8;
   --v5-surface-softer: #f8f9fc;
   --v5-rule: #e1e4ee;
@@ -396,13 +396,12 @@
   position: absolute;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   background: #ffffff;
   color: var(--v5-ink);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.005em;
-  padding: 10px 18px 10px 14px;
+  padding: 10px 18px;
   border-radius: var(--v5-r-pill);
   line-height: 1;
   white-space: nowrap;
@@ -411,17 +410,8 @@
     0 0 0 1px rgba(10, 26, 76, 0.04);
 }
 
-.v5__tag svg {
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-  color: var(--v5-accent);
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 1.75;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
+/* Icons removed from pills — text-only label style */
+.v5__tag svg { display: none; }
 
 /* -----------------------------------------------------------
    Buttons
@@ -1240,7 +1230,9 @@
   display: block;
 }
 
-/* Navy bleed sweeping in from the left — keeps copy legible behind the orange */
+/* Brand-blue bleed sweeping in from the left — keeps copy legible
+   while letting more of the photo show through on the right.
+   Uses Signal Brand Blue (#0032A0 → rgb 0, 50, 160). */
 .v5__room::before {
   content: '';
   position: absolute;
@@ -1248,13 +1240,14 @@
   z-index: 1;
   pointer-events: none;
   background: linear-gradient(95deg,
-    var(--v5-surface-dark) 0%,
-    rgba(10, 26, 76, 0.92) 30%,
-    rgba(10, 26, 76, 0.55) 55%,
-    rgba(10, 26, 76, 0.00) 82%);
+    rgba(10, 26, 76, 0.90) 0%,
+    rgba(0, 50, 160, 0.55) 28%,
+    rgba(0, 50, 160, 0.18) 50%,
+    rgba(0, 50, 160, 0.00) 65%);
 }
 
-/* Orange color bleed — a confident Signal-orange wash pouring in from the left */
+/* Orange color bleed — a Signal-orange wash pouring in from the left.
+   Kept subtle so the photo can breathe. */
 .v5__room::after {
   content: '';
   position: absolute;
@@ -1263,12 +1256,12 @@
   pointer-events: none;
   background:
     linear-gradient(95deg,
-      var(--v5-accent) 0%,
-      rgba(255, 147, 50, 0.78) 14%,
-      rgba(255, 147, 50, 0.35) 34%,
-      rgba(255, 147, 50, 0.00) 54%),
-    radial-gradient(80% 110% at -6% 60%,
       rgba(255, 147, 50, 0.55) 0%,
+      rgba(255, 147, 50, 0.30) 14%,
+      rgba(255, 147, 50, 0.10) 30%,
+      rgba(255, 147, 50, 0.00) 45%),
+    radial-gradient(80% 110% at -6% 60%,
+      rgba(255, 147, 50, 0.25) 0%,
       rgba(255, 147, 50, 0.00) 55%);
   mix-blend-mode: multiply;
 }
@@ -1715,54 +1708,73 @@
 /* -----------------------------------------------------------
    Travel grid
    ----------------------------------------------------------- */
+/* Bento — mirror rhythm: row 1 is 7/5, row 2 is 5/7. Same widths,
+   sides swapped — creates intentional asymmetry that pairs across
+   the rows instead of two unrelated grids stacked. Pairs visual
+   weight with size: the two big cards (7-col) are the soft surfaces;
+   the two narrow cards (5-col) are the brand-blue surfaces. */
 .v5__travel-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 24px;
+  gap: clamp(16px, 1.6vw, 32px);
 }
 
 .v5__travel-card {
+  --card-pad: clamp(24px, 3vw, 40px);
   border-radius: var(--v5-r-card);
   overflow: hidden;
-  background: var(--v5-bg);
-  border: 1px solid var(--v5-rule);
-  padding: clamp(24px, 3vw, 40px);
+  background: var(--v5-surface-softer);
+  padding: var(--card-pad);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: clamp(14px, 1.2vw, 20px);
 }
 
 .v5__travel-card--hotel {
   grid-column: span 7;
-  background: var(--v5-surface-softer);
-  border: 0;
 }
 
 .v5__travel-card--airport {
   grid-column: span 5;
+  background: var(--v5-surface-dark);
+  color: var(--v5-on-dark);
 }
 
 .v5__travel-card--around {
-  grid-column: span 6;
+  grid-column: span 5;
 }
 
 .v5__travel-card--early {
-  grid-column: span 6;
-  background: var(--v5-ink);
+  grid-column: span 7;
+  background: var(--v5-surface-dark);
   color: var(--v5-on-dark);
-  border: 0;
 }
 
-.v5__travel-card--early .v5__sub-h,
-.v5__travel-card--early p {
+.v5__travel-card--airport .v5__sub-h,
+.v5__travel-card--early .v5__sub-h {
   color: var(--v5-on-dark);
+}
+
+.v5__travel-card--airport p,
+.v5__travel-card--early p {
+  color: rgba(244, 245, 251, 0.82);
 }
 
 .v5__travel-card-img {
-  margin: -24px -24px 0;
+  /* Pulls the photo flush to the card's rounded edges at any viewport
+     by reusing the same clamp the card's padding uses. */
+  margin: calc(var(--card-pad) * -1) calc(var(--card-pad) * -1) 0;
   aspect-ratio: 5 / 3;
   background: var(--v5-surface-soft);
   overflow: hidden;
+}
+
+/* Card body copy. Slightly tighter than the page-level lede so the
+   four cards read as compact bento panels, not paragraph blocks. */
+.v5__travel-card p {
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0;
 }
 
 .v5__travel-card-img img {
@@ -1788,11 +1800,21 @@
   color: var(--v5-ink-muted);
 }
 
+.v5__travel-card--airport .v5__travel-list li,
+.v5__travel-card--early .v5__travel-list li {
+  color: rgba(244, 245, 251, 0.78);
+}
+
 .v5__travel-list svg {
   width: 16px;
   height: 16px;
   color: var(--v5-ink-soft);
   flex-shrink: 0;
+}
+
+.v5__travel-card--airport .v5__travel-list svg,
+.v5__travel-card--early .v5__travel-list svg {
+  color: rgba(244, 245, 251, 0.55);
 }
 
 /* -----------------------------------------------------------
@@ -2171,4 +2193,161 @@
   .v5__dock-item:nth-of-type(2),
   .v5__dock-rule:nth-of-type(1) { display: none; }
   .v5__dock { gap: 10px; padding: 8px 8px 8px 16px; }
+}
+
+/* ============================================================
+   MOBILE NAV — hamburger + full-screen sheet
+   Hidden on desktop. iPhone-first sizing.
+   ============================================================ */
+.v5__nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--v5-ink-strong);
+  border-radius: 10px;
+  -webkit-tap-highlight-color: transparent;
+}
+.v5__nav-toggle:focus-visible {
+  outline: 2px solid var(--v5-ink-strong);
+  outline-offset: 3px;
+}
+.v5__nav-toggle-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform var(--v5-fast) var(--v5-ease),
+              opacity var(--v5-fast) var(--v5-ease);
+}
+.v5__nav-toggle[aria-expanded='true'] .v5__nav-toggle-bar:nth-child(1) {
+  transform: translateY(4px) rotate(45deg);
+}
+.v5__nav-toggle[aria-expanded='true'] .v5__nav-toggle-bar:nth-child(2) {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+.v5__mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: var(--v5-surface-dark);
+  color: var(--v5-on-dark);
+  display: none;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.v5__mobile-menu[hidden] { display: none; }
+.v5__mobile-menu.is-open { display: block; }
+.v5__mobile-menu-inner {
+  min-height: 100%;
+  padding: 104px 24px calc(40px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.v5__mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+.v5__mobile-link {
+  display: block;
+  padding: 18px 4px;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--v5-on-dark);
+  border-bottom: 1px solid rgba(244, 245, 251, 0.12);
+  transition: opacity var(--v5-fast) var(--v5-ease);
+}
+.v5__mobile-link:hover { opacity: 0.8; }
+.v5__mobile-link[aria-current='page'] {
+  color: var(--v5-accent);
+}
+.v5__mobile-cta {
+  align-self: flex-start;
+  margin-top: 8px;
+  font-size: 16px;
+  padding: 16px 26px;
+}
+.v5__mobile-meta {
+  margin-top: auto;
+  padding-top: 24px;
+  font-size: 13px;
+  color: rgba(244, 245, 251, 0.55);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.v5__mobile-meta-sep { opacity: 0.5; }
+
+/* When the menu is open we lock body scroll and hide the floating dock */
+body.v5--menu-open { overflow: hidden; }
+body.v5--menu-open .v5__dock { opacity: 0 !important; pointer-events: none !important; }
+
+/* ============================================================
+   MOBILE LAYOUT — iPhone-first refinements (≤480px)
+   Hamburger replaces nav; sections breathe; dock has clearance.
+   ============================================================ */
+@media (max-width: 480px) {
+  /* Show hamburger, hide inline nav links + Register CTA */
+  .v5__nav-inner > nav,
+  .v5__nav-cta { display: none; }
+  .v5__nav-toggle { display: inline-flex; }
+  .v5__nav-inner { gap: 16px; padding-inline: 20px; height: 72px; }
+  .v5 .v5__brand-mark { height: 28px; }
+
+  /* Hero typography — readable, doesn't blow out at 390px */
+  .v5__display-xl,
+  .v5__hero-title { font-size: clamp(34px, 9vw, 44px); line-height: 1.05; }
+  .v5__page-hero-title { font-size: clamp(40px, 11vw, 56px); line-height: 1.02; }
+  .v5__feature-title,
+  .v5__section-title { font-size: clamp(28px, 7.5vw, 36px); line-height: 1.08; }
+
+  /* Body lede sits a bit lighter on phones */
+  .v5__lede { font-size: 16px; line-height: 1.55; }
+
+  /* Clearance so the floating dock never covers content */
+  main { padding-bottom: 96px; }
+
+  /* Section vertical rhythm — more breath between blocks */
+  .v5__section { padding-block: clamp(48px, 12vw, 72px); }
+
+  /* Hero image: pin to a 4:5 portrait so it doesn't shrink to the photo's
+     natural height and leave the floating pills hanging in white space */
+  .v5__hero-media {
+    aspect-ratio: 4 / 5;
+    min-height: 0;
+    max-height: none;
+    height: auto;
+  }
+  .v5__hero-media img { height: 100%; max-height: none; }
+
+  /* Pull the hero pills inside the image edges so they don't clip
+     against the viewport on tighter widths */
+  .v5__hero-media .v5__tag { font-size: 13px; padding: 10px 14px; gap: 8px; }
+  .v5__hero-media .v5__tag svg { width: 14px; height: 14px; }
+  .v5__hero-media .v5__tag--a { top: 16px; left: 12px; }
+  .v5__hero-media .v5__tag--b { top: 44%; right: 12px; }
+  .v5__hero-media .v5__tag--d { bottom: 16px; right: 12px; left: auto; }
+
+  /* Register form: prevent input min-width from pushing the submit off */
+  #register-form form { grid-template-columns: 1fr !important; }
+  #register-form form input { min-width: 0; width: 100%; }
+  #register-form form button { width: 100%; justify-content: center; }
+
+  /* Floating dock — keep tight but ensure not stealing tap targets */
+  .v5__dock { bottom: max(12px, env(safe-area-inset-bottom)); }
 }

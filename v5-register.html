@@ -7,7 +7,7 @@
     <meta name="description" content="Reserve your seat at Leadership Summit 2026." />
     <link rel="stylesheet" href="css/shared.css" />
     <link rel="stylesheet" href="css/switcher.css" />
-    <link rel="stylesheet" href="css/variation-5.css" />
+    <link rel="stylesheet" href="css/variation-5.css?v=2" />
   </head>
   <body class="v5">
     <header class="v5__nav">
@@ -22,8 +22,33 @@
           </ul>
         </nav>
         <a class="v5__btn v5__btn--primary v5__nav-cta" href="v5-register.html" aria-current="page">Register</a>
+        <button class="v5__nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="v5MobileMenu">
+          <span class="v5__nav-toggle-bar"></span>
+          <span class="v5__nav-toggle-bar"></span>
+        </button>
       </div>
     </header>
+    <div class="v5__mobile-menu" id="v5MobileMenu" hidden aria-hidden="true">
+      <div class="v5__mobile-menu-inner">
+        <nav class="v5__mobile-nav" aria-label="Primary">
+          <a class="v5__mobile-link" href="variation-5.html">Home</a>
+          <a class="v5__mobile-link" href="v5-agenda.html">Agenda</a>
+          <a class="v5__mobile-link" href="v5-travel.html">Travel</a>
+          <a class="v5__mobile-link" href="v5-faqs.html">FAQs</a>
+        </nav>
+        <a class="v5__btn v5__btn--primary v5__mobile-cta" href="v5-register.html" aria-current="page">
+          Register
+          <svg class="v5__btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" />
+          </svg>
+        </a>
+        <div class="v5__mobile-meta">
+          <span class="v5__mobile-meta-label">Oct 6–8, 2026</span>
+          <span class="v5__mobile-meta-sep">·</span>
+          <span class="v5__mobile-meta-label">Omaha, NE</span>
+        </div>
+      </div>
+    </div>
 
     <main>
       <section class="v5__page-hero">
@@ -232,7 +257,7 @@
         io.observe(hero);
       });
     </script>
-    <script src="js/v5-motion.js"></script>
+    <script src="js/v5-motion.js?v=2"></script>
     <script src="js/switcher.js"></script>
   </body>
 </html>

@@ -10,7 +10,7 @@
     />
     <link rel="stylesheet" href="css/shared.css" />
     <link rel="stylesheet" href="css/switcher.css" />
-    <link rel="stylesheet" href="css/variation-5.css" />
+    <link rel="stylesheet" href="css/variation-5.css?v=8-room-wash" />
   </head>
   <body class="v5">
     <!-- ============ NAV ============ -->
@@ -33,8 +33,33 @@
             <path d="M3 8h10M9 4l4 4-4 4" />
           </svg>
         </a>
+        <button class="v5__nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="v5MobileMenu">
+          <span class="v5__nav-toggle-bar"></span>
+          <span class="v5__nav-toggle-bar"></span>
+        </button>
       </div>
     </header>
+    <div class="v5__mobile-menu" id="v5MobileMenu" hidden aria-hidden="true">
+      <div class="v5__mobile-menu-inner">
+        <nav class="v5__mobile-nav" aria-label="Primary">
+          <a class="v5__mobile-link" href="variation-5.html" aria-current="page">Home</a>
+          <a class="v5__mobile-link" href="v5-agenda.html">Agenda</a>
+          <a class="v5__mobile-link" href="v5-travel.html">Travel</a>
+          <a class="v5__mobile-link" href="v5-faqs.html">FAQs</a>
+        </nav>
+        <a class="v5__btn v5__btn--primary v5__mobile-cta" href="v5-register.html">
+          Register
+          <svg class="v5__btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" />
+          </svg>
+        </a>
+        <div class="v5__mobile-meta">
+          <span class="v5__mobile-meta-label">Oct 6–8, 2026</span>
+          <span class="v5__mobile-meta-sep">·</span>
+          <span class="v5__mobile-meta-label">Omaha, NE</span>
+        </div>
+      </div>
+    </div>
 
     <main>
       <!-- ============ HERO ============ -->
@@ -43,7 +68,7 @@
           <div class="v5__hero-grid">
             <div class="v5__hero-copy">
               <h1 class="v5__display-xl v5__hero-title" data-reveal data-reveal-delay="1">
-                The whole network,<br />in <em>one room.</em>
+                The Leadership Summit.<br />Where the whole network meets.
               </h1>
               <p class="v5__lede v5__hero-lede" data-reveal data-reveal-delay="2">
                 October 6 to 8 at the Signal Home Office in Omaha. Three days of
@@ -249,9 +274,8 @@
               <span class="v5__eyebrow v5__eyebrow--on-dark">The room</span>
               <h2 class="v5__section-h v5__room-title">The full Signal network.</h2>
               <p class="v5__lede v5__room-lede">
-                Franchise owners and the executive directors, directors, and key team
-                members who run the business with them. Small enough for real
-                conversation, big enough that the conversations matter.
+                Owners and the leadership teams who run the business with them.
+                Small enough for real conversation, big enough to matter.
               </p>
             </div>
           </div>
@@ -540,7 +564,7 @@
         io.observe(hero);
       });
     </script>
-    <script src="js/v5-motion.js"></script>
+    <script src="js/v5-motion.js?v=4"></script>
     <script src="js/switcher.js"></script>
   </body>
 </html>

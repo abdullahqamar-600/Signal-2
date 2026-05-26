@@ -17,9 +17,13 @@ node_modules/
 dist/
 .cache/
 
-# Large source media — exceeds GitHub's 100 MB hard limit.
-# The .mov is the hero video; host externally or convert to a web-optimized
-# H.264 MP4 (under ~25 MB) before committing.
+# Large source media — exceeds GitHub's 100 MB hard limit. The .mov is
+# the original hero capture; we commit the web-optimized MP4 derivative
+# (assets/section-video.mp4, ~7 MB at 1920p / 30fps / CRF 25) and keep
+# the source out of the repo. To regenerate the MP4 from the .mov:
+#   ffmpeg -i assets/section-video.mov -vf scale=1920:-2,fps=30 \
+#     -c:v libx264 -preset slow -crf 25 -profile:v high -pix_fmt yuv420p \
+#     -movflags +faststart -an assets/section-video.mp4
 assets/section-video.mov
 *.mov
 
