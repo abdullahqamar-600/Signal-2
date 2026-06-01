@@ -565,11 +565,9 @@ html.v2--no-intro .v2-intro {
 .v2-figure img {
   display: block;
   width: 100%;
-  height: auto;
-  /* Crop the natural 3:2 frame to 15:8 (≈1.875:1) so the rendered
-     height is ~80% of what the intrinsic ratio would produce. */
-  aspect-ratio: 15 / 8;
+  height: 65vh;                                /* fixed viewport-relative height */
   object-fit: cover;
+  object-position: center;                     /* crops top/bottom; keeps full horizontal extent */
 }
 
 .v2-figure__cap {

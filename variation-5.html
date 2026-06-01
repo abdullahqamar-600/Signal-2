@@ -9,15 +9,14 @@
       content="Three days in Omaha for the people running and growing Signal franchises. October 6 to 8, 2026."
     />
     <link rel="stylesheet" href="css/shared.css" />
-    <link rel="stylesheet" href="css/switcher.css" />
-    <link rel="stylesheet" href="css/variation-5.css?v=25-no-hover" />
+    <link rel="stylesheet" href="css/variation-5.css?v=52-travel-uniform" />
   </head>
   <body class="v5">
     <!-- ============ NAV ============ -->
     <header class="v5__nav">
       <div class="v5__nav-inner">
         <a class="v5__brand" href="variation-5.html" aria-label="Leadership Summit 2026">
-          <img class="v5__brand-mark" src="assets/Logo Coloured.png" alt="Leadership Summit" />
+          <img class="v5__brand-mark" src="assets/Logo Blue.svg" alt="Leadership Summit" />
         </a>
         <nav>
           <ul class="v5__nav-links">
@@ -63,31 +62,22 @@
 
     <main>
       <!-- ============ HERO ============ -->
-      <section class="v5__hero">
+      <section class="v5__hero v5__hero--centered">
         <div class="v5__wrap">
-          <div class="v5__hero-grid">
-            <div class="v5__hero-copy">
-              <h1 class="v5__display-xl v5__hero-title" data-reveal data-reveal-delay="1">
-                The Leadership Summit.<br />Where the whole network meets.
-              </h1>
-              <p class="v5__lede v5__hero-lede" data-reveal data-reveal-delay="2">
-                October 6 to 8 at the Signal Home Office in Omaha. Three days of
-                business updates, owner-led sessions, and the conversations you
-                only get when the whole network is in the building.
-              </p>
-              <div class="v5__hero-ctas" data-reveal data-reveal-delay="3">
-                <a class="v5__btn v5__btn--primary" href="v5-register.html">
-                  Register
-                  <svg class="v5__btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
-                </a>
-                <a class="v5__btn v5__btn--secondary" href="v5-agenda.html">See the agenda</a>
-              </div>
-            </div>
-            <div class="v5__hero-media" data-reveal="fade">
-              <img src="assets/photos/SignalOwnerSummit2024-7062.jpg" alt="The conference room at a previous Signal summit, audience facing a speaker" />
-              <span class="v5__tag v5__tag--a"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 13.5c0-2.5 2.5-4 5-4s5 1.5 5 4"/></svg>Owners</span>
-              <span class="v5__tag v5__tag--b"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="6" cy="5.5" r="2"/><circle cx="11" cy="5.5" r="2"/><path d="M2 13c0-2 1.8-3.5 4-3.5s4 1.5 4 3.5"/><path d="M9 13c0-2 1.8-3.5 4-3.5"/></svg>Leadership</span>
-              <span class="v5__tag v5__tag--d"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 14s-5-4.5-5-8a5 5 0 0 1 10 0c0 3.5-5 8-5 8z"/><circle cx="8" cy="6" r="1.75"/></svg>Signal Home Office, Omaha</span>
+          <div class="v5__hero-stack">
+            <span class="v5__eyebrow v5__hero-eyebrow" data-reveal data-reveal-delay="1">Oct 6&ndash;8, 2026 &middot; Omaha</span>
+            <h1 class="v5__display-xl v5__hero-title" data-reveal data-reveal-delay="2">
+              Signal's<br />Leadership Summit.
+            </h1>
+            <div class="v5__hero-media v5__hero-media--video" data-reveal="fade" data-reveal-delay="3">
+              <video class="v5__hero-video"
+                preload="metadata"
+                playsinline
+                poster="assets/photos/SignalOwnerSummit2024-7062.jpg"
+                src="assets/section-video.mp4"></video>
+              <button class="v5__hero-play" type="button" aria-label="Play summit video">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+              </button>
             </div>
           </div>
         </div>
@@ -163,8 +153,86 @@
                     the business with you.
                   </p>
                 </div>
-                <div class="v5__composite-cta-swoosh" aria-hidden="true">
-                  <img src="Extendede Swoosh.svg" alt="" />
+                <div id="cta-ribbon" class="v5__composite-cta-swoosh" aria-hidden="true">
+                  <svg class="v5__signal-ribbon" viewBox="0 0 2743 270" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <!-- L1 atmospheric halo — slightly wider/softer bloom -->
+                      <linearGradient id="v5sr-glow" x1="0" y1="135" x2="2743" y2="135" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%"   stop-color="#FFA64A" stop-opacity="0.46"/>
+                        <stop offset="35%"  stop-color="#FFB868" stop-opacity="0.66"/>
+                        <stop offset="65%"  stop-color="#FFC685" stop-opacity="0.66"/>
+                        <stop offset="100%" stop-color="#FFD6A0" stop-opacity="0.44"/>
+                      </linearGradient>
+                      <!-- L2 mid wash — brighter tones, screen-blended -->
+                      <linearGradient id="v5sr-mid" x1="0" y1="0" x2="2743" y2="270" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%"   stop-color="#FFA64A" stop-opacity="0.24"/>
+                        <stop offset="55%"  stop-color="#FFB868" stop-opacity="0.34"/>
+                        <stop offset="100%" stop-color="#FFC685" stop-opacity="0.24"/>
+                      </linearGradient>
+                      <!-- L3 hero — brighter palette across the sweep -->
+                      <linearGradient id="v5sr-hero" x1="0" y1="0" x2="2743" y2="270" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%"   stop-color="#EE8024"/>
+                        <stop offset="18%"  stop-color="#FC9436"/>
+                        <stop offset="42%"  stop-color="#FFA64A"/>
+                        <stop offset="68%"  stop-color="#FFB868"/>
+                        <stop offset="88%"  stop-color="#FFC685"/>
+                        <stop offset="100%" stop-color="#FFD6A0"/>
+                      </linearGradient>
+                      <!-- L4 depth — softer warm shadows on both bands' bottoms. Lighter tone, lower opacity. -->
+                      <linearGradient id="v5sr-depth" x1="0" y1="0" x2="0" y2="270" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%"   stop-color="#B25500" stop-opacity="0.00"/>
+                        <stop offset="35%"  stop-color="#B25500" stop-opacity="0.00"/>
+                        <stop offset="47%"  stop-color="#A04A00" stop-opacity="0.12"/>
+                        <stop offset="52%"  stop-color="#A04A00" stop-opacity="0.04"/>
+                        <stop offset="62%"  stop-color="#B25500" stop-opacity="0.00"/>
+                        <stop offset="82%"  stop-color="#A04A00" stop-opacity="0.12"/>
+                        <stop offset="100%" stop-color="#8C3F00" stop-opacity="0.32"/>
+                      </linearGradient>
+                      <!-- L5 specular — softer highlights on both bands' tops. Dialed back to feel like ambient sheen, not hard glare. -->
+                      <linearGradient id="v5sr-specular" x1="0" y1="0" x2="0" y2="270" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%"  stop-color="#FFFFFF" stop-opacity="0.45"/>
+                        <stop offset="4%"  stop-color="#FFFFFF" stop-opacity="0.28"/>
+                        <stop offset="12%" stop-color="#FFFFFF" stop-opacity="0.10"/>
+                        <stop offset="22%" stop-color="#FFFFFF" stop-opacity="0.00"/>
+                        <stop offset="46%" stop-color="#FFFFFF" stop-opacity="0.00"/>
+                        <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.24"/>
+                        <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0.09"/>
+                        <stop offset="65%" stop-color="#FFFFFF" stop-opacity="0.00"/>
+                        <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.00"/>
+                      </linearGradient>
+                      <!-- L6 shimmer — warm cream-tinted sweep, reads as light not pixels -->
+                      <linearGradient id="v5sr-shimmer" x1="0" y1="135" x2="1070" y2="135" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0"/>
+                        <stop offset="28%"  stop-color="#FFF6E8" stop-opacity="0.14"/>
+                        <stop offset="50%"  stop-color="#FFFAF0" stop-opacity="0.45"/>
+                        <stop offset="72%"  stop-color="#FFF6E8" stop-opacity="0.14"/>
+                        <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+                      </linearGradient>
+                      <filter id="v5sr-blur" x="-18%" y="-110%" width="136%" height="320%">
+                        <feGaussianBlur stdDeviation="36"/>
+                      </filter>
+                      <filter id="v5sr-soft" x="-5%" y="-25%" width="110%" height="150%">
+                        <feGaussianBlur stdDeviation="7"/>
+                      </filter>
+                      <clipPath id="v5sr-clip">
+                        <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z"/>
+                      </clipPath>
+                    </defs>
+                    <!-- L1 atmospheric glow halo -->
+                    <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z" fill="url(#v5sr-glow)" filter="url(#v5sr-blur)"/>
+                    <!-- L2 mid-orange wash (screen) -->
+                    <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z" fill="url(#v5sr-mid)" filter="url(#v5sr-soft)" style="mix-blend-mode:screen"/>
+                    <!-- L3 hero gradient -->
+                    <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z" fill="url(#v5sr-hero)"/>
+                    <!-- L4 bottom warm shadow (multiply) -->
+                    <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z" fill="url(#v5sr-depth)" style="mix-blend-mode:multiply"/>
+                    <!-- L5 top specular highlight (screen) -->
+                    <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z" fill="url(#v5sr-specular)" style="mix-blend-mode:screen"/>
+                    <!-- L6 shimmer sweep (clipped to silhouette) -->
+                    <g clip-path="url(#v5sr-clip)" style="mix-blend-mode:screen">
+                      <rect class="v5__signal-ribbon__shimmer" x="0" y="0" width="1070" height="270" fill="url(#v5sr-shimmer)"/>
+                    </g>
+                  </svg>
                 </div>
                 <div class="v5__composite-cta-foot">
                   <a class="v5__btn v5__btn--primary" href="v5-register.html">
@@ -281,7 +349,7 @@
 
       <!-- ============ SPEAKERS ============ -->
       <section class="v5__speakers" aria-label="Speakers">
-        <div class="v5__wrap v5__speakers-head">
+        <div class="v5__wrap v5__speakers-head" data-reveal>
           <span class="v5__eyebrow">The team</span>
           <h2 class="v5__section-h">Speakers in the room.</h2>
           <p class="v5__lede">
@@ -291,42 +359,42 @@
         </div>
         <div class="v5__wrap">
           <div class="v5__speakers-grid">
-            <figure class="v5__speaker">
+            <figure class="v5__speaker" data-reveal data-reveal-delay="1">
               <div class="v5__speaker-img"><img src="assets/photos/SignalOwnerSummit2024-7071.jpg" alt="Reed Stocker" /></div>
               <figcaption>
                 <span class="v5__speaker-name">Reed Stocker</span>
                 <span class="v5__speaker-role">President &amp; CEO</span>
               </figcaption>
             </figure>
-            <figure class="v5__speaker">
+            <figure class="v5__speaker" data-reveal data-reveal-delay="2">
               <div class="v5__speaker-img"><img src="assets/photos/SignalOwnerSummit2024-1611.jpg" alt="Alex Park" /></div>
               <figcaption>
                 <span class="v5__speaker-name">Alex Park</span>
                 <span class="v5__speaker-role">VP, Operations</span>
               </figcaption>
             </figure>
-            <figure class="v5__speaker">
+            <figure class="v5__speaker" data-reveal data-reveal-delay="3">
               <div class="v5__speaker-img"><img src="assets/photos/SignalOwnerSummit2024-1281.jpg" alt="Casey Walsh" /></div>
               <figcaption>
                 <span class="v5__speaker-name">Casey Walsh</span>
                 <span class="v5__speaker-role">Head of Training</span>
               </figcaption>
             </figure>
-            <figure class="v5__speaker">
+            <figure class="v5__speaker" data-reveal data-reveal-delay="4">
               <div class="v5__speaker-img"><img src="assets/photos/SignalOwnerSummit2024-1668.jpg" alt="Morgan Chen" /></div>
               <figcaption>
                 <span class="v5__speaker-name">Morgan Chen</span>
                 <span class="v5__speaker-role">Director, Marketing</span>
               </figcaption>
             </figure>
-            <figure class="v5__speaker">
+            <figure class="v5__speaker" data-reveal data-reveal-delay="5">
               <div class="v5__speaker-img"><img src="assets/photos/SignalOwnerSummit2024-0834.jpg" alt="Jordan Hayes" /></div>
               <figcaption>
                 <span class="v5__speaker-name">Jordan Hayes</span>
                 <span class="v5__speaker-role">Director, Sales</span>
               </figcaption>
             </figure>
-            <figure class="v5__speaker">
+            <figure class="v5__speaker" data-reveal data-reveal-delay="6">
               <div class="v5__speaker-img"><img src="assets/photos/SignalOwnerSummit2024-1681.jpg" alt="Sam Rivera" /></div>
               <figcaption>
                 <span class="v5__speaker-name">Sam Rivera</span>
@@ -513,7 +581,7 @@
           </div>
         </div>
         <div class="v5__footer-bottom">
-          <img src="assets/Logo Coloured.png" alt="Leadership Summit" />
+          <img src="assets/Logo Blue.svg" alt="Leadership Summit" />
         </div>
       </div>
     </footer>
@@ -565,6 +633,19 @@
       });
     </script>
     <script src="js/v5-motion.js?v=9-no-hover"></script>
-    <script src="js/switcher.js"></script>
+    <script>
+      (function () {
+        var media = document.querySelector('.v5__hero-media--video');
+        if (!media) return;
+        var video = media.querySelector('.v5__hero-video');
+        var btn = media.querySelector('.v5__hero-play');
+        if (!btn || !video) return;
+        btn.addEventListener('click', function () {
+          media.classList.add('is-playing');
+          video.setAttribute('controls', '');
+          video.play();
+        });
+      })();
+    </script>
   </body>
 </html>

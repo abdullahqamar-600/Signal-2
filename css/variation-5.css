@@ -15,6 +15,11 @@
   box-sizing: border-box;
 }
 
+/* Reserve scrollbar space always — prevents the ~15px viewport shift
+   when navigating between short pages (no scrollbar) and tall pages
+   (scrollbar present). That shift was causing the nav-bar "jerk". */
+html.v5 { scrollbar-gutter: stable; }
+
 .v5 {
   /* Type — one family, restrained weights only */
   --v5-display: 'Archivo', system-ui, sans-serif;
@@ -23,8 +28,8 @@
 
   /* Palette — restrained navy/white surface, Signal Orange ≤10% punctuation */
   --v5-bg: #ffffff;
-  --v5-ink: #0a1a4c;
-  --v5-ink-strong: #051036;
+  --v5-ink: #0a1a4c;               /* deep navy text — high contrast on white */
+  --v5-ink-strong: #051036;        /* deeper navy for emphasis */
   --v5-ink-muted: #5a6388;
   --v5-ink-soft: #8b91ac;
   --v5-accent: #FF9332;            /* Signal Orange — primary CTA on light surfaces */
@@ -150,6 +155,49 @@
 .v5--motion-ready [data-reveal='fade'] {
   transform: none;
   transition: opacity var(--v5-slow) var(--v5-ease);
+}
+
+/* Card-stack reveal — slightly larger Y lift and softer scale for cards that
+   should feel like they "settle" into place rather than just fade up. Used
+   on travel cards and FAQ items (schedule days use sticky-stack instead). */
+.v5--motion-ready .v5__travel-card[data-reveal],
+.v5--motion-ready .v5__faq-item[data-reveal] {
+  transform: translateY(22px) scale(0.992);
+}
+.v5--motion-ready .v5__travel-card[data-reveal].is-in,
+.v5--motion-ready .v5__faq-item[data-reveal].is-in {
+  transform: none;
+}
+
+/* Schedule days override: no reveal transform, they use sticky-stack scroll. */
+.v5--motion-ready .v5__sched-day[data-reveal] { opacity: 1; transform: none; }
+
+/* -----------------------------------------------------------
+   Page-hero bridge image (agenda + faqs)
+   A single landscape photo that sits between the page-hero and the
+   main content. Generous radius, soft shadow, no overlay.
+   ----------------------------------------------------------- */
+.v5__section--bridge {
+  padding-block: clamp(24px, 3vw, 48px) !important;
+}
+
+.v5__page-bridge {
+  margin: 0;
+  border-radius: var(--v5-r-hero);
+  overflow: hidden;
+  aspect-ratio: 21 / 8;
+  box-shadow: 0 18px 48px -24px rgba(10, 26, 76, 0.18);
+}
+
+.v5__page-bridge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .v5__page-bridge { aspect-ratio: 16 / 10; border-radius: var(--v5-r-card); }
 }
 
 /* -----------------------------------------------------------
@@ -499,6 +547,10 @@
   gap: 32px;
 }
 
+/* Push the <nav> all the way to the right so the links sit next to the
+   Register button. Brand stays left. */
+.v5__nav-inner > nav { margin-left: auto; }
+
 .v5__brand {
   display: inline-flex;
   align-items: center;
@@ -515,65 +567,50 @@
 
 .v5 .v5__brand-mark {
   display: block;
-  height: 32px;                                    /* slightly tighter to match new nav height */
-  width: auto;
+  height: 32px;
+  width: 146px;                                    /* explicit width prevents reflow before SVG paints */
   max-width: none;
 }
 
 .v5__nav-links {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 4px;                                        /* tighter — the pill spacing carries the rhythm */
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .v5__nav-link {
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 500;
-  color: var(--v5-ink-muted);                      /* muted by default; current/hover lift it */
+  color: var(--v5-ink-muted);
   position: relative;
-  padding: 6px 0;                                  /* gives the underline room to live close */
-  transition: color var(--v5-fast) var(--v5-ease);
+  padding: 9px 14px;                               /* gives the active pill room */
+  border-radius: 999px;                            /* pill */
+  transition:
+    color var(--v5-fast) var(--v5-ease),
+    background-color var(--v5-fast) var(--v5-ease);
 }
 
-.v5__nav-link:hover,
+.v5__nav-link:hover {
+  color: var(--v5-ink-strong);
+  background: var(--v5-surface-soft);
+}
+
 .v5__nav-link[aria-current='page'] {
   color: var(--v5-ink-strong);
+  background: var(--v5-surface-soft);
 }
 
 .v5__nav-link:focus-visible {
   outline: 2px solid var(--v5-ink-strong);
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-
-.v5__nav-link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -2px;                                    /* hugs the text baseline */
-  height: 1.5px;
-  background: var(--v5-accent);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--v5-fast) var(--v5-ease);
-}
-
-.v5__nav-link:hover::after {
-  transform: scaleX(1);
-}
-
-.v5__nav-link[aria-current='page']::after {
-  background: var(--v5-ink-strong);
-  transform: scaleX(1);
+  outline-offset: 2px;
 }
 
 .v5__nav-cta {
-  padding: 14px 24px;                              /* trimmed to sit cleaner in the 84px header */
-  font-size: 15px;
+  padding: 12px 22px;                              /* sits cleanly next to the nav pills */
+  font-size: 14.5px;
 }
 
 .v5__nav-cta:focus-visible {
@@ -593,6 +630,92 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);   /* even 50/50 split */
   gap: clamp(48px, 6vw, 96px);
   align-items: center;                                     /* match reference: vertically centered */
+}
+
+/* Centered, stacked hero (eyebrow → headline → wide video) */
+.v5__hero--centered {
+  padding-top: clamp(32px, 3.5vw, 56px);
+  padding-bottom: clamp(40px, 4vw, 64px);
+}
+
+.v5__hero-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Eyebrow — neutral soft pill, sentence-case, no orange dot, to match reference */
+.v5__hero-eyebrow {
+  align-self: center;
+  background: #EFEFF2;
+  color: #1A1A1F;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px 7px;
+}
+
+.v5__hero-eyebrow::before { display: none; }
+
+/* Headline — large, tight, no width constraint (line breaks are explicit) */
+.v5__hero-stack .v5__hero-title {
+  margin: 16px 0 0;
+  font-size: clamp(42px, 5.5vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  font-weight: 600;                 /* semi-bold; falls back to medium if 600 not loaded */
+  max-width: none;
+}
+
+/* Media — wide letterbox, breaks out wider than the headline.
+   Chained class to win specificity over the base `.v5__hero-media` rule below. */
+.v5__hero-media.v5__hero-media--video {
+  position: relative;
+  width: 100%;
+  max-width: 1120px;
+  aspect-ratio: 2 / 1;
+  border-radius: clamp(20px, 1.5vw, 28px);
+  overflow: hidden;
+  margin: clamp(28px, 3vw, 40px) auto 0;
+}
+
+.v5__hero-media--video .v5__hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #000;
+}
+
+.v5__hero-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  border: 0;
+  background: #fff;
+  color: #1A1A1F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 180ms ease;
+}
+
+.v5__hero-play:hover { transform: scale(1.05); }
+.v5__hero-play svg { width: 26px; height: 26px; margin-left: 2px; }
+.v5__hero-media--video.is-playing .v5__hero-play { display: none; }
+
+@media (max-width: 720px) {
+  .v5__hero-stack .v5__hero-title { font-size: clamp(40px, 11vw, 64px); }
+  .v5__hero-media.v5__hero-media--video { aspect-ratio: 16 / 10; min-height: 0; }
+  .v5__hero-play { width: 60px; height: 60px; }
+  .v5__hero-play svg { width: 22px; height: 22px; }
 }
 
 .v5__hero-copy {
@@ -872,6 +995,36 @@ html.v5, body.v5 { overflow-x: clip; }
   filter: drop-shadow(0 10px 24px rgba(255, 140, 0, 0.30));
 }
 
+/* Styled inline-SVG variant — same placement as the legacy <img>,
+   but rendered with multi-layer gradients + animated shimmer for depth. */
+.v5__signal-ribbon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100%;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+  overflow: visible;             /* let the blurred halo bleed past the bounds */
+  isolation: isolate;            /* contain mix-blend-mode layers within the SVG */
+}
+
+.v5__signal-ribbon__shimmer {
+  transform: translateX(-1070px);
+  animation: v5SignalRibbonShimmer 2.6s ease-in-out infinite;
+}
+
+@keyframes v5SignalRibbonShimmer {
+  0%   { transform: translateX(-1070px); }
+  100% { transform: translateX(2743px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v5__signal-ribbon__shimmer { animation: none; }
+}
+
 @media (max-width: 480px) {
   .v5__composite-cta-swoosh {
     height: clamp(38px, 9.85vw, 50px);             /* 9.85vw keeps the same source ratio at mobile */
@@ -1048,7 +1201,7 @@ html.v5, body.v5 { overflow-x: clip; }
 .v5__days-images {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: clamp(20px, 2.4vw, 36px);                /* more breathing room between images */
   position: sticky;
   top: 112px;
   height: fit-content;
@@ -1060,21 +1213,14 @@ html.v5, body.v5 { overflow-x: clip; }
   border-radius: var(--v5-r-card);
   overflow: hidden;
   aspect-ratio: 4 / 3;
+  width: 100%;                                  /* consistent width across all three */
+  margin: 0;                                    /* drop the staggered offsets */
 }
 
 .v5__days-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.v5__days-img:nth-child(2) {
-  margin-left: 40px;
-}
-
-.v5__days-img:nth-child(3) {
-  margin-left: 16px;
-  margin-right: 24px;
 }
 
 .v5__days-list {
@@ -1237,13 +1383,18 @@ html.v5, body.v5 { overflow-x: clip; }
 /* -----------------------------------------------------------
    The room — single background image with color bleed from the left
    ----------------------------------------------------------- */
+/* "Room" section — type sits directly on the photo, no card surface.
+   Modernized via: (1) subtle brand-blue tint on the photo so it feels
+   designed, not literal stock; (2) localized radial darkening behind
+   the text only — not a global overlay; (3) editorial typography
+   anchored bottom-left with generous breathing room. */
 .v5__room {
   position: relative;
   isolation: isolate;
   border-radius: var(--v5-r-hero);
   overflow: hidden;
-  min-height: clamp(440px, 50vw, 640px);
-  padding: clamp(40px, 5vw, 88px);
+  min-height: clamp(480px, 56vw, 680px);
+  padding: clamp(32px, 4.5vw, 72px);
   color: var(--v5-on-dark);
   background: var(--v5-surface-dark);
   display: flex;
@@ -1264,24 +1415,20 @@ html.v5, body.v5 { overflow-x: clip; }
   display: block;
 }
 
-/* Brand-blue bleed sweeping in from the left — keeps copy legible
-   while letting more of the photo show through on the right.
-   Uses Signal Brand Blue (#0032A0 → rgb 0, 50, 160). */
+/* Layer 1 — very subtle navy wash over the whole photo. Light multiply
+   tint so the photo reads as part of the palette, not literal stock. */
 .v5__room::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(95deg,
-    rgba(10, 26, 76, 0.90) 0%,
-    rgba(0, 50, 160, 0.55) 28%,
-    rgba(0, 50, 160, 0.18) 50%,
-    rgba(0, 50, 160, 0.00) 65%);
+  background: rgba(10, 26, 76, 0.08);
+  mix-blend-mode: multiply;
 }
 
-/* Orange color bleed — a Signal-orange wash pouring in from the left.
-   Kept subtle so the photo can breathe. */
+/* Layer 2 — soft, wide bloom behind the text. Generous radius and
+   gradual stops so the fade is imperceptible — no visible edge. */
 .v5__room::after {
   content: '';
   position: absolute;
@@ -1289,35 +1436,41 @@ html.v5, body.v5 { overflow-x: clip; }
   z-index: 2;
   pointer-events: none;
   background:
-    linear-gradient(95deg,
-      rgba(255, 147, 50, 0.55) 0%,
-      rgba(255, 147, 50, 0.30) 14%,
-      rgba(255, 147, 50, 0.10) 30%,
-      rgba(255, 147, 50, 0.00) 45%),
-    radial-gradient(80% 110% at -6% 60%,
-      rgba(255, 147, 50, 0.25) 0%,
-      rgba(255, 147, 50, 0.00) 55%);
-  mix-blend-mode: multiply;
+    radial-gradient(120% 130% at 25% 100%,
+      rgba(0, 22, 72, 0.34) 0%,
+      rgba(0, 22, 72, 0.22) 25%,
+      rgba(0, 22, 72, 0.12) 55%,
+      rgba(0, 22, 72, 0.04) 80%,
+      rgba(0, 22, 72, 0.00) 100%);
 }
 
+/* Text block — no card surface, just type on the photo. */
 .v5__room-body {
   position: relative;
   z-index: 3;
-  max-width: min(560px, 60%);
+  max-width: min(560px, 70%);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
 }
 
 .v5__room-title {
   color: var(--v5-on-dark);
-  margin: 8px 0 0;
+  font-size: clamp(36px, 4.4vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  margin: 0;
+  /* Subtle text shadow for legibility — reads as a soft halo,
+     not a hard drop shadow. */
+  text-shadow: 0 2px 16px rgba(0, 20, 80, 0.4);
 }
 
 .v5__room-lede {
-  color: rgba(244, 245, 251, 0.86);
+  color: rgba(244, 245, 251, 0.94);
   max-width: 48ch;
-  margin: 4px 0 0;
+  margin: 0;
+  text-shadow: 0 1px 8px rgba(0, 20, 80, 0.5);
 }
 
 /* -----------------------------------------------------------
@@ -1579,7 +1732,8 @@ html.v5, body.v5 { overflow-x: clip; }
   color: var(--v5-ink);
   border-top: 1px solid var(--v5-rule);
   padding: clamp(64px, 8vw, 112px) 0 clamp(28px, 3vw, 40px);
-  margin-top: var(--v5-section-y);
+  /* No margin-top — the footer's own padding-top supplies the breathing room
+     from the preceding section. Adding margin-top here doubled the gap. */
 }
 
 /* -----------------------------------------------------------
@@ -1755,7 +1909,6 @@ body.v5 { padding-bottom: 30vh; }
    ----------------------------------------------------------- */
 .v5__page-hero {
   padding: clamp(56px, 7vw, 112px) 0 clamp(48px, 5vw, 80px);
-  border-bottom: 1px solid var(--v5-rule);
 }
 
 .v5__page-hero-inner {
@@ -1804,68 +1957,36 @@ body.v5 { padding-bottom: 30vh; }
    the rows instead of two unrelated grids stacked. Pairs visual
    weight with size: the two big cards (7-col) are the soft surfaces;
    the two narrow cards (5-col) are the brand-blue surfaces. */
+/* Uniform 2-column travel grid — no bento, no varying spans.
+   Every card follows the same structure: image (optional) → text → inner list. */
 .v5__travel-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: clamp(16px, 1.6vw, 32px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 2vw, 32px);
+}
+
+@media (max-width: 720px) {
+  .v5__travel-grid { grid-template-columns: 1fr; }
 }
 
 .v5__travel-card {
-  --card-pad: clamp(24px, 3vw, 40px);
+  --card-pad: clamp(24px, 2.6vw, 36px);
   border-radius: var(--v5-r-card);
   overflow: hidden;
-  background: var(--v5-surface-softer);
+  background: var(--v5-bg);
+  border: 1px solid var(--v5-rule);
   padding: var(--card-pad);
   display: flex;
   flex-direction: column;
-  gap: clamp(14px, 1.2vw, 20px);
+  gap: clamp(14px, 1.4vw, 20px);
 }
 
-.v5__travel-card--hotel {
-  grid-column: span 7;
-}
-
-.v5__travel-card--airport {
-  grid-column: span 5;
-  background: var(--v5-surface-dark);
-  color: var(--v5-on-dark);
-}
-
-.v5__travel-card--around {
-  grid-column: span 5;
-}
-
-.v5__travel-card--early {
-  grid-column: span 7;
-  background: var(--v5-surface-dark);
-  color: var(--v5-on-dark);
-}
-
-.v5__travel-card--airport .v5__sub-h,
-.v5__travel-card--early .v5__sub-h {
-  color: var(--v5-on-dark);
-}
-
-.v5__travel-card--airport p,
-.v5__travel-card--early p {
-  color: rgba(244, 245, 251, 0.82);
-}
-
+/* Image sits flush to the top of the card, pulled out of the card padding. */
 .v5__travel-card-img {
-  /* Pulls the photo flush to the card's rounded edges at any viewport
-     by reusing the same clamp the card's padding uses. */
-  margin: calc(var(--card-pad) * -1) calc(var(--card-pad) * -1) 0;
-  aspect-ratio: 5 / 3;
+  margin: calc(var(--card-pad) * -1) calc(var(--card-pad) * -1) 4px;
+  aspect-ratio: 16 / 9;
   background: var(--v5-surface-soft);
   overflow: hidden;
-}
-
-/* Card body copy. Slightly tighter than the page-level lede so the
-   four cards read as compact bento panels, not paragraph blocks. */
-.v5__travel-card p {
-  font-size: 16px;
-  line-height: 1.55;
-  margin: 0;
 }
 
 .v5__travel-card-img img {
@@ -1874,13 +1995,24 @@ body.v5 { padding-bottom: 30vh; }
   object-fit: cover;
 }
 
+/* Body copy in the middle. */
+.v5__travel-card p {
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0;
+  color: var(--v5-ink-muted);
+}
+
+/* Inner grey container at the bottom of each card — holds the bullet list. */
 .v5__travel-list {
   list-style: none;
-  margin: 8px 0 0;
-  padding: 0;
+  margin: auto 0 0;                          /* pushes the inner container to the bottom */
+  padding: clamp(18px, 1.8vw, 24px);
+  background: var(--v5-surface-soft);
+  border-radius: var(--v5-r-thumb);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .v5__travel-list li {
@@ -1888,24 +2020,15 @@ body.v5 { padding-bottom: 30vh; }
   align-items: center;
   gap: 10px;
   font-size: 14px;
-  color: var(--v5-ink-muted);
-}
-
-.v5__travel-card--airport .v5__travel-list li,
-.v5__travel-card--early .v5__travel-list li {
-  color: rgba(244, 245, 251, 0.78);
+  color: var(--v5-ink);
+  font-weight: 500;
 }
 
 .v5__travel-list svg {
   width: 16px;
   height: 16px;
-  color: var(--v5-ink-soft);
+  color: var(--v5-accent);
   flex-shrink: 0;
-}
-
-.v5__travel-card--airport .v5__travel-list svg,
-.v5__travel-card--early .v5__travel-list svg {
-  color: rgba(244, 245, 251, 0.55);
 }
 
 /* -----------------------------------------------------------
@@ -1996,6 +2119,15 @@ body.v5 { padding-bottom: 30vh; }
   gap: 16px;
 }
 
+/* Schedule container — bottom padding gives the last stacked card room
+   to scroll into view before the section ends. */
+.v5__schedule {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.4vw, 32px);
+  padding-bottom: clamp(80px, 10vw, 200px);
+}
+
 .v5__sched-day {
   background: var(--v5-surface-softer);
   border-radius: var(--v5-r-card);
@@ -2003,11 +2135,38 @@ body.v5 { padding-bottom: 30vh; }
   display: grid;
   grid-template-columns: minmax(160px, 220px) 1fr;
   gap: clamp(24px, 3vw, 48px);
+  /* --- Card-stack: each day sticks below the header with a small per-card
+     stagger so previously-stacked cards peek above the current one. */
+  position: sticky;
+  top: 100px;
+  /* Subtle drop shadow lets the layered cards read as physical. */
+  box-shadow: 0 6px 20px -12px rgba(10, 26, 76, 0.18);
+  /* Force a new layer + prevent transforms from breaking sticky. */
+  transform: translateZ(0);
 }
+
+.v5__sched-day:nth-child(1) { top: 100px; }
+.v5__sched-day:nth-child(2) { top: 116px; }
+.v5__sched-day:nth-child(3) { top: 132px; }
+.v5__sched-day:nth-child(4) { top: 148px; }
+.v5__sched-day:nth-child(5) { top: 164px; }
 
 .v5__sched-day--optional {
   background: var(--v5-bg);
   border: 1px dashed var(--v5-rule);
+}
+
+/* Disable sticky-stack at narrow widths — the cards become a regular column. */
+@media (max-width: 720px) {
+  .v5__sched-day,
+  .v5__sched-day:nth-child(n) { position: static; top: auto; }
+  .v5__schedule { padding-bottom: 0; }
+}
+
+/* Respect reduced motion preference — also fall back to a regular column. */
+@media (prefers-reduced-motion: reduce) {
+  .v5__sched-day,
+  .v5__sched-day:nth-child(n) { position: static; top: auto; }
 }
 
 .v5__sched-date {
