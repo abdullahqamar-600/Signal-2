@@ -1908,7 +1908,7 @@ body.v5 { padding-bottom: 30vh; }
    Sub-page hero
    ----------------------------------------------------------- */
 .v5__page-hero {
-  padding: clamp(56px, 7vw, 112px) 0 clamp(48px, 5vw, 80px);
+  padding: clamp(32px, 4vw, 56px) 0 clamp(24px, 3vw, 40px);
 }
 
 .v5__page-hero-inner {
@@ -1957,78 +1957,308 @@ body.v5 { padding-bottom: 30vh; }
    the rows instead of two unrelated grids stacked. Pairs visual
    weight with size: the two big cards (7-col) are the soft surfaces;
    the two narrow cards (5-col) are the brand-blue surfaces. */
-/* Uniform 2-column travel grid — no bento, no varying spans.
-   Every card follows the same structure: image (optional) → text → inner list. */
-.v5__travel-grid {
+/* -----------------------------------------------------------
+   Travel page — editorial restructure
+   Stat strip → featured hotel → two-up logistics → editorial extras
+   ----------------------------------------------------------- */
+
+/* Tight section padding helper for stat strip + extras */
+.v5__section--tight {
+  padding-block: clamp(20px, 2.4vw, 40px);
+}
+
+/* ---- 1. STAT STRIP — Swiss horizontal chart, hairline column dividers ---- */
+.v5__travel-stats {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(20px, 2vw, 32px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--v5-rule);
+  border-bottom: 1px solid var(--v5-rule);
+  padding: clamp(24px, 2.8vw, 40px) 0;
+}
+
+.v5__travel-stat {
+  position: relative;
+  padding: 0 clamp(20px, 2.4vw, 40px);
+}
+
+/* Hairline dividers between stats — structural, not decorative side-stripe. */
+.v5__travel-stat + .v5__travel-stat::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8%;
+  bottom: 8%;
+  width: 1px;
+  background: var(--v5-rule);
+}
+
+.v5__travel-stat:first-child { padding-left: 0; }
+.v5__travel-stat:last-child { padding-right: 0; }
+
+.v5__travel-stat-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--v5-ink-muted);
+  margin-bottom: 10px;
+}
+
+.v5__travel-stat-figure {
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: var(--v5-ink);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.v5__travel-stat-unit {
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 500;
+  color: var(--v5-ink-muted);
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 @media (max-width: 720px) {
-  .v5__travel-grid { grid-template-columns: 1fr; }
+  .v5__travel-stats { grid-template-columns: 1fr; gap: 20px; padding: 20px 0; }
+  .v5__travel-stat { padding: 0; }
+  .v5__travel-stat + .v5__travel-stat::before { display: none; }
 }
 
-.v5__travel-card {
-  --card-pad: clamp(24px, 2.6vw, 36px);
-  border-radius: var(--v5-r-card);
+/* ---- 2. HOTEL FEATURE — asymmetric marquee block ---- */
+.v5__travel-feature {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(36px, 4.5vw, 80px);
+  align-items: center;
+}
+
+.v5__travel-feature-media {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  border-radius: var(--v5-r-hero);
   overflow: hidden;
-  background: var(--v5-bg);
-  border: 1px solid var(--v5-rule);
-  padding: var(--card-pad);
-  display: flex;
-  flex-direction: column;
-  gap: clamp(14px, 1.4vw, 20px);
-}
-
-/* Image sits flush to the top of the card, pulled out of the card padding. */
-.v5__travel-card-img {
-  margin: calc(var(--card-pad) * -1) calc(var(--card-pad) * -1) 4px;
-  aspect-ratio: 16 / 9;
   background: var(--v5-surface-soft);
-  overflow: hidden;
 }
 
-.v5__travel-card-img img {
+.v5__travel-feature-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-/* Body copy in the middle. */
-.v5__travel-card p {
-  font-size: 16px;
-  line-height: 1.55;
-  margin: 0;
-  color: var(--v5-ink-muted);
+.v5__travel-feature-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-/* Inner grey container at the bottom of each card — holds the bullet list. */
-.v5__travel-list {
+.v5__travel-feature-title {
+  margin: 4px 0 0;
+  font-weight: 600;
+}
+
+.v5__travel-feature-body .v5__lede { margin: 0; max-width: 48ch; }
+
+.v5__travel-feature-bullets {
   list-style: none;
-  margin: auto 0 0;                          /* pushes the inner container to the bottom */
-  padding: clamp(18px, 1.8vw, 24px);
-  background: var(--v5-surface-soft);
-  border-radius: var(--v5-r-thumb);
+  padding: 0;
+  margin: 12px 0 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  font-size: 16px;
+  color: var(--v5-ink);
 }
 
-.v5__travel-list li {
+.v5__travel-feature-bullets li {
+  position: relative;
+  padding-left: 28px;
+  line-height: 1.45;
+}
+
+/* Orange dash before each amenity — punctuation, not decoration. */
+.v5__travel-feature-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 16px;
+  height: 1.5px;
+  background: var(--v5-accent);
+}
+
+/* "Included" callout — soft surface + orange pill tag, single moment of brand orange. */
+.v5__travel-feature-callout {
+  margin: 16px 0 0;
+  padding: 16px 20px;
+  background: var(--v5-surface-soft);
+  border-radius: var(--v5-r-card);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--v5-ink);
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: var(--v5-ink);
-  font-weight: 500;
+  gap: 14px;
 }
 
-.v5__travel-list svg {
-  width: 16px;
-  height: 16px;
+.v5__travel-feature-callout-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--v5-accent);
+  padding: 6px 11px;
+  background: rgba(255, 147, 50, 0.12);
+  border-radius: 999px;
   flex-shrink: 0;
+  line-height: 1;
+}
+
+@media (max-width: 860px) {
+  .v5__travel-feature {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .v5__travel-feature-media { aspect-ratio: 16 / 10; }
+}
+
+/* ---- 3. LOGISTICS TWO-UP — flying in + getting around ---- */
+.v5__travel-logistics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3.6vw, 64px);
+  padding-top: clamp(40px, 4.5vw, 64px);
+  border-top: 1px solid var(--v5-rule);
+}
+
+.v5__travel-logistic {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.v5__travel-logistic-title {
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.018em;
+  margin: 6px 0 0;
+  color: var(--v5-ink);
+}
+
+.v5__travel-logistic-body {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--v5-ink-muted);
+  margin: 0;
+  max-width: 50ch;
+}
+
+.v5__travel-logistic-note {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--v5-ink-soft);
+  margin: 6px 0 0;
+  max-width: 50ch;
+}
+
+/* Definition list of facts — spec-sheet style, no bullets */
+.v5__travel-facts {
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--v5-rule-soft);
+}
+
+.v5__travel-facts > div {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) 1fr;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--v5-rule-soft);
+}
+
+.v5__travel-facts dt {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--v5-ink-soft);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.v5__travel-facts dd {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--v5-ink);
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 720px) {
+  .v5__travel-logistics { grid-template-columns: 1fr; gap: 36px; }
+}
+
+/* ---- 4. OCTOBER EXTRAS — editorial sidebar ---- */
+.v5__travel-extras {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+  padding-top: clamp(32px, 4vw, 56px);
+  border-top: 1px solid var(--v5-rule);
+}
+
+.v5__travel-extras-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.v5__travel-extras-title {
+  font-size: clamp(24px, 2.4vw, 36px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 6px 0 0;
+}
+
+.v5__travel-extras-body p {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--v5-ink-muted);
+  margin: 0;
+  max-width: 52ch;
+}
+
+.v5__travel-extras-media {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--v5-r-card);
+  overflow: hidden;
+  background: var(--v5-surface-soft);
+}
+
+.v5__travel-extras-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .v5__travel-extras { grid-template-columns: 1fr; gap: 24px; }
+  .v5__travel-extras-media { aspect-ratio: 16 / 10; }
 }
 
 /* -----------------------------------------------------------
