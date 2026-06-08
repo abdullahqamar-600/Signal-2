@@ -1690,3 +1690,227 @@
 @media (max-width: 720px) {
   .v1-banner { aspect-ratio: 4 / 3; }
 }
+
+/* ─────────────────────────────────────────────────────────
+   Travel page — minimal additions on top of the agenda
+   grammar. The schedule rows do most of the work; this
+   block adds the real-Omaha map figure, the airport-code
+   data tile, and the small inline icon in the date column.
+   ───────────────────────────────────────────────────────── */
+
+/* ─── Real Omaha map (Leaflet) presented as an editorial figure ─── */
+.v1-travel-map {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2vw, 28px);
+}
+
+.v1-travel-map__frame {
+  width: 100%;
+  height: clamp(360px, 50vh, 540px);
+  border-radius: var(--radius-tile);
+  overflow: hidden;
+  border: 1px solid var(--divider-light);
+  background: color-mix(in srgb, var(--blue-deep) 4%, white);
+}
+
+/* Caption legend reads as a hairline-divided index, like the agenda
+   schedule's row rhythm. Three cells; mirrors the schedule's date /
+   content cadence at a smaller scale. */
+.v1-travel-map__caption {
+  display: block;
+  width: 100%;
+}
+
+.v1-travel-map__legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--divider-light);
+}
+
+.v1-travel-map__legend li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: clamp(20px, 2.4vw, 28px) clamp(20px, 2.4vw, 32px) clamp(20px, 2.4vw, 28px) 0;
+  border-right: 1px solid var(--divider-light);
+}
+.v1-travel-map__legend li:last-child { border-right: 0; padding-right: 0; }
+.v1-travel-map__legend li:not(:first-child) { padding-left: clamp(20px, 2.4vw, 32px); }
+
+.v1-travel-map__pin {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--blue-deep);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.v1-travel-map__pin--a { background: var(--orange); color: var(--blue-deep); }
+
+.v1-travel-map__label {
+  display: block;
+  font-size: clamp(14px, 1.1vw, 16px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--blue-deep);
+  line-height: 1.2;
+}
+.v1-travel-map__label em {
+  font-style: normal;
+  margin-left: 6px;
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--orange);
+}
+
+.v1-travel-map__sub {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted-body);
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .v1-travel-map__legend { grid-template-columns: 1fr; }
+  .v1-travel-map__legend li {
+    border-right: 0;
+    border-bottom: 1px solid var(--divider-light);
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .v1-travel-map__legend li:last-child { border-bottom: 0; }
+}
+
+/* ─── Leaflet pin styling (same blue/orange disc as the legend) ─── */
+.v1-leaflet-pin {
+  background: transparent;
+  border: 0;
+}
+.v1-leaflet-pin__inner {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--blue-deep);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.92);
+}
+.v1-leaflet-pin__inner--accent {
+  background: var(--orange);
+  color: var(--blue-deep);
+}
+.v1-leaflet-tooltip {
+  background: var(--blue-deep);
+  color: var(--white);
+  border: 0;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  box-shadow: none;
+}
+.v1-leaflet-tooltip::before { display: none; }
+.leaflet-container .leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 10px;
+  color: var(--muted-tertiary);
+  padding: 2px 8px;
+}
+.leaflet-container { font-family: inherit; }
+
+/* ─── Schedule-row additions for travel
+   (the row layout itself is inherited from .v1-schedule__day in
+   the agenda section above; we only add a tiny icon slot in the
+   date column and a typographic data tile for the media column). */
+
+.v1-schedule__date {
+  position: relative;
+}
+
+.v1-schedule__date-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 16px;
+  color: var(--blue-deep);
+}
+.v1-schedule__date-icon svg { display: block; }
+
+/* The data-tile replaces a photo in the right column for travel rows.
+   Same 4:5 aspect as agenda's media, same radius, hairline border.
+   Reads as a luggage-tag / boarding-pass detail panel. */
+.v1-schedule__media--tile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: flex-start;
+  padding: clamp(20px, 2vw, 28px);
+  background: color-mix(in srgb, var(--blue-deep) 3%, white);
+  border: 1px solid var(--divider-light);
+  border-radius: var(--radius-tile);
+  aspect-ratio: 4 / 5;
+}
+
+.v1-schedule__tile-code {
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--blue-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.v1-schedule__tile-meta {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange);
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+.v1-schedule__tile-rule {
+  display: block;
+  height: 1px;
+  margin: clamp(12px, 1.5vw, 20px) 0;
+  background: var(--divider-light);
+}
+
+.v1-schedule__tile-detail {
+  font-size: clamp(13px, 1vw, 14px);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--muted-body);
+  font-variant-numeric: tabular-nums;
+}
+
+/* When the schedule grid collapses on narrow screens, the data tile
+   becomes a landscape strip (matches agenda's 16/9 collapse). */
+@media (max-width: 960px) {
+  .v1-schedule__media--tile { aspect-ratio: 16 / 9; max-width: 480px; padding: 24px; }
+}
+@media (max-width: 720px) {
+  .v1-schedule__media--tile { aspect-ratio: auto; max-width: 100%; }
+}

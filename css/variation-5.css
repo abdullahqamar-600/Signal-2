@@ -535,6 +535,62 @@ html.v5 { scrollbar-gutter: stable; }
   -webkit-backdrop-filter: saturate(180%) blur(12px);
 }
 
+/* -----------------------------------------------------------
+   Home-page hero: single-logo morph
+   The nav's brand element is transformed (JS-driven) to sit big + centered
+   in the hero at scrollY=0, then continuously morphs back to its natural
+   nav position over the first ~280px of scroll. After the logo arrives,
+   the rest of the nav (links + CTA + bg) fades in (--nav-reveal: 0 -> 1).
+   ----------------------------------------------------------- */
+
+/* Screen-reader-only utility. */
+.v5__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Empty slot in the hero stack — reserves the vertical space the
+   transformed brand occupies so the layout doesn't collapse around it. */
+.v5__hero-logo-slot {
+  height: clamp(96px, 14vw, 180px);
+  pointer-events: none;
+}
+
+/* When the home-page hero is present, the brand becomes the morph target.
+   We keep it visible (it IS the hero logo at scroll=0), but the JS applies
+   its transform inline. transform-origin: center keeps the scale anchored. */
+html.v5:has(.v5__hero--logo-morph) .v5__brand {
+  z-index: 60;                       /* float above all nav children during morph */
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* The rest of the nav (everything except the brand) fades in via --nav-reveal,
+   AFTER the logo has arrived at its nav position (phase B). */
+html.v5:has(.v5__hero--logo-morph) .v5__nav {
+  background: rgba(255, 255, 255, calc(var(--nav-reveal, 0) * 0.88));
+  backdrop-filter: saturate(180%) blur(calc(var(--nav-reveal, 0) * 12px));
+  -webkit-backdrop-filter: saturate(180%) blur(calc(var(--nav-reveal, 0) * 12px));
+}
+
+html.v5:has(.v5__hero--logo-morph) .v5__nav-inner > :not(.v5__brand) {
+  opacity: var(--nav-reveal, 0);
+  transition: none;
+}
+
+/* Disable interaction with nav links/CTA while they're (mostly) invisible —
+   JS flips data-nav-visible once --nav-reveal passes ~0.6. */
+html.v5:has(.v5__hero--logo-morph):not([data-nav-visible]) .v5__nav-inner > :not(.v5__brand) {
+  pointer-events: none;
+}
+
 .v5__nav-inner {
   display: flex;
   align-items: center;
@@ -567,8 +623,8 @@ html.v5 { scrollbar-gutter: stable; }
 
 .v5 .v5__brand-mark {
   display: block;
-  height: 32px;
-  width: 146px;                                    /* explicit width prevents reflow before SVG paints */
+  height: 42px;                                    /* larger header logo */
+  width: 192px;                                    /* aspect 593:130 -> 42 * 593/130 ≈ 192 */
   max-width: none;
 }
 
@@ -975,7 +1031,7 @@ html.v5, body.v5 { overflow-x: clip; }
   margin-left: -50vw;
   /* Height set so width (= height × 10.16) reaches viewport width.
      At a 1440px viewport, 100vw × 270/2743 ≈ 141.7px tall. */
-  height: clamp(60px, 9.85vw, 160px);
+  height: clamp(73px, 11.92vw, 194px);              /* +10% again on all stops */
   margin-block: clamp(8px, 1.2vw, 20px);
   flex: 0 0 auto;
   overflow: visible;
@@ -1007,8 +1063,11 @@ html.v5, body.v5 { overflow-x: clip; }
   display: block;
   max-width: none;
   pointer-events: none;
-  overflow: visible;             /* let the blurred halo bleed past the bounds */
+  overflow: visible;
   isolation: isolate;            /* contain mix-blend-mode layers within the SVG */
+  /* Structural drop shadow — replaces the old soft halo. Tight, defined,
+     reads as physical depth instead of marketing glow. */
+  filter: drop-shadow(0 6px 14px rgba(40, 14, 0, 0.28));
 }
 
 .v5__signal-ribbon__shimmer {
@@ -1027,7 +1086,7 @@ html.v5, body.v5 { overflow-x: clip; }
 
 @media (max-width: 480px) {
   .v5__composite-cta-swoosh {
-    height: clamp(38px, 9.85vw, 50px);             /* 9.85vw keeps the same source ratio at mobile */
+    height: clamp(46px, 11.92vw, 61px);            /* +10% mobile stops again */
     margin-block: 6px;
   }
 }
@@ -1129,7 +1188,10 @@ html.v5, body.v5 { overflow-x: clip; }
   position: relative;
   background: var(--v5-surface-dark);
   color: var(--v5-on-dark);
-  padding: clamp(24px, 2.6vw, 40px);
+  /* Top padding intentionally large — pushes the heading text down to sit
+     near the vertical center of the card. Bottom stays at standard padding
+     so the Register button keeps its anchor at the bottom edge. */
+  padding: clamp(140px, 14vw, 220px) clamp(24px, 2.6vw, 40px) clamp(24px, 2.6vw, 40px);
   border-radius: var(--v5-r-hero);
   overflow: hidden;                                    /* clip the swoosh bleed */
   display: flex;
@@ -1498,22 +1560,24 @@ html.v5, body.v5 { overflow-x: clip; }
   object-fit: cover;
   object-position: 70% center;
   display: block;
-  /* Image fades to transparent on the left, revealing the orange bleed beneath */
+  /* Image bleeds much further left — fade starts almost immediately,
+     image is fully solid by 16% of the container width. */
   -webkit-mask-image: linear-gradient(95deg,
     transparent 0%,
-    rgba(0, 0, 0, 0.08) 8%,
-    rgba(0, 0, 0, 0.55) 22%,
-    #000 36%,
+    rgba(0, 0, 0, 0.18) 2%,
+    rgba(0, 0, 0, 0.68) 8%,
+    #000 16%,
     #000 100%);
   mask-image: linear-gradient(95deg,
     transparent 0%,
-    rgba(0, 0, 0, 0.08) 8%,
-    rgba(0, 0, 0, 0.55) 22%,
-    #000 36%,
+    rgba(0, 0, 0, 0.18) 2%,
+    rgba(0, 0, 0, 0.68) 8%,
+    #000 16%,
     #000 100%);
 }
 
-/* Soft orange glow pouring into the photo edge */
+/* Orange glow — wider horizontal spread so the warm bleed reads across more
+   of the image edge, not just a narrow strip. */
 .v5__feature::before {
   content: '';
   position: absolute;
@@ -1521,9 +1585,11 @@ html.v5, body.v5 { overflow-x: clip; }
   z-index: 1;
   pointer-events: none;
   background: linear-gradient(95deg,
-    rgba(255, 147, 50, 0.0) 30%,
-    rgba(255, 147, 50, 0.25) 38%,
-    rgba(255, 147, 50, 0.0) 52%);
+    rgba(255, 147, 50, 0.0) 2%,
+    rgba(255, 147, 50, 0.22) 12%,
+    rgba(255, 147, 50, 0.34) 22%,
+    rgba(255, 147, 50, 0.22) 34%,
+    rgba(255, 147, 50, 0.0) 48%);
   mix-blend-mode: screen;
 }
 
@@ -1676,8 +1742,8 @@ html.v5, body.v5 { overflow-x: clip; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 48px;
-  min-height: 360px;
+  gap: 28px;                /* was 48 — reduced to ~60% */
+  min-height: 216px;        /* was 360 — reduced to 60% */
 }
 
 .v5__close-title {
@@ -1713,8 +1779,8 @@ html.v5, body.v5 { overflow-x: clip; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 32px;
-  min-height: 360px;
+  gap: 20px;                /* was 32 — reduced to ~60% */
+  min-height: 216px;        /* was 360 — reduced to 60% */
 }
 
 .v5__close-side-h {
@@ -1768,9 +1834,11 @@ body.v5 { padding-bottom: 30vh; }
    backgrounds so the pattern is fully covered during normal scroll.
    The pattern only ever reveals in the padding-bottom strip below the
    footer, never through transparent sections in mid-page. */
-.v5__nav,
+/* Lift main + footer above the fixed bg pattern. Nav keeps its sticky
+   positioning from the .v5__nav rule above — DON'T override it here. */
 .v5 main,
 .v5__footer-big { position: relative; z-index: 1; }
+.v5__nav { z-index: 50; }
 .v5 main { background: var(--v5-bg); }              /* opaque white covers the fixed pattern */
 
 /* Faint shadow under the footer — just a hint of separation from the
@@ -2787,7 +2855,7 @@ body.v5--menu-open .v5__dock { opacity: 0 !important; pointer-events: none !impo
   .v5__nav-cta { display: none; }
   .v5__nav-toggle { display: inline-flex; }
   .v5__nav-inner { gap: 16px; padding-inline: 20px; height: 72px; }
-  .v5 .v5__brand-mark { height: 28px; }
+  .v5 .v5__brand-mark { height: 36px; width: 164px; }
 
   /* Tighten radius scale — 32px/24px on small phone images reads as pill,
      not photo. Scale down ~40% so corners feel intentional, not soft. */

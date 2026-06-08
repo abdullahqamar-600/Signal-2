@@ -9,7 +9,7 @@
       content="Three days in Omaha for the people running and growing Signal franchises. October 6 to 8, 2026."
     />
     <link rel="stylesheet" href="css/shared.css" />
-    <link rel="stylesheet" href="css/variation-5.css?v=53-travel-editorial" />
+    <link rel="stylesheet" href="css/variation-5.css?v=69-cta-center2" />
   </head>
   <body class="v5">
     <!-- ============ NAV ============ -->
@@ -62,13 +62,14 @@
 
     <main>
       <!-- ============ HERO ============ -->
-      <section class="v5__hero v5__hero--centered">
+      <section class="v5__hero v5__hero--centered v5__hero--logo-morph">
         <div class="v5__wrap">
           <div class="v5__hero-stack">
             <span class="v5__eyebrow v5__hero-eyebrow" data-reveal data-reveal-delay="1">Oct 6&ndash;8, 2026 &middot; Omaha</span>
-            <h1 class="v5__display-xl v5__hero-title" data-reveal data-reveal-delay="2">
-              Signal's<br />Leadership Summit.
-            </h1>
+            <h1 class="v5__sr-only">Signal&rsquo;s Leadership Summit</h1>
+            <!-- Empty slot reserves the vertical space the nav-brand occupies
+                 when it's transformed into hero size. -->
+            <div class="v5__hero-logo-slot" aria-hidden="true"></div>
             <div class="v5__hero-media v5__hero-media--video" data-reveal="fade" data-reveal-delay="3">
               <video class="v5__hero-video"
                 preload="metadata"
@@ -156,79 +157,60 @@
                 <div id="cta-ribbon" class="v5__composite-cta-swoosh" aria-hidden="true">
                   <svg class="v5__signal-ribbon" viewBox="0 0 2743 270" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                      <!-- L1 atmospheric halo — slightly wider/softer bloom -->
-                      <linearGradient id="v5sr-glow" x1="0" y1="135" x2="2743" y2="135" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%"   stop-color="#FFA64A" stop-opacity="0.46"/>
-                        <stop offset="35%"  stop-color="#FFB868" stop-opacity="0.66"/>
-                        <stop offset="65%"  stop-color="#FFC685" stop-opacity="0.66"/>
-                        <stop offset="100%" stop-color="#FFD6A0" stop-opacity="0.44"/>
-                      </linearGradient>
-                      <!-- L2 mid wash — brighter tones, screen-blended -->
-                      <linearGradient id="v5sr-mid" x1="0" y1="0" x2="2743" y2="270" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%"   stop-color="#FFA64A" stop-opacity="0.24"/>
-                        <stop offset="55%"  stop-color="#FFB868" stop-opacity="0.34"/>
-                        <stop offset="100%" stop-color="#FFC685" stop-opacity="0.24"/>
-                      </linearGradient>
-                      <!-- L3 hero — brighter palette across the sweep -->
+                      <!-- HERO gradient — premium tonal range: terracotta anchor → brand-orange peak →
+                           refined peach. Each stop shifts in hue + chroma + L, not just L. -->
                       <linearGradient id="v5sr-hero" x1="0" y1="0" x2="2743" y2="270" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%"   stop-color="#EE8024"/>
-                        <stop offset="18%"  stop-color="#FC9436"/>
-                        <stop offset="42%"  stop-color="#FFA64A"/>
-                        <stop offset="68%"  stop-color="#FFB868"/>
-                        <stop offset="88%"  stop-color="#FFC685"/>
-                        <stop offset="100%" stop-color="#FFD6A0"/>
+                        <stop offset="0%"   stop-color="#C75A1A"/>  <!-- deep terracotta anchor -->
+                        <stop offset="12%"  stop-color="#E16E1F"/>  <!-- fired orange -->
+                        <stop offset="30%"  stop-color="#F58B2A"/>  <!-- Signal-orange -->
+                        <stop offset="55%"  stop-color="#FF9E40"/>  <!-- peak warmth -->
+                        <stop offset="78%"  stop-color="#FFAE5C"/>  <!-- sunlit -->
+                        <stop offset="100%" stop-color="#FFC07A"/>  <!-- refined peach (still saturated) -->
                       </linearGradient>
-                      <!-- L4 depth — softer warm shadows on both bands' bottoms. Lighter tone, lower opacity. -->
+                      <!-- DEPTH — burnt sienna shadow on the bottom edge of both bands.
+                           Cooler red undertone, not muddy brown. -->
                       <linearGradient id="v5sr-depth" x1="0" y1="0" x2="0" y2="270" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%"   stop-color="#B25500" stop-opacity="0.00"/>
-                        <stop offset="35%"  stop-color="#B25500" stop-opacity="0.00"/>
-                        <stop offset="47%"  stop-color="#A04A00" stop-opacity="0.12"/>
-                        <stop offset="52%"  stop-color="#A04A00" stop-opacity="0.04"/>
-                        <stop offset="62%"  stop-color="#B25500" stop-opacity="0.00"/>
-                        <stop offset="82%"  stop-color="#A04A00" stop-opacity="0.12"/>
-                        <stop offset="100%" stop-color="#8C3F00" stop-opacity="0.32"/>
+                        <stop offset="0%"   stop-color="#5C1E08" stop-opacity="0.00"/>
+                        <stop offset="35%"  stop-color="#5C1E08" stop-opacity="0.00"/>
+                        <stop offset="47%"  stop-color="#5C1E08" stop-opacity="0.16"/>
+                        <stop offset="52%"  stop-color="#5C1E08" stop-opacity="0.04"/>
+                        <stop offset="62%"  stop-color="#5C1E08" stop-opacity="0.00"/>
+                        <stop offset="82%"  stop-color="#5C1E08" stop-opacity="0.18"/>
+                        <stop offset="100%" stop-color="#3A1206" stop-opacity="0.38"/>
                       </linearGradient>
-                      <!-- L5 specular — softer highlights on both bands' tops. Dialed back to feel like ambient sheen, not hard glare. -->
+                      <!-- SPECULAR — tighter, sharper catch-light at the top edge of both bands.
+                           Falloff happens fast for that "polished metal" precision. -->
                       <linearGradient id="v5sr-specular" x1="0" y1="0" x2="0" y2="270" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%"  stop-color="#FFFFFF" stop-opacity="0.45"/>
-                        <stop offset="4%"  stop-color="#FFFFFF" stop-opacity="0.28"/>
-                        <stop offset="12%" stop-color="#FFFFFF" stop-opacity="0.10"/>
-                        <stop offset="22%" stop-color="#FFFFFF" stop-opacity="0.00"/>
-                        <stop offset="46%" stop-color="#FFFFFF" stop-opacity="0.00"/>
-                        <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.24"/>
-                        <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0.09"/>
-                        <stop offset="65%" stop-color="#FFFFFF" stop-opacity="0.00"/>
+                        <stop offset="0%"  stop-color="#FFFFFF" stop-opacity="0.58"/>
+                        <stop offset="3%"  stop-color="#FFFFFF" stop-opacity="0.36"/>
+                        <stop offset="9%"  stop-color="#FFFFFF" stop-opacity="0.10"/>
+                        <stop offset="18%" stop-color="#FFFFFF" stop-opacity="0.00"/>
+                        <stop offset="47%" stop-color="#FFFFFF" stop-opacity="0.00"/>
+                        <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.32"/>
+                        <stop offset="53%" stop-color="#FFFFFF" stop-opacity="0.14"/>
+                        <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0.00"/>
                         <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.00"/>
                       </linearGradient>
-                      <!-- L6 shimmer — warm cream-tinted sweep, reads as light not pixels -->
+                      <!-- SHIMMER — warm cream-tinted sweep, reads as light not pixels. -->
                       <linearGradient id="v5sr-shimmer" x1="0" y1="135" x2="1070" y2="135" gradientUnits="userSpaceOnUse">
                         <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0"/>
-                        <stop offset="28%"  stop-color="#FFF6E8" stop-opacity="0.14"/>
-                        <stop offset="50%"  stop-color="#FFFAF0" stop-opacity="0.45"/>
-                        <stop offset="72%"  stop-color="#FFF6E8" stop-opacity="0.14"/>
+                        <stop offset="28%"  stop-color="#FFF6E8" stop-opacity="0.16"/>
+                        <stop offset="50%"  stop-color="#FFFAF0" stop-opacity="0.50"/>
+                        <stop offset="72%"  stop-color="#FFF6E8" stop-opacity="0.16"/>
                         <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
                       </linearGradient>
-                      <filter id="v5sr-blur" x="-18%" y="-110%" width="136%" height="320%">
-                        <feGaussianBlur stdDeviation="36"/>
-                      </filter>
-                      <filter id="v5sr-soft" x="-5%" y="-25%" width="110%" height="150%">
-                        <feGaussianBlur stdDeviation="7"/>
-                      </filter>
                       <clipPath id="v5sr-clip">
                         <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z"/>
                       </clipPath>
                     </defs>
-                    <!-- L1 atmospheric glow halo -->
-                    <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z" fill="url(#v5sr-glow)" filter="url(#v5sr-blur)"/>
-                    <!-- L2 mid-orange wash (screen) -->
-                    <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z" fill="url(#v5sr-mid)" filter="url(#v5sr-soft)" style="mix-blend-mode:screen"/>
-                    <!-- L3 hero gradient -->
+                    <!-- HERO gradient (the band's base color). No outer halo, no blurs.
+                         Crisp edge against the blue card is the premium move. -->
                     <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z" fill="url(#v5sr-hero)"/>
-                    <!-- L4 bottom warm shadow (multiply) -->
+                    <!-- DEPTH — burnt sienna shadow at the bottom edge of each band (multiply). -->
                     <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z" fill="url(#v5sr-depth)" style="mix-blend-mode:multiply"/>
-                    <!-- L5 top specular highlight (screen) -->
+                    <!-- SPECULAR — sharp catch-light at the top edge of each band (screen). -->
                     <path d="M0 269.838V135.306H1594.94C1611.44 135.306 1626.46 125.793 1633.51 110.877L1665.72 42.7502C1678.06 16.6477 1704.34 0 1733.21 0H2742.11V136.079L1676.77 134.563C1663.8 134.544 1652.01 142.11 1646.63 153.911L1613.71 226.147C1601.57 252.76 1575.02 269.838 1545.77 269.838H0Z" fill="url(#v5sr-specular)" style="mix-blend-mode:screen"/>
-                    <!-- L6 shimmer sweep (clipped to silhouette) -->
+                    <!-- SHIMMER — animated sweep (clipped to silhouette). -->
                     <g clip-path="url(#v5sr-clip)" style="mix-blend-mode:screen">
                       <rect class="v5__signal-ribbon__shimmer" x="0" y="0" width="1070" height="270" fill="url(#v5sr-shimmer)"/>
                     </g>
@@ -633,6 +615,88 @@
       });
     </script>
     <script src="js/v5-motion.js?v=9-no-hover"></script>
+    <script>
+      /* Home-page only: SINGLE-logo morph.
+         The nav's brand element scales up + translates into hero center
+         when at scrollY=0, then continuously morphs back to its natural
+         nav position as the user scrolls. After the logo arrives at the
+         nav (phase A complete), the rest of the nav (links + CTA + bg)
+         fades in (phase B). Reverses on scroll-up. */
+      (function () {
+        var html = document.documentElement;
+        var heroSection = document.querySelector('.v5__hero--logo-morph');
+        var brand = document.querySelector('.v5__brand');
+        if (!heroSection || !brand) return;
+
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) {
+          html.style.setProperty('--nav-reveal', '1');
+          return;
+        }
+
+        var PHASE_A = 280;   /* px of scroll over which the logo morphs */
+        var PHASE_B = 120;   /* px of scroll after that for nav to fade in */
+
+        var natural = null;  /* { dx, dy, scale } */
+
+        function measure() {
+          /* Clear any transform so we read the natural nav position. */
+          brand.style.transform = '';
+          var brandRect = brand.getBoundingClientRect();
+          var cx = brandRect.left + brandRect.width / 2;
+          var cy = brandRect.top + brandRect.height / 2;
+
+          /* Hero target: center of the .v5__hero-logo-slot so the logo
+             sits exactly between the eyebrow and the video card. */
+          var slot = heroSection.querySelector('.v5__hero-logo-slot');
+          var slotRect = slot.getBoundingClientRect();
+          var targetX = slotRect.left + slotRect.width / 2;
+          var targetY = slotRect.top + slotRect.height / 2;
+
+          natural = {
+            dx: targetX - cx,
+            dy: targetY - cy,
+            scale: Math.max(2, Math.min(3.4, window.innerWidth / 480))
+          };
+        }
+
+        function update() {
+          if (!natural) measure();
+          var y = window.scrollY;
+          var pA = Math.max(0, Math.min(1, y / PHASE_A));
+          var pB = Math.max(0, Math.min(1, (y - PHASE_A) / PHASE_B));
+          var inv = 1 - pA;
+
+          var tx = natural.dx * inv;
+          var ty = natural.dy * inv;
+          var s = 1 + (natural.scale - 1) * inv;
+
+          brand.style.transform =
+            'translate3d(' + tx.toFixed(2) + 'px, ' + ty.toFixed(2) + 'px, 0) ' +
+            'scale(' + s.toFixed(3) + ')';
+          html.style.setProperty('--nav-reveal', pB.toFixed(3));
+          if (pB > 0.6) html.setAttribute('data-nav-visible', '');
+          else html.removeAttribute('data-nav-visible');
+        }
+
+        var raf = null;
+        function onScroll() {
+          if (raf) return;
+          raf = requestAnimationFrame(function () { update(); raf = null; });
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', function () {
+          natural = null;
+          update();
+        });
+
+        /* Initial paint after the logo image is sized correctly. */
+        if (document.readyState === 'complete') update();
+        else window.addEventListener('load', update, { once: true });
+        update();
+      })();
+    </script>
     <script>
       (function () {
         var media = document.querySelector('.v5__hero-media--video');
