@@ -629,8 +629,8 @@ html.v5:has(.v5__hero--logo-morph):not([data-nav-visible]) .v5__nav-inner > :not
    instead of being upsampled from a 192px-wide rasterisation. */
 .v5 .v5__brand-frame {
   display: block;
-  width: 192px;
-  height: 42px;
+  width: 160px;
+  height: 34px;
   position: relative;
   overflow: visible;
   pointer-events: none;
@@ -641,7 +641,7 @@ html.v5:has(.v5__hero--logo-morph):not([data-nav-visible]) .v5__nav-inner > :not
   width: 593px;                       /* natural intrinsic — paint sharp */
   height: 126px;
   max-width: none;
-  transform: scale(0.32378);          /* 192/593 — visual size 192×42 */
+  transform: scale(0.26981);          /* 160/593 — visual size 160×34 */
   transform-origin: top left;
 }
 
@@ -3146,11 +3146,10 @@ body.v5--menu-open .v5__dock { opacity: 0 !important; pointer-events: none !impo
   .v5__nav-cta { display: none; }
   .v5__nav-toggle { display: inline-flex; }
   .v5__nav-inner { gap: 16px; padding-inline: 20px; height: 72px; }
-  /* Mobile: keep the layout frame at 164×36 (smaller header). The
-     internal img still renders at natural res; the scale ratio drops
-     proportionally (164/593 ≈ 0.2765). */
-  .v5 .v5__brand-frame { width: 164px; height: 36px; }
-  .v5 .v5__brand-mark { transform: scale(0.27656); }
+  /* Mobile: layout frame at 136×30 (smaller header). Scale ratio
+     drops proportionally (136/593 ≈ 0.2293). */
+  .v5 .v5__brand-frame { width: 136px; height: 30px; }
+  .v5 .v5__brand-mark { transform: scale(0.22934); }
 
   /* Tighten radius scale — 32px/24px on small phone images reads as pill,
      not photo. Scale down ~40% so corners feel intentional, not soft. */
