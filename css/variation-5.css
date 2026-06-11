@@ -1803,8 +1803,8 @@ html.v5, body.v5 { overflow-x: clip; }
     #000 100%);
 }
 
-/* Orange glow — wider horizontal spread so the warm bleed reads across more
-   of the image edge, not just a narrow strip. */
+/* Orange glow — high-intensity warm wash. Peak alpha pushed up so the
+   orange reads as a strong field, not a tint. */
 .v5__feature::before {
   content: '';
   position: absolute;
@@ -1812,11 +1812,13 @@ html.v5, body.v5 { overflow-x: clip; }
   z-index: 1;
   pointer-events: none;
   background: linear-gradient(95deg,
-    rgba(255, 147, 50, 0.0) 2%,
-    rgba(255, 147, 50, 0.22) 12%,
-    rgba(255, 147, 50, 0.34) 22%,
-    rgba(255, 147, 50, 0.22) 34%,
-    rgba(255, 147, 50, 0.0) 48%);
+    rgba(255, 147, 50, 0.0) 0%,
+    rgba(255, 147, 50, 0.88) 3%,
+    rgba(255, 147, 50, 1.0) 10%,       /* peak hugged to the left */
+    rgba(255, 147, 50, 0.78) 22%,
+    rgba(255, 147, 50, 0.52) 36%,
+    rgba(255, 147, 50, 0.32) 48%,      /* still warm just past the card edge */
+    rgba(255, 147, 50, 0.0) 58%);      /* fades out shortly after */
   mix-blend-mode: screen;
 }
 
@@ -2091,7 +2093,7 @@ html.v5, body.v5 { overflow-x: clip; }
   z-index: 0;                                       /* sits beneath every content layer */
   height: 30vh;
   min-height: 220px;
-  background-color: #ffffff;
+  background-color: var(--v5-surface-dark);         /* Signal Brand Blue */
   overflow: hidden;
 }
 
