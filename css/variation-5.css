@@ -572,24 +572,10 @@ html.v5:has(.v5__hero--logo-morph) .v5__brand {
   will-change: transform;
 }
 
-/* The rest of the nav (everything except the brand) fades in via --nav-reveal,
-   AFTER the logo has arrived at its nav position (phase B). */
-html.v5:has(.v5__hero--logo-morph) .v5__nav {
-  background: rgba(255, 255, 255, calc(var(--nav-reveal, 0) * 0.88));
-  backdrop-filter: saturate(180%) blur(calc(var(--nav-reveal, 0) * 12px));
-  -webkit-backdrop-filter: saturate(180%) blur(calc(var(--nav-reveal, 0) * 12px));
-}
-
-html.v5:has(.v5__hero--logo-morph) .v5__nav-inner > :not(.v5__brand) {
-  opacity: var(--nav-reveal, 0);
-  transition: none;
-}
-
-/* Disable interaction with nav links/CTA while they're (mostly) invisible —
-   JS flips data-nav-visible once --nav-reveal passes ~0.6. */
-html.v5:has(.v5__hero--logo-morph):not([data-nav-visible]) .v5__nav-inner > :not(.v5__brand) {
-  pointer-events: none;
-}
+/* Nav links + CTA + background stay fully visible at all times.
+   Only the brand morphs from hero size back into its nav slot.
+   (The --nav-reveal variable is still set by JS but no longer wired
+   to opacity, so it's a no-op for visibility.) */
 
 .v5__nav-inner {
   display: flex;
@@ -627,22 +613,15 @@ html.v5:has(.v5__hero--logo-morph):not([data-nav-visible]) .v5__nav-inner > :not
    the cumulative effective scale of the image is ~1, so the embedded
    wordmark raster is painted close to its native pixel resolution
    instead of being upsampled from a 192px-wide rasterisation. */
-.v5 .v5__brand-frame {
-  display: block;
-  width: 160px;
-  height: 34px;
-  position: relative;
-  overflow: visible;
-  pointer-events: none;
-}
-
+/* SVG logo — rasterizes natively at every size + DPR, so no transform-scale
+   trick is needed. Sized directly via CSS width/height. The home-page
+   hero-morph applies its own scale transform to grow this UP for the hero
+   state; the SVG re-rasterizes sharp at every step of the morph. */
 .v5 .v5__brand-mark {
   display: block;
-  width: 593px;                       /* natural intrinsic — paint sharp */
-  height: 126px;
+  width: 128px;                                    /* 20% smaller than the previous 160 */
+  height: 39px;                                    /* 593:180 aspect ratio */
   max-width: none;
-  transform: scale(0.26981);          /* 160/593 — visual size 160×34 */
-  transform-origin: top left;
 }
 
 .v5__nav-links {
@@ -3146,10 +3125,8 @@ body.v5--menu-open .v5__dock { opacity: 0 !important; pointer-events: none !impo
   .v5__nav-cta { display: none; }
   .v5__nav-toggle { display: inline-flex; }
   .v5__nav-inner { gap: 16px; padding-inline: 20px; height: 72px; }
-  /* Mobile: layout frame at 136×30 (smaller header). Scale ratio
-     drops proportionally (136/593 ≈ 0.2293). */
-  .v5 .v5__brand-frame { width: 136px; height: 30px; }
-  .v5 .v5__brand-mark { transform: scale(0.22934); }
+  /* Mobile: 20% smaller than desktop nav. SVG aspect 593:180. */
+  .v5 .v5__brand-mark { width: 109px; height: 33px; }
 
   /* Tighten radius scale — 32px/24px on small phone images reads as pill,
      not photo. Scale down ~40% so corners feel intentional, not soft. */
