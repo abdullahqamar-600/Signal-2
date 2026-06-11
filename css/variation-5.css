@@ -2093,7 +2093,7 @@ html.v5, body.v5 { overflow-x: clip; }
   z-index: 0;                                       /* sits beneath every content layer */
   height: 30vh;
   min-height: 220px;
-  background-color: var(--v5-surface-dark);         /* Signal Brand Blue */
+  background-color: #ffffff;
   overflow: hidden;
 }
 
@@ -2122,7 +2122,7 @@ body.v5 { padding-bottom: 30vh; }
   content: '';
   position: absolute;
   inset: -10% -2% -10% -2%;
-  background: url('../Pattern.svg') center / cover no-repeat;
+  background: url('../Pattern.svg?v=2-brand-blue') center / cover no-repeat;
   pointer-events: none;
   transform: translate3d(0, var(--v5-pp-py, 0px), 0);
   will-change: transform;
