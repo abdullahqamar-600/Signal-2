@@ -621,11 +621,28 @@ html.v5:has(.v5__hero--logo-morph):not([data-nav-visible]) .v5__nav-inner > :not
   outline-offset: 4px;
 }
 
+/* Frame holds the layout box at nav-size; the SVG inside renders at
+   near-native resolution and is downscaled via CSS transform. When the
+   home-page morph then transforms the parent .v5__brand up to scale 3,
+   the cumulative effective scale of the image is ~1, so the embedded
+   wordmark raster is painted close to its native pixel resolution
+   instead of being upsampled from a 192px-wide rasterisation. */
+.v5 .v5__brand-frame {
+  display: block;
+  width: 192px;
+  height: 42px;
+  position: relative;
+  overflow: visible;
+  pointer-events: none;
+}
+
 .v5 .v5__brand-mark {
   display: block;
-  height: 42px;                                    /* larger header logo */
-  width: 192px;                                    /* aspect 593:130 -> 42 * 593/130 ≈ 192 */
+  width: 593px;                       /* natural intrinsic — paint sharp */
+  height: 126px;
   max-width: none;
+  transform: scale(0.32378);          /* 192/593 — visual size 192×42 */
+  transform-origin: top left;
 }
 
 .v5__nav-links {
@@ -981,6 +998,11 @@ html.v5:has(.v5__hero--logo-morph):not([data-nav-visible]) .v5__nav-inner > :not
   scroll-margin-top: 88px;
 }
 
+/* Section padding modifiers — replace repeated inline overrides. */
+.v5__section.v5__section--flush-top { padding-top: 0; }
+.v5__section.v5__section--tight-top { padding-top: var(--v5-section-y-tight); }
+.v5__section.v5__section--tight-block { padding-block: var(--v5-section-y-tight); }
+
 .v5__section-head {
   display: flex;
   flex-direction: column;
@@ -1023,6 +1045,11 @@ html.v5, body.v5 { overflow-x: clip; }
    centered relative to the viewport (via 100vw band) so the full ribbon
    reveals end-to-end across the page in one go, regardless of how narrow
    the card is. Body-level overflow-x:clip prevents horizontal scroll. */
+/* Decorative swoosh inside the navy CTA card — uses the full "Extendede
+   Swoosh.svg" (2743×270, 10.16:1 ratio). The image is sized by HEIGHT and
+   centered relative to the viewport (via 100vw band) so the full ribbon
+   reveals end-to-end across the page in one go, regardless of how narrow
+   the card is. Body-level overflow-x:clip prevents horizontal scroll. */
 .v5__composite-cta-swoosh {
   position: relative;
   /* Break out of the card horizontally — span the whole viewport */
@@ -1031,7 +1058,7 @@ html.v5, body.v5 { overflow-x: clip; }
   margin-left: -50vw;
   /* Height set so width (= height × 10.16) reaches viewport width.
      At a 1440px viewport, 100vw × 270/2743 ≈ 141.7px tall. */
-  height: clamp(73px, 11.92vw, 194px);              /* +10% again on all stops */
+  height: clamp(73px, 11.92vw, 194px);
   margin-block: clamp(8px, 1.2vw, 20px);
   flex: 0 0 auto;
   overflow: visible;
@@ -1170,7 +1197,7 @@ html.v5, body.v5 { overflow-x: clip; }
   border-radius: var(--v5-r-card);
   overflow: hidden;
   flex: 1;
-  min-height: 220px;
+  min-height: 96px;
 }
 
 .v5__composite-mission-photo img {
@@ -1183,17 +1210,21 @@ html.v5, body.v5 { overflow-x: clip; }
 .v5__composite-mission-photo .v5__tag--b { top: 50%; right: 20px; transform: translateY(-50%); }
 .v5__composite-mission-photo .v5__tag--c { bottom: 20px; left: 20px; }
 
-/* Bottom-right card — dark blue, with CTA and the swoosh clipped to the card */
+/* Bottom-right card — dark blue. The heading text fills the entire card
+   and is vertically centered. The swoosh and register button float at the
+   bottom (absolutely positioned) so they don't displace the heading. */
+/* Bottom-right card — dark blue. Three children: heading group → swoosh
+   ribbon (spans 100vw, breaks out horizontally) → register button. Layout
+   is flex column with space-between, so the swoosh always sits between
+   the heading and the button. Top padding is the largest stop so the
+   heading sits roughly at the visual centre of the card. */
 .v5__composite-cta {
   position: relative;
   background: var(--v5-surface-dark);
   color: var(--v5-on-dark);
-  /* Top padding intentionally large — pushes the heading text down to sit
-     near the vertical center of the card. Bottom stays at standard padding
-     so the Register button keeps its anchor at the bottom edge. */
-  padding: clamp(140px, 14vw, 220px) clamp(24px, 2.6vw, 40px) clamp(24px, 2.6vw, 40px);
+  padding: clamp(72px, 7.5vw, 112px) clamp(24px, 2.6vw, 40px) clamp(24px, 2.6vw, 40px);
   border-radius: var(--v5-r-hero);
-  overflow: hidden;                                    /* clip the swoosh bleed */
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1536,6 +1567,223 @@ html.v5, body.v5 { overflow-x: clip; }
 }
 
 /* -----------------------------------------------------------
+   THE ROOM — pinned scene transition
+   Inside a rounded card centered in white space. Scene A is the
+   room photo. Orange sweeps up. Pattern wave rows mask in bottom→top.
+   Headline + lede land alongside the upper-middle rows. Driven by
+   --p (0..1) set by js/v5-room-pin.js.
+   ----------------------------------------------------------- */
+.v5-rp {
+  --p: 0;
+  position: relative;
+  background: var(--v5-bg);
+}
+
+/* Track defines the scroll distance the pin will hold. Animation is
+   scroll-driven (reverses on scroll up) and compressed into a short
+   window so the full sequence completes quickly. */
+.v5-rp__track {
+  position: relative;
+  height: 175vh;
+}
+
+/* Stage is the pinned 100vh viewport — white surface that frames the card. */
+.v5-rp__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--v5-bg);
+  display: grid;
+  place-items: center;
+  /* Match the site container/gutter used by .v5__wrap so the card
+     aligns with every other section's edge. */
+  padding-inline: var(--v5-pad-x);
+  padding-block: clamp(48px, 10vh, 120px);
+}
+
+/* The card — clipped surface that holds every animated layer. Width
+   is capped by the site container so it doesn't extend wider than
+   the surrounding sections. */
+.v5-rp__card {
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--v5-container) - 2 * var(--v5-pad-x));
+  aspect-ratio: 16 / 9;
+  max-height: 100%;
+  border-radius: clamp(20px, 1.8vw, 32px);
+  overflow: hidden;
+  background: var(--v5-accent);
+  isolation: isolate;
+  box-shadow: 0 30px 60px -30px rgba(0, 22, 72, 0.18);
+}
+
+/* -- Layer 0: Photo (Scene A) -- */
+.v5-rp__photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: clamp(0, calc((0.40 - var(--p)) / 0.10), 1);
+}
+.v5-rp__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% center;
+  display: block;
+}
+.v5-rp__photo-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 130% at 25% 100%,
+      rgba(0, 22, 72, 0.42) 0%,
+      rgba(0, 22, 72, 0.26) 30%,
+      rgba(0, 22, 72, 0.12) 60%,
+      rgba(0, 22, 72, 0.00) 100%);
+}
+
+/* Photo-state text — visible only in Scene A, ducks out as orange rises. */
+.v5-rp__photo-body {
+  position: absolute;
+  z-index: 1;
+  left: clamp(24px, 5%, 88px);
+  right: clamp(24px, 5%, 88px);
+  bottom: clamp(28px, 7%, 72px);
+  max-width: min(560px, 70%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: #ffffff;
+  opacity: clamp(0, calc((0.18 - var(--p)) / 0.10), 1);
+  transform: translateY(calc(var(--p) * -24px));
+}
+.v5-rp__photo-title {
+  color: #ffffff;
+  font-size: clamp(28px, 3.4vw, 52px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0 2px 16px rgba(0, 20, 80, 0.45);
+}
+.v5-rp__photo-lede {
+  color: rgba(244, 245, 251, 0.94);
+  font-size: clamp(15px, 1.1vw, 17px);
+  line-height: 1.45;
+  max-width: 44ch;
+  margin: 0;
+  text-shadow: 0 1px 8px rgba(0, 20, 80, 0.5);
+}
+
+/* -- Layer 1: Orange overlay. Fades onto the photo (no sweep). -- */
+.v5-rp__orange {
+  --orange-a: 0;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--v5-accent);
+  opacity: var(--orange-a);
+  will-change: opacity;
+}
+
+/* -- Layer 2: Pattern rows. Anchored bottom-right of the card. The SVG
+      is sized larger than the card so the wave field reads as a swatch
+      flowing off the right edge, matching the reference composition. -- */
+.v5-rp__pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  color: #ffffff;
+  pointer-events: none;
+  overflow: hidden;
+}
+.v5-rp__pattern svg {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  /* Pattern intrinsic ratio is 1160:679 (~1.71:1). At width 100%
+     of the card, the pattern occupies the lower ~55% of the card
+     height — leaving clean orange in the upper-left for the
+     headline, with the bottom-most wave row spanning the full
+     card width (per the reference). */
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.v5-rp__pattern .v5-rp-row {
+  --r: 0;
+  opacity: var(--r);
+  will-change: opacity;
+}
+
+/* -- Layer 3: Final body (headline + lede over the orange + pattern).
+      Anchored top-left, title case, no eyebrow — per reference. -- */
+.v5-rp__body {
+  --body-t: 0;
+  position: absolute;
+  z-index: 4;
+  left: clamp(32px, 7%, 112px);
+  right: auto;
+  top: clamp(48px, 13%, 144px);
+  max-width: min(560px, 56%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: #ffffff;
+  opacity: var(--body-t);
+  transform: translate3d(0, calc((1 - var(--body-t)) * 20px), 0);
+  will-change: transform, opacity;
+}
+.v5-rp__title {
+  color: #ffffff;
+  font-family: 'Darker Grotesque', system-ui, sans-serif;
+  font-size: clamp(44px, 5.6vw, 88px);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  margin: 0;
+  text-transform: none;
+}
+.v5-rp__lede {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: clamp(15px, 1.05vw, 18px);
+  line-height: 1.45;
+  max-width: 38ch;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* -- Reduced motion: no pin, no animation, render the final state. -- */
+@media (prefers-reduced-motion: reduce) {
+  .v5-rp__track { height: auto; }
+  .v5-rp__stage {
+    position: relative;
+    height: auto;
+  }
+  .v5-rp__photo,
+  .v5-rp__photo-body { display: none; }
+  .v5-rp__orange { opacity: 1; }
+  .v5-rp__pattern .v5-rp-row { --r: 1; }
+  .v5-rp__body { opacity: 1; transform: none; }
+}
+
+/* -- Narrow screens: tighter pin + card switches to portrait aspect. -- */
+@media (max-width: 720px) {
+  .v5-rp__track { height: 200vh; }
+  .v5-rp__stage { padding: 16px; }
+  .v5-rp__card { aspect-ratio: 4 / 5; }
+  .v5-rp__title { font-size: clamp(28px, 8vw, 44px); }
+  .v5-rp__body {
+    top: clamp(28px, 8%, 64px);
+    max-width: 78%;
+  }
+  .v5-rp__pattern svg { width: 110%; right: -8%; }
+}
+
+/* -----------------------------------------------------------
    Featured event — full-bleed image with a white card floated on top-left
    ----------------------------------------------------------- */
 .v5__feature {
@@ -1660,6 +1908,11 @@ html.v5, body.v5 { overflow-x: clip; }
   border-top: 1px solid var(--v5-rule);
 }
 
+/* Separator after a FAQ group when more groups follow on the same page. */
+.v5__faq-list--group {
+  margin-bottom: 64px;
+}
+
 .v5__faq-item {
   border-bottom: 1px solid var(--v5-rule);
 }
@@ -1727,33 +1980,42 @@ html.v5, body.v5 { overflow-x: clip; }
 /* -----------------------------------------------------------
    Closing CTA
    ----------------------------------------------------------- */
+/* Close section — one outer blue card with the grey "Send it in" panel
+   nested inside as an inset right column. Reads as a single composed
+   surface, not two standalone cards. */
 .v5__close {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
-  gap: clamp(32px, 4vw, 72px);
-  align-items: stretch;
+  display: block;
 }
 
 .v5__close-card {
   background: var(--v5-ink);
   color: var(--v5-on-dark);
   border-radius: var(--v5-r-hero);
-  padding: clamp(40px, 5vw, 72px);
+  padding: clamp(32px, 4vw, 56px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(28px, 3vw, 56px);
+  align-items: stretch;
+  min-height: 216px;
+}
+
+.v5__close-main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 28px;                /* was 48 — reduced to ~60% */
-  min-height: 216px;        /* was 360 — reduced to 60% */
+  gap: 28px;
+  padding: clamp(8px, 1vw, 16px) 0;
 }
 
 .v5__close-title {
   font-family: var(--v5-sans);
   font-weight: 500;
-  font-size: clamp(32px, 3.6vw, 48px);
+  font-size: clamp(28px, 3.2vw, 44px);
   line-height: 1.06;
   letter-spacing: -0.02em;
   color: var(--v5-on-dark);
   max-width: 14ch;
+  margin: 0;
 }
 
 .v5__close-foot {
@@ -1768,26 +2030,55 @@ html.v5, body.v5 { overflow-x: clip; }
   font-size: 14px;
   color: rgba(244, 245, 251, 0.65);
   max-width: 32ch;
+  margin: 0;
 }
 
+/* Nested grey panel inside the blue close-card. */
 .v5__close-side {
   background: var(--v5-surface-softer);
   color: var(--v5-ink);
-  border: 1px solid var(--v5-rule);
-  border-radius: var(--v5-r-hero);
-  padding: clamp(32px, 4vw, 56px);
+  border-radius: var(--v5-r-card);
+  padding: clamp(24px, 2.4vw, 36px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 20px;                /* was 32 — reduced to ~60% */
-  min-height: 216px;        /* was 360 — reduced to 60% */
+  gap: 16px;
+  min-height: 0;
 }
 
 .v5__close-side-h {
-  font-size: clamp(22px, 2vw, 28px);
+  font-size: clamp(20px, 1.8vw, 26px);
   font-weight: 500;
-  line-height: 1.15;
+  line-height: 1.18;
   letter-spacing: -0.01em;
+  color: var(--v5-ink);
+  margin: 0;
+}
+
+.v5__close-side p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(10, 26, 76, 0.72);
+  margin: 0;
+}
+
+.v5__close-side .v5__btn--secondary {
+  align-self: flex-start;
+  background: rgba(10, 26, 76, 0.06);
+  border-color: transparent;
+  color: var(--v5-ink);
+}
+
+.v5__close-side .v5__btn--secondary:hover {
+  background: rgba(10, 26, 76, 0.10);
+}
+
+/* Stack to single column at narrower viewports. */
+@media (max-width: 720px) {
+  .v5__close-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
 /* -----------------------------------------------------------
@@ -1988,10 +2279,10 @@ body.v5 { padding-bottom: 30vh; }
 
 .v5__page-hero-title {
   font-family: var(--v5-sans);
-  font-weight: 700;
+  font-weight: 600;
   font-size: clamp(44px, 5.2vw, 72px);
-  line-height: 1.0;
-  letter-spacing: -0.03em;
+  line-height: 1.02;
+  letter-spacing: -0.028em;
   margin-top: 12px;
 }
 
@@ -2855,7 +3146,11 @@ body.v5--menu-open .v5__dock { opacity: 0 !important; pointer-events: none !impo
   .v5__nav-cta { display: none; }
   .v5__nav-toggle { display: inline-flex; }
   .v5__nav-inner { gap: 16px; padding-inline: 20px; height: 72px; }
-  .v5 .v5__brand-mark { height: 36px; width: 164px; }
+  /* Mobile: keep the layout frame at 164×36 (smaller header). The
+     internal img still renders at natural res; the scale ratio drops
+     proportionally (164/593 ≈ 0.2765). */
+  .v5 .v5__brand-frame { width: 164px; height: 36px; }
+  .v5 .v5__brand-mark { transform: scale(0.27656); }
 
   /* Tighten radius scale — 32px/24px on small phone images reads as pill,
      not photo. Scale down ~40% so corners feel intentional, not soft. */
@@ -2906,4 +3201,375 @@ body.v5--menu-open .v5__dock { opacity: 0 !important; pointer-events: none !impo
 
   /* Floating dock — keep tight but ensure not stealing tap targets */
   .v5__dock { bottom: max(12px, env(safe-area-inset-bottom)); }
+}
+
+/* -----------------------------------------------------------
+   Travel page — v5 progress redesign
+   Hero track strip, real Omaha map (Voyager tile, permanent
+   labels, numbered pins), 3-step progress, "Heads up" callout.
+   ----------------------------------------------------------- */
+
+/* ---- Eyebrow inline icon (used in step eyebrows) ---- */
+.v5__eyebrow-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 2px;
+  vertical-align: -2px;
+  color: var(--v5-ink);
+  opacity: 0.85;
+}
+.v5__eyebrow:has(.v5__eyebrow-icon)::before { display: none; }
+
+/* ---- Hero track — small 3-stop preview pinned to the right of the hero
+        (replaces the redundant "fly into Eppley · OMA" meta strip). ---- */
+.v5__travel-track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-self: end;
+  min-width: 240px;
+}
+
+.v5__travel-track li {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--v5-rule);
+}
+.v5__travel-track li:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.v5__travel-track-num {
+  font-family: var(--v5-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--v5-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.v5__travel-track-name {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--v5-ink);
+}
+
+@media (max-width: 860px) {
+  .v5__page-hero-inner { grid-template-columns: 1fr; align-items: start; }
+  .v5__travel-track { align-self: start; min-width: 0; width: 100%; }
+}
+
+/* ---- Map figure (bridge) ---- */
+.v5__travel-mapfig { margin: 0; display: block; }
+
+.v5__travel-mapfig-frame {
+  width: 100%;
+  height: clamp(420px, 60vh, 640px);
+  border-radius: var(--v5-r-img);
+  overflow: hidden;
+  border: 1px solid var(--v5-rule);
+  background: var(--v5-surface-softer);
+}
+
+@media (max-width: 720px) {
+  .v5__travel-mapfig-frame {
+    height: clamp(340px, 62vh, 520px);
+    border-radius: var(--v5-r-card);
+  }
+}
+
+/* ---- Leaflet pin (numbered) and permanent label pill ---- */
+.v5__leaflet-pin {
+  background: transparent;
+  border: 0;
+}
+.v5__leaflet-pin-inner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--v5-ink);
+  color: var(--v5-on-dark);
+  display: grid;
+  place-items: center;
+  font-family: var(--v5-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.95), 0 4px 14px -6px rgba(10, 26, 76, 0.35);
+}
+.v5__leaflet-pin-inner--accent {
+  background: var(--v5-accent);
+  color: var(--v5-on-accent);
+}
+
+/* The permanent label sits next to the pin and names the stop on the map.
+   White pill, hairline border, tight typography — matches the v5 dock. */
+.v5__leaflet-label {
+  background: #ffffff;
+  color: var(--v5-ink);
+  border: 1px solid var(--v5-rule);
+  padding: 8px 12px;
+  font-family: var(--v5-sans);
+  border-radius: 10px;
+  box-shadow: 0 4px 14px -8px rgba(10, 26, 76, 0.22);
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.15;
+  pointer-events: none;
+}
+.v5__leaflet-label::before { display: none; }
+
+.v5__leaflet-label-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--v5-ink);
+}
+.v5__leaflet-label-sub {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--v5-ink-muted);
+}
+
+.v5__leaflet-label--accent .v5__leaflet-label-sub { color: var(--v5-accent); }
+
+@media (max-width: 720px) {
+  .v5__leaflet-label { padding: 6px 9px; }
+  .v5__leaflet-label-name { font-size: 12.5px; }
+  .v5__leaflet-label-sub { font-size: 9.5px; letter-spacing: 0.08em; }
+  .v5__leaflet-pin-inner { width: 34px; height: 34px; font-size: 12.5px; }
+}
+
+.leaflet-container { font-family: var(--v5-sans); }
+.leaflet-container .leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.88);
+  font-size: 10px;
+  color: var(--v5-ink-soft);
+  padding: 2px 8px;
+}
+
+/* ---- Progress section ---- */
+.v5__travel-progress-head {
+  margin-bottom: clamp(32px, 4vw, 56px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.v5__travel-progress {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.v5__travel-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.4fr);
+  gap: clamp(24px, 4vw, 80px);
+  padding: clamp(32px, 3.6vw, 56px) 0;
+  border-top: 1px solid var(--v5-rule);
+}
+.v5__travel-step:last-child { border-bottom: 1px solid var(--v5-rule); }
+
+.v5__travel-step-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(20px, 2vw, 28px);
+  align-items: start;
+}
+
+/* Big step numeral — anchors the journey rhythm. */
+.v5__travel-step-num {
+  font-family: var(--v5-display);
+  font-size: clamp(56px, 6.5vw, 96px);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--v5-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Each step's numeral inherits the orange accent for step 01 only —
+   matches the orange "A" pin on the map. */
+.v5__travel-step:first-child .v5__travel-step-num { color: var(--v5-accent); }
+
+.v5__travel-step-headings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 6px;
+}
+
+.v5__travel-step-title {
+  font-family: var(--v5-sans);
+  font-size: clamp(22px, 2.2vw, 32px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--v5-ink);
+  margin: 0;
+}
+
+.v5__travel-step-code {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 4px 10px;
+  background: rgba(255, 147, 50, 0.14);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v5-accent);
+  vertical-align: middle;
+}
+
+.v5__travel-step-subtitle {
+  display: block;
+  font-weight: 500;
+  color: var(--v5-ink-muted);
+  letter-spacing: -0.018em;
+}
+
+/* Right column body sits centered against the numeral, keeps its own
+   stable rhythm independent of the numeral height. */
+.v5__travel-step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-self: center;
+}
+
+.v5__travel-step-lede {
+  font-size: clamp(16px, 1.1vw, 18px);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--v5-ink-muted);
+  margin: 0;
+  max-width: 52ch;
+}
+
+.v5__travel-step-bullets { margin-top: 4px; }
+
+@media (max-width: 860px) {
+  .v5__travel-step {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .v5__travel-step-body { align-self: start; }
+}
+@media (max-width: 520px) {
+  .v5__travel-step-head { grid-template-columns: 1fr; gap: 12px; }
+  .v5__travel-step-num { font-size: clamp(48px, 14vw, 72px); }
+  .v5__travel-step-code { display: block; margin: 8px 0 0; width: max-content; }
+}
+
+/* ---- Heads-up callout (note variant of the existing feature callout) ---- */
+.v5__travel-feature-callout--note {
+  align-items: flex-start;
+  background: rgba(255, 147, 50, 0.07);
+}
+.v5__travel-feature-callout-tag--alt {
+  background: var(--v5-accent);
+  color: var(--v5-on-accent);
+}
+
+/* ---- Tail note under the hotel bullets ---- */
+.v5__travel-feature-note {
+  margin: 14px 0 0;
+  font-size: 14px;
+  color: var(--v5-ink-soft);
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* -----------------------------------------------------------
+   Network card — orange surface, Signal wave pattern.
+   Mirrors the brand reference: heading top-left, lede beneath,
+   cascading wavy white ribbons running lower-left to upper-right.
+   ----------------------------------------------------------- */
+.v5__network-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--v5-r-img);
+  background: var(--v5-accent);
+  color: #ffffff;
+  padding: clamp(40px, 5vw, 88px) clamp(32px, 4vw, 80px);
+  min-height: clamp(360px, 38vw, 560px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  isolation: isolate;
+}
+
+.v5__network-card-body {
+  position: relative;
+  z-index: 2;
+  max-width: 36ch;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.6vw, 22px);
+}
+
+.v5__network-card-title {
+  font-family: var(--v5-sans);
+  font-weight: 500;
+  font-size: clamp(36px, 4.4vw, 64px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.v5__network-card-lede {
+  font-size: clamp(15px, 1.05vw, 17px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+  max-width: 36ch;
+}
+
+/* Wave pattern anchored to the bottom-right; CSS mask fades the leftmost
+   edge so the cascade never crashes into the body copy on the upper-left. */
+.v5__network-card-waves {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 78%;
+  height: 96%;
+  z-index: 1;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 22%, #000 100%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 22%, #000 100%);
+}
+
+@media (max-width: 860px) {
+  .v5__network-card-waves { width: 88%; height: 70%; }
+}
+
+@media (max-width: 720px) {
+  .v5__network-card {
+    padding: 36px 28px;
+    min-height: 420px;
+    border-radius: var(--v5-r-card);
+  }
+  .v5__network-card-waves {
+    width: 100%;
+    height: 60%;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%, #000 100%);
+            mask-image: linear-gradient(to right, transparent 0%, #000 30%, #000 100%);
+  }
 }

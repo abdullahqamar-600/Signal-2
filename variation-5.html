@@ -9,14 +9,22 @@
       content="Three days in Omaha for the people running and growing Signal franchises. October 6 to 8, 2026."
     />
     <link rel="stylesheet" href="css/shared.css" />
-    <link rel="stylesheet" href="css/variation-5.css?v=69-cta-center2" />
+    <link rel="stylesheet" href="css/variation-5.css?v=90-swoosh-restore" />
   </head>
   <body class="v5">
     <!-- ============ NAV ============ -->
     <header class="v5__nav">
       <div class="v5__nav-inner">
         <a class="v5__brand" href="variation-5.html" aria-label="Leadership Summit 2026">
-          <img class="v5__brand-mark" src="assets/Logo Blue.svg" alt="Leadership Summit" />
+          <!-- Wrapper keeps the layout box at nav size (192x42) while the
+               img inside is sized to its natural ~593x126 and downscaled
+               via CSS transform. The SVG (which contains an embedded
+               raster wordmark) therefore rasterizes at near-native res,
+               so the home-page hero morph can scale UP from here without
+               upsampling a tiny bitmap. -->
+          <span class="v5__brand-frame" aria-hidden="true">
+            <img class="v5__brand-mark" src="assets/Logo Blue 2.png" alt="Leadership Summit" width="593" height="126" />
+          </span>
         </a>
         <nav>
           <ul class="v5__nav-links">
@@ -311,19 +319,34 @@
       </section>
 
       <!-- ============ THE ROOM ============ -->
-      <section class="v5__section">
-        <div class="v5__wrap">
-          <div class="v5__room" data-reveal="fade">
-            <div class="v5__room-bg" aria-hidden="true">
-              <img src="assets/photos/SignalOwnerSummit2024-7063.jpg" alt="" />
-            </div>
-            <div class="v5__room-body">
-              <span class="v5__eyebrow v5__eyebrow--on-dark">The room</span>
-              <h2 class="v5__section-h v5__room-title">The full Signal network.</h2>
-              <p class="v5__lede v5__room-lede">
-                Owners and the leadership teams who run the business with them.
-                Small enough for real conversation, big enough to matter.
-              </p>
+      <!-- ============ THE ROOM — pinned scene transition ============ -->
+      <section class="v5-rp" aria-label="The room">
+        <div class="v5-rp__track">
+          <div class="v5-rp__stage">
+            <div class="v5-rp__card">
+              <div class="v5-rp__photo" aria-hidden="true">
+                <img src="assets/photos/SignalOwnerSummit2024-7063.jpg" alt="" />
+                <div class="v5-rp__photo-vignette"></div>
+              </div>
+              <div class="v5-rp__photo-body">
+                <h2 class="v5-rp__photo-title">The full Signal network.</h2>
+                <p class="v5-rp__photo-lede">
+                  Owners and the leadership teams who run the business with them.
+                  Small enough for real conversation, big enough to matter.
+                </p>
+              </div>
+
+              <div class="v5-rp__orange" aria-hidden="true"></div>
+
+              <div class="v5-rp__pattern" aria-hidden="true" data-pattern-src="Pattern.grouped.svg?v=4-waves"></div>
+
+              <div class="v5-rp__body">
+                <h2 class="v5-rp__title">The full<br />Signal network.</h2>
+                <p class="v5-rp__lede">
+                  Owners and the leadership teams who run the business with them.
+                  Small enough for real conversation, big enough to matter.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -388,7 +411,7 @@
       </section>
 
       <!-- ============ PULL QUOTE ============ -->
-      <section class="v5__section" style="padding-block: var(--v5-section-y-tight);">
+      <section class="v5__section v5__section--tight-block">
         <div class="v5__wrap">
           <figure class="v5__quote" data-reveal>
             <div class="v5__quote-body">
@@ -563,7 +586,7 @@
           </div>
         </div>
         <div class="v5__footer-bottom">
-          <img src="assets/Logo Blue.svg" alt="Leadership Summit" />
+          <img src="assets/Logo Blue 2.png" alt="Leadership Summit" />
         </div>
       </div>
     </footer>
@@ -615,6 +638,7 @@
       });
     </script>
     <script src="js/v5-motion.js?v=9-no-hover"></script>
+    <script src="js/v5-room-pin.js?v=8"></script>
     <script>
       /* Home-page only: SINGLE-logo morph.
          The nav's brand element scales up + translates into hero center
@@ -690,6 +714,30 @@
           natural = null;
           update();
         });
+
+        /* bfcache restore: when the browser navigates back to the home
+           page from a sub-page via back/forward, the IIFE does NOT
+           re-execute and the stale inline transform stays applied.
+           Force a remeasure + update on every pageshow. */
+        window.addEventListener('pageshow', function () {
+          natural = null;
+          update();
+        });
+
+        /* Polling backup: in some environments (programmatic scrolls,
+           certain headless contexts, scroll inside an inner container)
+           the `scroll` event on window does not fire. A lightweight rAF
+           loop that runs only while scrollY is changing keeps the morph
+           in sync without spinning every frame at rest. */
+        var lastY = -1;
+        (function poll() {
+          var y = window.scrollY;
+          if (y !== lastY) {
+            lastY = y;
+            update();
+          }
+          requestAnimationFrame(poll);
+        })();
 
         /* Initial paint after the logo image is sized correctly. */
         if (document.readyState === 'complete') update();

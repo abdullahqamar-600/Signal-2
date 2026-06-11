@@ -4,14 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Travel &amp; Hotel. Leadership Summit 2026.</title>
-    <meta name="description" content="Getting to Omaha for Leadership Summit 2026." />
+    <meta name="description" content="Travel and hotel information for Leadership Summit 2026 in Omaha." />
     <link rel="stylesheet" href="css/shared.css" />
-    <link rel="stylesheet" href="css/variation-5.css?v=69-cta-center2" />
+    <link rel="stylesheet" href="css/variation-5.css?v=71-travel-progress" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
   </head>
   <body class="v5">
     <header class="v5__nav">
       <div class="v5__nav-inner">
-        <a class="v5__brand" href="variation-5.html"><img class="v5__brand-mark" src="assets/Logo Blue.svg" alt="Leadership Summit" /></a>
+        <a class="v5__brand" href="variation-5.html"><img class="v5__brand-mark" src="assets/Logo Blue 2.png" alt="Leadership Summit" /></a>
         <nav>
           <ul class="v5__nav-links">
             <li><a class="v5__nav-link" href="variation-5.html">Home</a></li>
@@ -50,159 +56,174 @@
     </div>
 
     <main>
+      <!-- ============ HERO ============ -->
       <section class="v5__page-hero">
         <div class="v5__wrap">
           <div class="v5__page-hero-inner">
             <div data-reveal data-reveal-delay="1">
-              <span class="v5__eyebrow">Travel</span>
+              <span class="v5__eyebrow">Travel &amp; Hotel</span>
               <h1 class="v5__page-hero-title">Getting<br />to Omaha.</h1>
               <p class="v5__lede v5__page-hero-lede">
-                Fly into Eppley. Stay nearby. Plan to be in town by Monday afternoon
-                if you&rsquo;re joining the kickoff.
+                To help make travel planning simple, we&rsquo;ve included nearby
+                airport and hotel recommendations for your time at Leadership Summit.
               </p>
             </div>
-            <div class="v5__page-hero-meta" data-reveal data-reveal-delay="2">
-              <span>Direct from</span>
-              <strong>60+ U.S. cities</strong>
-              <span>20 min to home office</span>
-            </div>
+            <ol class="v5__travel-track" data-reveal data-reveal-delay="2" aria-label="Trip overview">
+              <li>
+                <span class="v5__travel-track-num">01</span>
+                <span class="v5__travel-track-name">Eppley Airfield</span>
+              </li>
+              <li>
+                <span class="v5__travel-track-num">02</span>
+                <span class="v5__travel-track-name">Embassy Suites</span>
+              </li>
+              <li>
+                <span class="v5__travel-track-num">03</span>
+                <span class="v5__travel-track-name">Signal Home Office</span>
+              </li>
+            </ol>
           </div>
         </div>
       </section>
 
-      <!-- STAT STRIP — Swiss-style editorial chart, not metric tiles -->
+      <!-- ============ MAP BRIDGE — real Omaha map, 3 numbered locations ============ -->
+      <section class="v5__section v5__section--bridge">
+        <div class="v5__wrap">
+          <figure class="v5__travel-mapfig" data-reveal="fade">
+            <div id="v5-omaha-map" class="v5__travel-mapfig-frame" role="img" aria-label="Map of Omaha showing Eppley Airfield, Embassy Suites La Vista, and the Signal Home Office, connected in order."></div>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ PROGRESS — three-step journey ============ -->
       <section class="v5__section v5__section--tight">
         <div class="v5__wrap">
-          <div class="v5__travel-stats" data-reveal>
-            <div class="v5__travel-stat">
-              <span class="v5__travel-stat-label">Direct flights</span>
-              <span class="v5__travel-stat-figure">60+<span class="v5__travel-stat-unit">U.S. cities</span></span>
-            </div>
-            <div class="v5__travel-stat">
-              <span class="v5__travel-stat-label">Hotel &rarr; Home Office</span>
-              <span class="v5__travel-stat-figure">10<span class="v5__travel-stat-unit">min</span></span>
-            </div>
-            <div class="v5__travel-stat">
-              <span class="v5__travel-stat-label">Airport &rarr; Home Office</span>
-              <span class="v5__travel-stat-figure">20<span class="v5__travel-stat-unit">min</span></span>
-            </div>
-          </div>
-        </div>
-      </section>
+          <header class="v5__travel-progress-head" data-reveal>
+            <span class="v5__eyebrow">Your trip</span>
+            <h2 class="v5__section-h">Three stops,<br />about 25 minutes apart.</h2>
+          </header>
 
-      <!-- HOTEL FEATURE — asymmetric photo + content split, the marquee block -->
-      <section class="v5__section">
-        <div class="v5__wrap">
-          <article class="v5__travel-feature" data-reveal>
-            <div class="v5__travel-feature-media">
-              <img src="assets/photos/SignalOwnerSummit2024-7063.jpg" alt="Signal owners gathered for a previous summit" />
-            </div>
-            <div class="v5__travel-feature-body">
-              <span class="v5__eyebrow">Where you stay</span>
-              <h2 class="v5__section-h v5__travel-feature-title">Embassy Suites La Vista.</h2>
-              <p class="v5__lede">
-                About 10 minutes from the Signal Home Office. Where most of the
-                network stays. The lobby is where the side conversations happen.
-              </p>
-              <ul class="v5__travel-feature-bullets">
-                <li>Complimentary breakfast</li>
-                <li>Complimentary parking</li>
-                <li>Walkable to restaurants</li>
-              </ul>
-              <p class="v5__travel-feature-callout">
-                <span class="v5__travel-feature-callout-tag">Included</span>
-                <span>Block rate sent with your registration confirmation.</span>
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
+          <ol class="v5__travel-progress" data-reveal>
 
-      <!-- LOGISTICS TWO-UP — flying in + getting around, factual & compact -->
-      <section class="v5__section">
-        <div class="v5__wrap">
-          <div class="v5__travel-logistics">
-            <article class="v5__travel-logistic" data-reveal data-reveal-delay="1">
-              <span class="v5__eyebrow">Flying in</span>
-              <h3 class="v5__travel-logistic-title">Eppley Airfield (OMA).</h3>
-              <p class="v5__travel-logistic-body">
-                20 to 25 minutes from the Signal Home Office. Most major U.S. cities have a direct flight in.
-              </p>
-              <dl class="v5__travel-facts">
-                <div>
-                  <dt>To Home Office</dt>
-                  <dd>20 min</dd>
+            <!-- ── 01 — Fly in ───────────────────── -->
+            <li class="v5__travel-step">
+              <header class="v5__travel-step-head">
+                <span class="v5__travel-step-num" aria-hidden="true">01</span>
+                <div class="v5__travel-step-headings">
+                  <span class="v5__eyebrow">
+                    <svg class="v5__eyebrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M12 2 L13.6 10 L22 12.4 L22 14 L13.6 13 L12.4 19.6 L15 21 L15 22 L9 22 L9 21 L11.6 19.6 L10.4 13 L2 14 L2 12.4 L10.4 10 Z"/>
+                    </svg>
+                    Airport
+                  </span>
+                  <h3 class="v5__travel-step-title">Eppley Airfield <span class="v5__travel-step-code">OMA</span></h3>
                 </div>
-                <div>
-                  <dt>To Embassy Suites</dt>
-                  <dd>30 min</dd>
-                </div>
-                <div>
-                  <dt>On site</dt>
-                  <dd>Rideshare + rental</dd>
-                </div>
-              </dl>
-            </article>
+              </header>
+              <div class="v5__travel-step-body">
+                <p class="v5__travel-step-lede">
+                  Approximately 20&ndash;25 minutes from headquarters. All major
+                  airlines service Eppley Airfield.
+                </p>
+                <p class="v5__travel-feature-callout v5__travel-feature-callout--note">
+                  <span class="v5__travel-feature-callout-tag v5__travel-feature-callout-tag--alt">Heads up</span>
+                  <span>
+                    Arrive no later than <strong>X:XX</strong> on Monday, October 5
+                    if you&rsquo;d like to attend the optional Kids Against Hunger event.
+                  </span>
+                </p>
+              </div>
+            </li>
 
-            <article class="v5__travel-logistic" data-reveal data-reveal-delay="2">
-              <span class="v5__eyebrow">Getting around</span>
-              <h3 class="v5__travel-logistic-title">Carpool, rideshare, rental.</h3>
-              <p class="v5__travel-logistic-body">
-                The Home Office and Embassy Suites are close enough that owners typically share rides between sessions.
-              </p>
-              <p class="v5__travel-logistic-note">
-                Carpool details and rideshare guidance go out with the registration confirmation.
-              </p>
-            </article>
-          </div>
+            <!-- ── 02 — Stay ─────────────────────── -->
+            <li class="v5__travel-step">
+              <header class="v5__travel-step-head">
+                <span class="v5__travel-step-num" aria-hidden="true">02</span>
+                <div class="v5__travel-step-headings">
+                  <span class="v5__eyebrow">
+                    <svg class="v5__eyebrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M3 21 L3 8 L21 8 L21 21" />
+                      <path d="M3 21 L21 21" />
+                      <path d="M12 8 L12 3 L17 4.5" />
+                      <path d="M7 12 L9 12 M11 12 L13 12 M15 12 L17 12" />
+                      <path d="M7 16 L9 16 M11 16 L13 16 M15 16 L17 16" />
+                      <path d="M10 21 L10 18 L14 18 L14 21" />
+                    </svg>
+                    Recommended hotel
+                  </span>
+                  <h3 class="v5__travel-step-title">Embassy Suites by Hilton<br /><span class="v5__travel-step-subtitle">Omaha La Vista</span></h3>
+                </div>
+              </header>
+              <div class="v5__travel-step-body">
+                <p class="v5__travel-step-lede">
+                  Approximately 10 minutes from headquarters. Attached to the
+                  La Vista Conference Center.
+                </p>
+                <ul class="v5__travel-feature-bullets v5__travel-step-bullets">
+                  <li>Complimentary breakfast</li>
+                  <li>Complimentary parking</li>
+                  <li>Central location near restaurants and dining</li>
+                </ul>
+                <p class="v5__travel-feature-note">
+                  Attendees are welcome to stay at any hotel of their choosing.
+                </p>
+              </div>
+            </li>
+
+            <!-- ── 03 — Arrive ───────────────────── -->
+            <li class="v5__travel-step v5__travel-step--final">
+              <header class="v5__travel-step-head">
+                <span class="v5__travel-step-num" aria-hidden="true">03</span>
+                <div class="v5__travel-step-headings">
+                  <span class="v5__eyebrow">
+                    <svg class="v5__eyebrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M12 22 C12 22 4 14 4 9.5 C4 5.36 7.58 2 12 2 C16.42 2 20 5.36 20 9.5 C20 14 12 22 12 22 Z"/>
+                      <circle cx="12" cy="9.5" r="2.6"/>
+                    </svg>
+                    Destination
+                  </span>
+                  <h3 class="v5__travel-step-title">Signal Home Office.</h3>
+                </div>
+              </header>
+              <div class="v5__travel-step-body">
+                <p class="v5__travel-step-lede">
+                  3880 S. 149th St., Ste. 106 &middot; Omaha, NE 68144.
+                  The summit runs here, October 6 to 8, 2026.
+                </p>
+              </div>
+            </li>
+
+          </ol>
         </div>
       </section>
 
-      <!-- OCTOBER EXTRAS — editorial sidebar, not a card -->
-      <section class="v5__section v5__section--tight">
-        <div class="v5__wrap">
-          <aside class="v5__travel-extras" data-reveal>
-            <div class="v5__travel-extras-body">
-              <span class="v5__eyebrow">While you&rsquo;re here</span>
-              <h3 class="v5__travel-extras-title">October in Omaha is genuinely pleasant.</h3>
-              <p>
-                Extending the trip? The home office team is happy to point you at
-                what&rsquo;s worth doing: the Old Market, the Henry Doorly Zoo,
-                the river path, a steak.
-              </p>
-            </div>
-            <figure class="v5__travel-extras-media">
-              <img src="assets/photos/SignalOwnerSummit2024-1497.jpg" alt="Signal owners during a previous summit" />
-            </figure>
-          </aside>
-        </div>
-      </section>
-
-      <section class="v5__section" style="padding-top: 0;">
+      <!-- ============ CLOSE ============ -->
+      <section class="v5__section v5__section--flush-top">
         <div class="v5__wrap">
           <div class="v5__close" data-reveal>
             <div class="v5__close-card">
-              <h2 class="v5__close-title">Book the flight. Book the room.</h2>
-              <div class="v5__close-foot">
-                <p class="v5__close-note">
-                  Registration confirmation includes the Embassy Suites block-rate
-                  link and carpool sign-up.
-                </p>
-                <a class="v5__btn v5__btn--primary" href="v5-register.html">
-                  Register
-                  <svg class="v5__btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
-                </a>
+              <div class="v5__close-main">
+                <h2 class="v5__close-title">Book the flight. Book the room.</h2>
+                <div class="v5__close-foot">
+                  <p class="v5__close-note">
+                    Travel and lodging are owner-funded. Register first; your
+                    confirmation includes the Embassy Suites block-rate link.
+                  </p>
+                  <a class="v5__btn v5__btn--primary" href="v5-register.html">
+                    Register
+                    <svg class="v5__btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+                  </a>
+                </div>
               </div>
-            </div>
-            <div class="v5__close-side">
-              <h3 class="v5__close-side-h">Travel questions go to the home office.</h3>
-              <p style="font-size: 14px; color: rgba(10,26,76,0.75);">
-                Special arrangements, accessibility needs, group bookings, anything
-                else. We&rsquo;ll get it sorted.
-              </p>
-              <a class="v5__btn v5__btn--secondary" href="mailto:summit@signal88.com" style="background: rgba(10,26,76,0.08); border-color: transparent;">
-                Email the home office
-              </a>
+              <aside class="v5__close-side">
+                <h3 class="v5__close-side-h">Got something specific?</h3>
+                <p>
+                  Group rates, accessibility, dietary, anything else that needs a
+                  human. Write the home office and we&rsquo;ll sort it.
+                </p>
+                <a class="v5__btn v5__btn--secondary" href="mailto:summit@signal88.com">
+                  Email the home office
+                </a>
+              </aside>
             </div>
           </div>
         </div>
@@ -256,15 +277,13 @@
           </div>
         </div>
         <div class="v5__footer-bottom">
-          <img src="assets/Logo Blue.svg" alt="Leadership Summit" />
+          <img src="assets/Logo Blue 2.png" alt="Leadership Summit" />
         </div>
       </div>
     </footer>
 
-    <!-- ============ PAGE PATTERN BED (fixed, revealed under footer) ============ -->
     <div class="v5__page-pattern" aria-hidden="true"></div>
 
-    <!-- ============ FLOATING INFO DOCK ============ -->
     <aside class="v5__dock" aria-label="Summit details and register">
       <div class="v5__dock-item">
         <span class="v5__dock-label">Dates</span>
@@ -295,7 +314,6 @@
         if (!cta) return;
         const hero = document.querySelector('.v5__hero');
         if (!hero || !('IntersectionObserver' in window)) {
-          // Sub-page (no main hero) or no IO support: surface the CTA right away.
           cta.classList.add('is-visible');
           return;
         }
@@ -307,6 +325,12 @@
         io.observe(hero);
       });
     </script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
     <script src="js/v5-motion.js?v=2"></script>
+    <script src="js/v5-travel-map.js?v=2"></script>
   </body>
 </html>
