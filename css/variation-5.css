@@ -721,6 +721,30 @@ html.v5:has(.v5__hero--logo-morph) .v5__brand {
   max-width: none;
 }
 
+.v5__hero-headline {
+  margin: 20px 0 0;
+  max-width: 16ch;
+  font-size: clamp(40px, 5.4vw, 72px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: #0B1530;
+}
+
+.v5 .v5__hero-subhead {
+  margin: 16px 0 0;
+  max-width: 44ch;
+  font-size: clamp(17px, 1.35vw, 20px);
+  line-height: 1.45;
+  color: #3A3F4F;
+  font-weight: 400;
+}
+
+@media (max-width: 720px) {
+  .v5__hero-headline { font-size: clamp(34px, 9vw, 52px); max-width: none; }
+  .v5__hero-subhead { font-size: 16px; }
+}
+
 /* Media — wide letterbox, breaks out wider than the headline.
    Chained class to win specificity over the base `.v5__hero-media` rule below. */
 .v5__hero-media.v5__hero-media--video {
@@ -1213,11 +1237,12 @@ html.v5, body.v5 { overflow-x: clip; }
 .v5__composite-cta h3 {
   font-family: var(--v5-sans);
   font-weight: 500;
-  font-size: clamp(24px, 2.6vw, 36px);
-  line-height: 1.08;
+  font-size: clamp(22px, 2.2vw, 32px);
+  line-height: 1.12;
   letter-spacing: -0.02em;
   color: var(--v5-on-dark);
-  max-width: 14ch;
+  max-width: none;
+  text-wrap: balance;
 }
 
 .v5__composite-cta p {
@@ -1346,12 +1371,281 @@ html.v5, body.v5 { overflow-x: clip; }
   max-width: 58ch;
 }
 
+.v5__day-sub {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  max-width: 58ch;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--v5-ink-muted);
+}
+
+.v5__day-sub > li {
+  padding-left: 18px;
+  position: relative;
+}
+
+.v5__day-sub > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--v5-orange, #F58B2A);
+}
+
+.v5__day-sub > li strong {
+  color: var(--v5-ink, #0B1530);
+  font-weight: 600;
+}
+
+.v5__composite-main-lede {
+  margin: 16px 0 0;
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 60ch;
+}
+
 .v5__day--optional .v5__day-date {
   color: var(--v5-ink-soft);
 }
 
 .v5__day-title {
   font-weight: 500;
+}
+
+/* -----------------------------------------------------------
+   Why Attend — closing CTA section
+   ----------------------------------------------------------- */
+.v5__section--why {
+  padding-block: var(--v5-section-y);
+}
+
+/* Outer grid: photo column + dark content card.
+   The card is sized larger than the photo to anchor the eye on the CTA. */
+.v5__why {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(20px, 2.4vw, 36px);
+  align-items: stretch;
+}
+
+/* --- Photo column --------------------------------------------------------- */
+.v5__why-media {
+  position: relative;
+  margin: 0;
+  border-radius: var(--v5-r-hero, 28px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #0B1530;
+  min-height: 460px;                   /* fallback if the grid stretch isn't enough */
+}
+
+/* Specificity bump — `.v5 img { height: auto }` was beating the bare class.
+   Using two classes keeps it ahead without resorting to !important. */
+.v5 .v5__why-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  /* Frame to the right side of the source image so the speaker is centered
+     in the column instead of clipped against the right edge. */
+  object-position: 62% 50%;
+  display: block;
+  transform: scale(1.02);              /* prevents the edge-pixel sliver during reveal */
+  transition: transform 1100ms cubic-bezier(.2,.65,.2,1);
+}
+
+.v5__why.is-in .v5__why-photo,
+[data-reveal].is-in .v5__why-photo { transform: scale(1.0); }
+
+/* --- Content card --------------------------------------------------------- */
+.v5__why-card {
+  position: relative;
+  background: var(--v5-ink, #0B1530);
+  color: var(--v5-on-dark, #F4F5FB);
+  border-radius: var(--v5-r-hero, 28px);
+  padding: clamp(32px, 3.6vw, 56px) clamp(28px, 3vw, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 1.6vw, 28px);
+  overflow: hidden;
+}
+
+/* Soft warm radial glow in the top-left corner — echoes the photo's sunset
+   light bleeding into the dark card without using a literal divider line. */
+.v5__why-card::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  left: -120px;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(closest-side,
+    rgba(245, 139, 42, 0.22) 0%,
+    rgba(245, 139, 42, 0.08) 45%,
+    transparent 75%);
+  pointer-events: none;
+}
+
+/* Thin orange accent rule above the eyebrow, sitting flush with the top edge. */
+.v5__why-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: clamp(28px, 3vw, 48px);
+  width: 56px;
+  height: 3px;
+  background: var(--v5-orange, #F58B2A);
+  border-radius: 0 0 4px 4px;
+  z-index: 1;
+}
+
+.v5__why-card-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.v5__why-h {
+  font-family: var(--v5-sans);
+  font-weight: 600;
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  color: var(--v5-on-dark, #F4F5FB);
+  margin: 0;
+  max-width: 16ch;
+  text-wrap: balance;
+}
+
+/* Everything inside the card sits above the radial glow. */
+.v5__why-card > * { position: relative; z-index: 2; }
+
+.v5 .v5__why-card .v5__why-lede {
+  margin: 0;
+  font-size: clamp(16px, 1.2vw, 18px);
+  line-height: 1.55;
+  color: rgba(244, 245, 251, 0.78);
+  max-width: 52ch;
+}
+
+.v5 .v5__why-card .v5__why-leave {
+  margin: 6px 0 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244, 245, 251, 0.6);
+}
+
+/* Numbered outcome list — each item is a row with a big tabular number,
+   a thin divider above, and a hover tint that nudges the row right. */
+.v5__why-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-bottom: 1px solid rgba(244, 245, 251, 0.10);
+}
+
+.v5__why-list > li {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: baseline;
+  gap: 20px;
+  padding: 18px 4px;
+  border-top: 1px solid rgba(244, 245, 251, 0.10);
+  transition: padding-left 220ms ease;
+}
+
+.v5__why-list-num {
+  font-family: var(--v5-sans);
+  font-feature-settings: "tnum" 1;     /* tabular numerals so 01/02/03 align */
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: var(--v5-orange, #F58B2A);
+  align-self: start;
+  padding-top: 3px;                    /* optical line-up with first text line */
+}
+
+.v5__why-list-text {
+  font-size: clamp(15px, 1.05vw, 17px);
+  line-height: 1.5;
+  color: rgba(244, 245, 251, 0.92);
+  text-wrap: pretty;
+}
+
+/* CTA row */
+.v5__why-cta {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+.v5__why-cta-note {
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: rgba(244, 245, 251, 0.55);
+}
+
+/* Match the white-pill primary CTA used in other dark cards */
+.v5__why-card .v5__btn--primary {
+  background: #FFFFFF;
+  color: var(--v5-ink, #0B1530);
+  border-color: #FFFFFF;
+}
+
+.v5__why-card .v5__btn--primary:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+/* --- Responsive ----------------------------------------------------------- */
+@media (max-width: 900px) {
+  .v5__why {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .v5__why-media {
+    min-height: 0;
+    aspect-ratio: 16 / 11;             /* slightly landscape when stacked */
+  }
+  .v5__why-card { padding: clamp(28px, 6vw, 40px) clamp(24px, 5vw, 32px); }
+  .v5__why-h { max-width: none; }
+  .v5__why-list > li { grid-template-columns: 44px 1fr; gap: 16px; }
+}
+
+@media (max-width: 520px) {
+  .v5__why-stat { padding: 12px 14px; gap: 12px; max-width: 86%; }
+  .v5__why-stat-num { font-size: 30px; }
+  .v5__why-stat-label { font-size: 11.5px; }
+  .v5__why-chip { font-size: 11.5px; padding: 7px 12px; }
+  .v5__why-list > li { padding: 14px 4px; }
+  .v5__why-cta { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .v5__why-cta-note { font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v5 .v5__why-photo {
+    transform: scale(1);
+    transition: none;
+  }
 }
 
 /* -----------------------------------------------------------
@@ -1980,6 +2274,39 @@ html.v5, body.v5 { overflow-x: clip; }
   min-height: 216px;
 }
 
+.v5__close-card--solo {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.v5__close-card--solo .v5__close-title { max-width: 22ch; }
+
+/* -----------------------------------------------------------
+   Travel — Recommended hotels list (two-up under step 02)
+   ----------------------------------------------------------- */
+.v5__travel-hotels {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.v5__travel-hotel {
+  padding: 14px 16px;
+  background: rgba(11, 21, 48, 0.04);
+  border: 1px solid rgba(11, 21, 48, 0.08);
+  border-radius: 12px;
+}
+
+.v5__travel-hotel-name {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--v5-ink, #0B1530);
+}
+
 .v5__close-main {
   display: flex;
   flex-direction: column;
@@ -2133,12 +2460,9 @@ body.v5 { padding-bottom: 30vh; }
   .v5__page-pattern::before { transform: none; transition: none; }
 }
 
-/* Outer 2-col split: big statement on the left, info column on the right */
+/* Single info column (the big statement was removed). */
 .v5__footer-big-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: clamp(40px, 5vw, 80px);
-  align-items: start;
+  display: block;
 }
 
 .v5__footer-statement {
@@ -2236,12 +2560,10 @@ body.v5 { padding-bottom: 30vh; }
   max-width: none;
 }
 
-@media (max-width: 960px) {
-  .v5__footer-big-grid { grid-template-columns: 1fr; }
+@media (max-width: 720px) {
   .v5__footer-meta { padding-top: 0; }
   .v5__footer-rows { grid-template-columns: 1fr; row-gap: 32px; }
   .v5__footer-rows .v5__footer-row-body { margin-top: -20px; }
-  .v5__footer-statement { font-size: clamp(56px, 14vw, 96px); }
 }
 
 /* -----------------------------------------------------------
