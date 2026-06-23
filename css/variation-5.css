@@ -493,7 +493,6 @@ html.v5 { scrollbar-gutter: stable; }
    so orange stays a punctuation color and doesn't compete with the dark field. */
 .v5__composite-cta .v5__btn--primary,
 .v5__close-card .v5__btn--primary,
-.v5__register-side .v5__btn--primary,
 .v5__travel-card--early .v5__btn--primary {
   background: var(--v5-on-dark);
   color: var(--v5-ink);
@@ -501,7 +500,6 @@ html.v5 { scrollbar-gutter: stable; }
 
 .v5__composite-cta .v5__btn--primary:hover,
 .v5__close-card .v5__btn--primary:hover,
-.v5__register-side .v5__btn--primary:hover,
 .v5__travel-card--early .v5__btn--primary:hover {
   background: #ffffff;
 }
@@ -1428,24 +1426,50 @@ html.v5, body.v5 { overflow-x: clip; }
   padding-block: var(--v5-section-y);
 }
 
-/* Outer grid: photo column + dark content card.
-   The card is sized larger than the photo to anchor the eye on the CTA. */
+/* Outer container: photo is the background, white card overlays on the right,
+   warm orange light spills in from the left edge. */
 .v5__why {
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: clamp(20px, 2.4vw, 36px);
-  align-items: stretch;
-}
-
-/* --- Photo column --------------------------------------------------------- */
-.v5__why-media {
   position: relative;
-  margin: 0;
   border-radius: var(--v5-r-hero, 28px);
   overflow: hidden;
   isolation: isolate;
   background: #0B1530;
-  min-height: 460px;                   /* fallback if the grid stretch isn't enough */
+  min-height: clamp(380px, 38vw, 500px);
+  padding: clamp(20px, 2.4vw, 36px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;          /* card pinned to the left */
+}
+
+/* Warm orange light spilling in from the left edge — sits behind and around
+   the card so it reads as a halo, then fades into the photo past midpoint. */
+.v5__why::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(75% 100% at -4% 50%,
+      rgba(245, 139, 42, 0.92) 0%,
+      rgba(245, 139, 42, 0.62) 24%,
+      rgba(245, 139, 42, 0.24) 50%,
+      transparent 72%),
+    linear-gradient(to right,
+      rgba(11, 21, 48, 0.18) 0%,
+      rgba(11, 21, 48, 0.04) 45%,
+      rgba(11, 21, 48, 0) 65%);
+  pointer-events: none;
+}
+
+/* --- Photo: full-bleed background of the container ----------------------- */
+.v5__why-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  border-radius: 0;
+  overflow: hidden;
+  background: #0B1530;
 }
 
 /* Specificity bump — `.v5 img { height: auto }` was beating the bare class.
@@ -1457,44 +1481,30 @@ html.v5, body.v5 { overflow-x: clip; }
   height: 100%;
   max-width: none;
   object-fit: cover;
-  /* Frame to the right side of the source image so the speaker is centered
-     in the column instead of clipped against the right edge. */
-  object-position: 62% 50%;
+  /* Bias toward the speaker's upper body / face in the new landscape photo. */
+  object-position: 60% 32%;
   display: block;
-  transform: scale(1.02);              /* prevents the edge-pixel sliver during reveal */
+  transform: scale(1.04);              /* prevents the edge-pixel sliver during reveal */
   transition: transform 1100ms cubic-bezier(.2,.65,.2,1);
 }
 
 .v5__why.is-in .v5__why-photo,
 [data-reveal].is-in .v5__why-photo { transform: scale(1.0); }
 
-/* --- Content card --------------------------------------------------------- */
+/* --- Content card: white, overlaid on the left --------------------------- */
 .v5__why-card {
   position: relative;
-  background: var(--v5-ink, #0B1530);
-  color: var(--v5-on-dark, #F4F5FB);
-  border-radius: var(--v5-r-hero, 28px);
-  padding: clamp(32px, 3.6vw, 56px) clamp(28px, 3vw, 48px);
+  z-index: 2;
+  background: #FFFFFF;
+  color: var(--v5-ink, #0B1530);
+  border-radius: clamp(18px, 1.6vw, 24px);
+  padding: clamp(22px, 2.2vw, 32px) clamp(22px, 2.2vw, 32px);
   display: flex;
   flex-direction: column;
-  gap: clamp(20px, 1.6vw, 28px);
+  gap: clamp(12px, 1vw, 18px);
+  width: clamp(360px, 44%, 480px);
+  box-shadow: 0 24px 48px -28px rgba(11, 21, 48, 0.45);
   overflow: hidden;
-}
-
-/* Soft warm radial glow in the top-left corner — echoes the photo's sunset
-   light bleeding into the dark card without using a literal divider line. */
-.v5__why-card::before {
-  content: "";
-  position: absolute;
-  top: -120px;
-  left: -120px;
-  width: 360px;
-  height: 360px;
-  background: radial-gradient(closest-side,
-    rgba(245, 139, 42, 0.22) 0%,
-    rgba(245, 139, 42, 0.08) 45%,
-    transparent 75%);
-  pointer-events: none;
 }
 
 /* Thin orange accent rule above the eyebrow, sitting flush with the top edge. */
@@ -1502,8 +1512,8 @@ html.v5, body.v5 { overflow-x: clip; }
   content: "";
   position: absolute;
   top: 0;
-  left: clamp(28px, 3vw, 48px);
-  width: 56px;
+  left: clamp(22px, 2.2vw, 32px);
+  width: 48px;
   height: 3px;
   background: var(--v5-orange, #F58B2A);
   border-radius: 0 0 4px 4px;
@@ -1515,43 +1525,41 @@ html.v5, body.v5 { overflow-x: clip; }
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 
 .v5__why-h {
   font-family: var(--v5-sans);
   font-weight: 600;
-  font-size: clamp(30px, 3.4vw, 46px);
-  line-height: 1.04;
-  letter-spacing: -0.022em;
-  color: var(--v5-on-dark, #F4F5FB);
+  font-size: clamp(22px, 2.1vw, 30px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--v5-ink, #0B1530);
   margin: 0;
   max-width: 16ch;
   text-wrap: balance;
 }
 
-/* Everything inside the card sits above the radial glow. */
 .v5__why-card > * { position: relative; z-index: 2; }
 
 .v5 .v5__why-card .v5__why-lede {
   margin: 0;
-  font-size: clamp(16px, 1.2vw, 18px);
-  line-height: 1.55;
-  color: rgba(244, 245, 251, 0.78);
+  font-size: clamp(13.5px, 0.95vw, 15px);
+  line-height: 1.5;
+  color: rgba(11, 21, 48, 0.72);
   max-width: 52ch;
 }
 
 .v5 .v5__why-card .v5__why-leave {
-  margin: 6px 0 0;
-  font-size: 11.5px;
+  margin: 2px 0 0;
+  font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(244, 245, 251, 0.6);
+  color: rgba(11, 21, 48, 0.5);
 }
 
-/* Numbered outcome list — each item is a row with a big tabular number,
-   a thin divider above, and a hover tint that nudges the row right. */
+/* Numbered outcome list — light dividers tuned for the white card. */
 .v5__why-list {
   list-style: none;
   margin: 0;
@@ -1559,16 +1567,16 @@ html.v5, body.v5 { overflow-x: clip; }
   display: flex;
   flex-direction: column;
   gap: 0;
-  border-bottom: 1px solid rgba(244, 245, 251, 0.10);
+  border-bottom: 1px solid rgba(11, 21, 48, 0.12);
 }
 
 .v5__why-list > li {
   display: grid;
-  grid-template-columns: 56px 1fr;
+  grid-template-columns: 40px 1fr;
   align-items: baseline;
-  gap: 20px;
-  padding: 18px 4px;
-  border-top: 1px solid rgba(244, 245, 251, 0.10);
+  gap: 14px;
+  padding: 10px 2px;
+  border-top: 1px solid rgba(11, 21, 48, 0.12);
   transition: padding-left 220ms ease;
 }
 
@@ -1576,17 +1584,17 @@ html.v5, body.v5 { overflow-x: clip; }
   font-family: var(--v5-sans);
   font-feature-settings: "tnum" 1;     /* tabular numerals so 01/02/03 align */
   font-weight: 500;
-  font-size: 15px;
+  font-size: 13px;
   letter-spacing: 0.04em;
   color: var(--v5-orange, #F58B2A);
   align-self: start;
-  padding-top: 3px;                    /* optical line-up with first text line */
+  padding-top: 2px;                    /* optical line-up with first text line */
 }
 
 .v5__why-list-text {
-  font-size: clamp(15px, 1.05vw, 17px);
-  line-height: 1.5;
-  color: rgba(244, 245, 251, 0.92);
+  font-size: clamp(13px, 0.9vw, 14.5px);
+  line-height: 1.45;
+  color: var(--v5-ink, #0B1530);
   text-wrap: pretty;
 }
 
@@ -1602,33 +1610,43 @@ html.v5, body.v5 { overflow-x: clip; }
 .v5__why-cta-note {
   font-size: 12.5px;
   letter-spacing: 0.04em;
-  color: rgba(244, 245, 251, 0.55);
+  color: rgba(11, 21, 48, 0.6);
 }
 
-/* Match the white-pill primary CTA used in other dark cards */
+/* Dark filled primary CTA — inverse of the surrounding white card. */
 .v5__why-card .v5__btn--primary {
-  background: #FFFFFF;
-  color: var(--v5-ink, #0B1530);
-  border-color: #FFFFFF;
+  background: var(--v5-ink, #0B1530);
+  color: #FFFFFF;
+  border-color: var(--v5-ink, #0B1530);
 }
 
 .v5__why-card .v5__btn--primary:hover {
-  background: rgba(255, 255, 255, 0.92);
+  background: #15224a;
+  border-color: #15224a;
 }
 
 /* --- Responsive ----------------------------------------------------------- */
 @media (max-width: 900px) {
   .v5__why {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .v5__why-media {
     min-height: 0;
-    aspect-ratio: 16 / 11;             /* slightly landscape when stacked */
+    padding: clamp(20px, 4vw, 32px);
+    align-items: flex-end;             /* card drops to the bottom of the image */
+    aspect-ratio: 5 / 6;                /* portrait-ish container at narrow widths */
   }
-  .v5__why-card { padding: clamp(28px, 6vw, 40px) clamp(24px, 5vw, 32px); }
+  .v5__why-card {
+    width: 100%;
+    padding: clamp(24px, 5vw, 36px) clamp(22px, 4.5vw, 32px);
+  }
   .v5__why-h { max-width: none; }
   .v5__why-list > li { grid-template-columns: 44px 1fr; gap: 16px; }
+  .v5__why::before {
+    background:
+      radial-gradient(120% 70% at -10% 0%,
+        rgba(245, 139, 42, 0.82) 0%,
+        rgba(245, 139, 42, 0.45) 28%,
+        rgba(245, 139, 42, 0.15) 55%,
+        transparent 78%);
+  }
 }
 
 @media (max-width: 520px) {
@@ -2924,85 +2942,6 @@ body.v5 { padding-bottom: 30vh; }
 }
 
 /* -----------------------------------------------------------
-   Register
-   ----------------------------------------------------------- */
-.v5__register-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(32px, 4vw, 64px);
-  align-items: start;
-}
-
-.v5__includes {
-  background: var(--v5-surface-softer);
-  border-radius: var(--v5-r-card);
-  padding: clamp(28px, 3vw, 40px);
-}
-
-.v5__includes h3 {
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 16px;
-}
-
-.v5__includes-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.v5__includes-list li {
-  display: grid;
-  grid-template-columns: 18px 1fr;
-  gap: 12px;
-  font-size: 15px;
-  align-items: start;
-  color: var(--v5-ink);
-}
-
-.v5__includes-list svg {
-  width: 16px;
-  height: 16px;
-  color: var(--v5-ink-soft);
-  margin-top: 3px;
-}
-
-.v5__register-side {
-  background: var(--v5-ink);
-  color: var(--v5-on-dark);
-  border-radius: var(--v5-r-card);
-  padding: clamp(28px, 3vw, 40px);
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  position: sticky;
-  top: 96px;
-}
-
-.v5__register-side h3 {
-  font-family: var(--v5-sans);
-  font-size: clamp(26px, 2.8vw, 32px);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  color: var(--v5-on-dark);
-}
-
-.v5__register-side p {
-  font-size: 14px;
-  color: rgba(244, 245, 251, 0.7);
-  line-height: 1.5;
-}
-
-.v5__register-side .v5__btn--primary {
-  width: 100%;
-  padding-block: 18px;
-}
-
-/* -----------------------------------------------------------
    Schedule (agenda page expanded view)
    ----------------------------------------------------------- */
 .v5__schedule {
@@ -3135,7 +3074,6 @@ body.v5 { padding-bottom: 30vh; }
   .v5__hero-grid,
   .v5__days,
   .v5__close,
-  .v5__register-grid,
   .v5__page-hero-inner {
     grid-template-columns: 1fr;
   }
