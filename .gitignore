@@ -31,3 +31,4 @@ assets/section-video.mov
 *.log
 .tmp/
 assets/hero_video.mp4
+*.tmp.mp4
