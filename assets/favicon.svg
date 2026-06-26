@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#0B1530"/>
+  <text x="16" y="22" text-anchor="middle"
+        font-family="Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-weight="800" font-size="20" fill="#FFFFFF"
+        letter-spacing="-0.04em">LS</text>
+  <rect x="9" y="25" width="14" height="2" rx="1" fill="#19A88B"/>
+</svg>
