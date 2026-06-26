@@ -2539,67 +2539,54 @@ html.v5, body.v5 { overflow-x: clip; }
 /* -----------------------------------------------------------
    Footer (new — big-statement layout, matches reference frame)
    ----------------------------------------------------------- */
-/* Bolder footer — dark navy band with an oversized white wordmark and a
-   thin legal rule beneath. */
+/* Minimal footer — just Privacy + © + small logo. */
 .v5__footer-min {
-  background: var(--v5-ink, #0B1530);
-  color: rgba(255, 255, 255, 0.72);
-  padding: clamp(56px, 7vw, 96px) 0 clamp(24px, 2.4vw, 36px);
+  background: var(--v5-bg);
+  color: var(--v5-ink-muted, rgba(11, 21, 48, 0.6));
+  border-top: 1px solid var(--v5-rule);
+  padding: clamp(28px, 3.5vw, 44px) 0;
   font-size: 13.5px;
 }
 
-.v5__footer-min .v5__wrap {
+.v5__footer-min-row {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(40px, 5vw, 72px);
-}
-
-/* Oversized wordmark — fills most of the container width as a statement. */
-.v5__footer-min-brand {
-  display: block;
-  width: 100%;
-  max-width: 880px;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 3vw, 40px);
+  flex-wrap: wrap;
 }
 
 .v5__footer-min-brand img {
   display: block;
-  width: 100%;
-  height: auto;
-  max-width: 100%;
+  height: 26px;
+  width: auto;
+  max-width: none;
 }
 
-/* Hairline rule + legal row tucked under the wordmark. */
 .v5__footer-min-legal {
-  width: 100%;
   display: flex;
   align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
-  gap: 10px 14px;
-  padding-top: clamp(20px, 2vw, 28px);
-  border-top: 1px solid rgba(255, 255, 255, 0.10);
-  font-size: 12.5px;
-  letter-spacing: 0.02em;
 }
 
 .v5__footer-min-link {
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--v5-ink-muted, rgba(11, 21, 48, 0.6));
   transition: color var(--v5-fast, 180ms) ease;
 }
 
 .v5__footer-min-link:hover {
-  color: #FFFFFF;
+  color: var(--v5-ink, #0B1530);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .v5__footer-min-sep {
-  color: rgba(255, 255, 255, 0.32);
+  color: var(--v5-ink-muted, rgba(11, 21, 48, 0.35));
 }
 
 @media (max-width: 640px) {
-  .v5__footer-min { padding-top: clamp(40px, 12vw, 64px); }
-  .v5__footer-min-legal { justify-content: flex-start; }
+  .v5__footer-min-row { justify-content: center; text-align: center; }
 }
 
 /* -----------------------------------------------------------
