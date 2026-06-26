@@ -193,6 +193,9 @@ html.v5 { scrollbar-gutter: stable; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Anchor crop to the top of the photo so heads aren't cut off when the
+     letterbox container is much wider than the source aspect. */
+  object-position: center 18%;
   display: block;
 }
 
@@ -617,8 +620,8 @@ html.v5:has(.v5__hero--logo-morph) .v5__brand {
    state; the SVG re-rasterizes sharp at every step of the morph. */
 .v5 .v5__brand-mark {
   display: block;
-  width: 128px;                                    /* 20% smaller than the previous 160 */
-  height: 39px;                                    /* 593:180 aspect ratio */
+  width: 160px;                                    /* slightly larger; coloured logo is wider/shorter */
+  height: auto;                                    /* preserve the 593:123 aspect of the coloured PNG */
   max-width: none;
 }
 
@@ -784,6 +787,34 @@ html.v5:has(.v5__hero--logo-morph) .v5__brand {
 .v5__hero-play:hover { transform: scale(1.05); }
 .v5__hero-play svg { width: 26px; height: 26px; margin-left: 2px; }
 .v5__hero-media--video.is-playing .v5__hero-play { display: none; }
+
+/* Mute/unmute pill, lower-right corner of the hero video. */
+.v5__hero-mute {
+  position: absolute;
+  right: clamp(12px, 1.4vw, 20px);
+  bottom: clamp(12px, 1.4vw, 20px);
+  z-index: 4;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(11, 21, 48, 0.62);
+  color: #FFFFFF;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.v5__hero-mute:hover { background: rgba(11, 21, 48, 0.82); transform: scale(1.04); }
+
+.v5__hero-mute-icon { width: 20px; height: 20px; }
+.v5__hero-mute-icon--on { display: none; }
+.v5__hero-mute.is-on .v5__hero-mute-icon--off { display: none; }
+.v5__hero-mute.is-on .v5__hero-mute-icon--on { display: block; }
 
 @media (max-width: 720px) {
   .v5__hero-stack .v5__hero-title { font-size: clamp(40px, 11vw, 64px); }
@@ -2325,6 +2356,87 @@ html.v5, body.v5 { overflow-x: clip; }
   color: var(--v5-ink, #0B1530);
 }
 
+.v5__travel-hotel-name a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(11, 21, 48, 0.25);
+  transition: text-decoration-color 180ms ease;
+}
+
+.v5__travel-hotel-name a:hover {
+  text-decoration-color: currentColor;
+}
+
+.v5__travel-hotel-info {
+  margin: 12px 0 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  font-size: 14px;
+  color: var(--v5-ink-muted, rgba(11, 21, 48, 0.7));
+}
+
+.v5__travel-hotel-info-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.v5__travel-hotel-info dt {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(11, 21, 48, 0.5);
+  margin: 0;
+}
+
+.v5__travel-hotel-info dd {
+  margin: 0;
+  color: var(--v5-ink, #0B1530);
+  font-weight: 500;
+}
+
+.v5__travel-hotel-info dd a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(11, 21, 48, 0.25);
+}
+
+.v5__travel-hotel-info dd a:hover {
+  text-decoration-color: currentColor;
+}
+
+.v5__travel-hotel-note {
+  margin: 14px 0 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--v5-ink-muted, rgba(11, 21, 48, 0.7));
+}
+
+.v5__travel-hotel-note a {
+  color: var(--v5-ink, #0B1530);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* "Other hotel options coming soon" placeholder — dashed border, no fill. */
+.v5__travel-hotel--soon {
+  background: transparent;
+  border-style: dashed;
+  border-color: rgba(11, 21, 48, 0.18);
+}
+
+.v5__travel-hotel--soon .v5__travel-hotel-name {
+  font-weight: 500;
+  color: var(--v5-ink-muted, rgba(11, 21, 48, 0.65));
+  font-style: italic;
+}
+
 .v5__close-main {
   display: flex;
   flex-direction: column;
@@ -2410,13 +2522,55 @@ html.v5, body.v5 { overflow-x: clip; }
 /* -----------------------------------------------------------
    Footer (new — big-statement layout, matches reference frame)
    ----------------------------------------------------------- */
-.v5__footer-big {
+/* Minimal footer — just Privacy + © + small logo. */
+.v5__footer-min {
   background: var(--v5-bg);
   color: var(--v5-ink);
   border-top: 1px solid var(--v5-rule);
-  padding: clamp(64px, 8vw, 112px) 0 clamp(28px, 3vw, 40px);
-  /* No margin-top — the footer's own padding-top supplies the breathing room
-     from the preceding section. Adding margin-top here doubled the gap. */
+  padding: clamp(28px, 3.5vw, 44px) 0;
+  font-size: 13.5px;
+  color: var(--v5-ink-muted, rgba(11, 21, 48, 0.6));
+}
+
+.v5__footer-min-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 3vw, 40px);
+  flex-wrap: wrap;
+}
+
+.v5__footer-min-brand img {
+  display: block;
+  height: 26px;
+  width: auto;
+  max-width: none;
+}
+
+.v5__footer-min-legal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.v5__footer-min-link {
+  color: var(--v5-ink-muted, rgba(11, 21, 48, 0.6));
+  transition: color var(--v5-fast, 180ms) ease;
+}
+
+.v5__footer-min-link:hover {
+  color: var(--v5-ink, #0B1530);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.v5__footer-min-sep {
+  color: var(--v5-ink-muted, rgba(11, 21, 48, 0.35));
+}
+
+@media (max-width: 640px) {
+  .v5__footer-min-row { justify-content: center; text-align: center; }
 }
 
 /* -----------------------------------------------------------
@@ -2454,13 +2608,13 @@ body.v5 { padding-bottom: 30vh; }
 /* Lift main + footer above the fixed bg pattern. Nav keeps its sticky
    positioning from the .v5__nav rule above — DON'T override it here. */
 .v5 main,
-.v5__footer-big { position: relative; z-index: 1; }
+.v5__footer-min { position: relative; z-index: 1; }
 .v5__nav { z-index: 50; }
 .v5 main { background: var(--v5-bg); }              /* opaque white covers the fixed pattern */
 
 /* Faint shadow under the footer — just a hint of separation from the
    pattern layer beneath, nothing more. */
-.v5__footer-big {
+.v5__footer-min {
   box-shadow: 0 12px 28px -16px rgba(10, 26, 76, 0.10);
 }
 .v5__page-pattern::before {
@@ -3387,8 +3541,8 @@ body.v5--menu-open .v5__dock { opacity: 0 !important; pointer-events: none !impo
   .v5__nav-cta { display: none; }
   .v5__nav-toggle { display: inline-flex; }
   .v5__nav-inner { gap: 16px; padding-inline: 20px; height: 72px; }
-  /* Mobile: 20% smaller than desktop nav. SVG aspect 593:180. */
-  .v5 .v5__brand-mark { width: 109px; height: 33px; }
+  /* Mobile: ~20% smaller than desktop nav. Coloured PNG aspect 593:123. */
+  .v5 .v5__brand-mark { width: 132px; height: auto; }
 
   /* Tighten radius scale — 32px/24px on small phone images reads as pill,
      not photo. Scale down ~40% so corners feel intentional, not soft. */

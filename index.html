@@ -9,18 +9,18 @@
       content="Three days in Omaha for the people running and growing Signal franchises. October 6 to 8, 2026."
     />
     <link rel="stylesheet" href="css/shared.css" />
-    <link rel="stylesheet" href="css/variation-5.css?v=116-register-external" />
+    <link rel="stylesheet" href="css/variation-5.css?v=201-single-hero" />
   </head>
   <body class="v5">
     <!-- ============ NAV ============ -->
     <header class="v5__nav">
       <div class="v5__nav-inner">
-        <a class="v5__brand" href="variation-5.html" aria-label="Leadership Summit 2026">
-          <img class="v5__brand-mark" src="assets/Logo Blue 2.svg" alt="Leadership Summit" />
+        <a class="v5__brand" href="index.html" aria-label="Leadership Summit 2026">
+          <img class="v5__brand-mark" src="assets/Logo Coloured.png" alt="Leadership Summit" />
         </a>
         <nav>
           <ul class="v5__nav-links">
-            <li><a class="v5__nav-link" href="variation-5.html" aria-current="page">Home</a></li>
+            <li><a class="v5__nav-link" href="index.html" aria-current="page">Home</a></li>
             <li><a class="v5__nav-link" href="v5-agenda.html">Agenda</a></li>
             <li><a class="v5__nav-link" href="v5-travel.html">Travel</a></li>
             <li><a class="v5__nav-link" href="v5-faqs.html">FAQs</a></li>
@@ -41,7 +41,7 @@
     <div class="v5__mobile-menu" id="v5MobileMenu" hidden aria-hidden="true">
       <div class="v5__mobile-menu-inner">
         <nav class="v5__mobile-nav" aria-label="Primary">
-          <a class="v5__mobile-link" href="variation-5.html" aria-current="page">Home</a>
+          <a class="v5__mobile-link" href="index.html" aria-current="page">Home</a>
           <a class="v5__mobile-link" href="v5-agenda.html">Agenda</a>
           <a class="v5__mobile-link" href="v5-travel.html">Travel</a>
           <a class="v5__mobile-link" href="v5-faqs.html">FAQs</a>
@@ -69,7 +69,7 @@
             <h1 class="v5__hero-headline" data-reveal data-reveal-delay="2">Bringing Franchise Leaders Together</h1>
             <p class="v5__hero-subhead" data-reveal data-reveal-delay="2">Three days focused on what it takes to lead a growing Signal franchise.</p>
             <div class="v5__hero-media v5__hero-media--video is-playing" data-reveal="fade" data-reveal-delay="3">
-              <video class="v5__hero-video"
+              <video class="v5__hero-video" id="v5HeroVideo"
                 preload="auto"
                 autoplay
                 muted
@@ -77,6 +77,18 @@
                 playsinline
                 poster="assets/photos/SignalOwnerSummit2024-7062.jpg"
                 src="assets/section-video.mp4"></video>
+              <button class="v5__hero-mute" type="button" aria-pressed="true" aria-controls="v5HeroVideo" aria-label="Unmute video">
+                <svg class="v5__hero-mute-icon v5__hero-mute-icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M11 5 6 9H3v6h3l5 4z" />
+                  <path d="M22 9l-6 6" />
+                  <path d="M16 9l6 6" />
+                </svg>
+                <svg class="v5__hero-mute-icon v5__hero-mute-icon--on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M11 5 6 9H3v6h3l5 4z" />
+                  <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+                  <path d="M18.5 5.5a9 9 0 0 1 0 13" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -104,7 +116,7 @@
                   </p>
                 </div>
                 <div class="v5__composite-main-image">
-                  <img src="assets/photos/SignalOwnerSummit2024-7062.jpg" alt="Conference session at a previous Signal summit" />
+                  <img src="assets/photos/1.jpg" alt="Signal franchise owners gathered in working sessions at Leadership Summit" />
                 </div>
               </div>
             </div>
@@ -216,7 +228,7 @@
           <div class="v5__days">
             <div class="v5__days-images">
               <figure class="v5__days-img">
-                <img src="assets/photos/SignalOwnerSummit2024-1065.jpg" alt="Owners in a working session" />
+                <img src="assets/photos/2.jpg" alt="Signal franchisees packing meals at the Kids Against Hunger volunteer event" />
               </figure>
               <figure class="v5__days-img">
                 <img src="assets/photos/SignalOwnerSummit2024-7062.jpg" alt="Leadership session" />
@@ -341,49 +353,17 @@
     </main>
 
     <!-- ============ FOOTER ============ -->
-    <footer class="v5__footer-big">
+    <footer class="v5__footer-min">
       <div class="v5__wrap">
-        <div class="v5__footer-big-grid">
-          <div class="v5__footer-meta">
-            <p class="v5__footer-tagline">
-              October 6 to 8, 2026 at the Signal Home Office. Three days for
-              the people running and growing Signal franchises.
-              <a href="https://apps.theframebrand.com/events/event_attendee_registration.php?event_id=event-1119566627-1172477814" target="_blank" rel="noopener">Register&nbsp;&rarr;</a>
-            </p>
-
-            <div class="v5__footer-rows">
-              <div class="v5__footer-row-h">Signal Home Office</div>
-              <div class="v5__footer-row-body">
-                3880 S. 149th St., Ste. 106<br>
-                Omaha, NE 68144<br>
-                United States
-              </div>
-              <div class="v5__footer-legal-cell">
-                <span class="v5__footer-legal-h">Privacy policy</span>
-                <a href="#">Read the policy</a>
-              </div>
-
-              <div class="v5__footer-row-h">Embassy Suites La Vista</div>
-              <div class="v5__footer-row-body">
-                Recommended hotel<br>
-                10 minutes from Home Office<br>
-                Block rate at registration
-              </div>
-              <div class="v5__footer-legal-cell">
-                &copy; 2026 Signal Franchising.<br>
-                All rights reserved.
-              </div>
-
-              <div class="v5__footer-row-h">Contact</div>
-              <div class="v5__footer-row-body">
-                <a href="mailto:summit@signal88.com">summit@signal88.com</a>
-              </div>
-              <div class="v5__footer-legal-cell"></div>
-            </div>
+        <div class="v5__footer-min-row">
+          <a class="v5__footer-min-brand" href="index.html" aria-label="Leadership Summit 2026">
+            <img src="assets/Logo Coloured.png" alt="Leadership Summit" />
+          </a>
+          <div class="v5__footer-min-legal">
+            <a class="v5__footer-min-link" href="#">Privacy policy</a>
+            <span class="v5__footer-min-sep" aria-hidden="true">&middot;</span>
+            <span>&copy; 2026 Signal Franchising. All rights reserved.</span>
           </div>
-        </div>
-        <div class="v5__footer-bottom">
-          <img src="assets/Logo Blue 2.svg" alt="Leadership Summit" />
         </div>
       </div>
     </footer>
@@ -435,5 +415,27 @@
       });
     </script>
     <script src="js/v5-motion.js?v=9-no-hover"></script>
+
+    <!-- Hero video mute/unmute toggle. -->
+    <script>
+      (() => {
+        const video = document.getElementById('v5HeroVideo');
+        const btn = document.querySelector('.v5__hero-mute');
+        if (!video || !btn) return;
+        const sync = () => {
+          const muted = video.muted;
+          btn.classList.toggle('is-on', !muted);
+          btn.setAttribute('aria-pressed', String(muted));
+          btn.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
+        };
+        btn.addEventListener('click', () => {
+          video.muted = !video.muted;
+          if (!video.muted && video.paused) video.play().catch(() => {});
+          sync();
+        });
+        sync();
+      })();
+    </script>
+
   </body>
 </html>

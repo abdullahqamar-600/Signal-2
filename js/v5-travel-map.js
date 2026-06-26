@@ -1,8 +1,8 @@
 /* Real Omaha map for v5-travel.html (progress version).
    Leaflet + CARTO Voyager tiles. Numbered pins with permanent labels.
    01 — Eppley Airfield (OMA), accented in Signal Orange
-   02 — Embassy Suites La Vista, navy
-   03 — Signal Home Office, navy
+   02 — Courtyard by Marriott Omaha La Vista, navy
+   03 — Signal Elevation Room, navy
    Connected by a dotted polyline in order.
 */
 
@@ -12,9 +12,9 @@
   if (!el) return;
 
   var POINTS = [
-    { step: '01', name: 'Eppley Airfield',         tag: 'OMA · Airport',    coords: [41.3032, -95.8941], accent: true,  labelDir: 'left'  },
-    { step: '02', name: 'Embassy Suites La Vista', tag: 'Recommended hotel', coords: [41.1816, -96.0902], accent: false, labelDir: 'right' },
-    { step: '03', name: 'Signal Home Office',      tag: 'Destination',       coords: [41.1916, -96.1442], accent: false, labelDir: 'left'  },
+    { step: '01', name: 'Eppley Airfield',                       tag: 'OMA · Airport',     coords: [41.3032, -95.8941], accent: true,  labelDir: 'left'  },
+    { step: '02', name: 'Courtyard by Marriott Omaha La Vista',  tag: 'Recommended hotel', coords: [41.1839, -96.0888], accent: false, labelDir: 'right' },
+    { step: '03', name: 'Signal Elevation Room',                 tag: 'Destination',       coords: [41.1916, -96.1442], accent: false, labelDir: 'left'  },
   ];
 
   var bounds = L.latLngBounds(POINTS.map(function (p) { return p.coords; }));
