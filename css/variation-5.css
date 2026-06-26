@@ -2301,6 +2301,23 @@ html.v5, body.v5 { overflow-x: clip; }
   max-width: 64ch;
 }
 
+/* Inline links inside FAQ answers — pop with Signal orange + underline so
+   they read as actionable, not as body copy. */
+.v5__faq-a a {
+  color: var(--v5-orange, #F58B2A);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(245, 139, 42, 0.45);
+  transition: text-decoration-color 180ms ease, color 180ms ease;
+}
+
+.v5__faq-a a:hover {
+  color: #d8731e;
+  text-decoration-color: currentColor;
+}
+
 /* -----------------------------------------------------------
    Closing CTA
    ----------------------------------------------------------- */
