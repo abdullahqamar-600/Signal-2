@@ -11,7 +11,7 @@
     <!-- Preload the hero video poster so the LCP image starts decoding before CSS finishes parsing. -->
     <link rel="preload" as="image" href="assets/photos/SignalOwnerSummit2024-7062.jpg" fetchpriority="high" />
     <link rel="stylesheet" href="css/shared.css" />
-    <link rel="stylesheet" href="css/variation-5.css?v=202-image-perf" />
+    <link rel="stylesheet" href="css/variation-5.css?v=203-nav-arrow" />
   </head>
   <body class="v5">
     <!-- ============ NAV ============ -->
@@ -420,23 +420,41 @@
     </script>
     <script src="js/v5-motion.js?v=9-no-hover"></script>
 
-    <!-- Hero video mute/unmute toggle. -->
+    <!-- Hero video mute/unmute toggle. Hides itself if the video has no audio track. -->
     <script>
       (() => {
         const video = document.getElementById('v5HeroVideo');
         const btn = document.querySelector('.v5__hero-mute');
         if (!video || !btn) return;
+
+        const hasAudio = (v) => {
+          if (typeof v.mozHasAudio === 'boolean') return v.mozHasAudio;
+          if (typeof v.webkitAudioDecodedByteCount === 'number') return v.webkitAudioDecodedByteCount > 0;
+          if (v.audioTracks && typeof v.audioTracks.length === 'number') return v.audioTracks.length > 0;
+          return null;     /* unknown — keep the button so newer videos still work */
+        };
+
         const sync = () => {
           const muted = video.muted;
           btn.classList.toggle('is-on', !muted);
           btn.setAttribute('aria-pressed', String(muted));
           btn.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
         };
+
+        const checkAudio = () => {
+          const result = hasAudio(video);
+          if (result === false) btn.hidden = true;
+        };
+
         btn.addEventListener('click', () => {
           video.muted = !video.muted;
           if (!video.muted && video.paused) video.play().catch(() => {});
           sync();
         });
+
+        video.addEventListener('loadedmetadata', checkAudio);
+        video.addEventListener('canplay', checkAudio);
+        if (video.readyState >= 1) checkAudio();
         sync();
       })();
     </script>
