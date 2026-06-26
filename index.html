@@ -79,7 +79,7 @@
                 loop
                 playsinline
                 poster="assets/photos/SignalOwnerSummit2024-7062.jpg"
-                src="assets/section-video.mp4"></video>
+                src="https://h1sy8gdvspahitem.private.blob.vercel-storage.com/hero_video.mp4?vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfSDFTeThHZHZTcEFoaXRFbSIsIm93bmVySWQiOiJ0ZWFtX29UM285bVhVWWQwZHhXVGFZZGdqdjBtVyIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzgyNTIyMDA5MTYxLCJpYXQiOjE3ODI0Nzg4MDk1NjN9.PtAmXbWXco87khxQmZAfD7xPWo6w8dkjGWpKI3MCw9k&amp;vercel-blob-signature=_eUt73vXTlgK1vC-mkyhjNAz-nxa8_A-KPFf32S_a4U"></video>
               <button class="v5__hero-mute" type="button" aria-pressed="true" aria-controls="v5HeroVideo" aria-label="Unmute video">
                 <svg class="v5__hero-mute-icon v5__hero-mute-icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M11 5 6 9H3v6h3l5 4z" />
@@ -428,13 +428,6 @@
         const btn = document.querySelector('.v5__hero-mute');
         if (!video || !btn) return;
 
-        const hasAudio = (v) => {
-          if (typeof v.mozHasAudio === 'boolean') return v.mozHasAudio;
-          if (typeof v.webkitAudioDecodedByteCount === 'number') return v.webkitAudioDecodedByteCount > 0;
-          if (v.audioTracks && typeof v.audioTracks.length === 'number') return v.audioTracks.length > 0;
-          return null;     /* unknown — keep the button so newer videos still work */
-        };
-
         const sync = () => {
           const muted = video.muted;
           btn.classList.toggle('is-on', !muted);
@@ -442,9 +435,15 @@
           btn.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
         };
 
+        // Only hide on a definitive "no audio" signal. webkitAudioDecodedByteCount
+        // starts at 0 even on videos with audio (nothing decoded yet) — so we treat
+        // a non-zero count as "has audio" and never use 0 as proof of "no audio".
         const checkAudio = () => {
-          const result = hasAudio(video);
-          if (result === false) btn.hidden = true;
+          if (typeof video.mozHasAudio === 'boolean') {
+            btn.hidden = !video.mozHasAudio;
+          } else if (video.audioTracks && video.audioTracks.length === 0) {
+            btn.hidden = true;
+          }
         };
 
         btn.addEventListener('click', () => {
@@ -454,7 +453,6 @@
         });
 
         video.addEventListener('loadedmetadata', checkAudio);
-        video.addEventListener('canplay', checkAudio);
         if (video.readyState >= 1) checkAudio();
         sync();
       })();
